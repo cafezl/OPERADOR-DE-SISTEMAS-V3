@@ -77,5 +77,3 @@ Os exercícios em C# são projetos independentes. No Windows, abra no Visual Stu
 ---
 [DOCUMENT CONTINUES - PAGE 2 CLASSIFIED]
 PROPERTY OF UNITED STATES GOVERNMENT - FOR OFFICIAL USE ONLY
-
-
