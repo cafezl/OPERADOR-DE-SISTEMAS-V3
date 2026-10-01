@@ -1,6 +1,6 @@
 # Caderno do laboratório
 
-Albuquerque, depois do expediente. **Heisenberg (Café)** mantém as anotações em ordem; **Pinkman (Deus da Guerra)** verifica as saídas. Aqui está o inventário das pastas, das telas e dos arquivos deixados pela dupla.
+Café é **Heisenberg**: metódico, brilhante e certo de ser o melhor. **Deus da Guerra é Pinkman**, o sócio que leva as ideias para o mundo real e improvisa quando o plano falha. A sociedade funciona enquanto a confiança vence o orgulho. Abaixo está o inventário dos projetos que ficaram no laboratório.
 
 ## CAFE
 

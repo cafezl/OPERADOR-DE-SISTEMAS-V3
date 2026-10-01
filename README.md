@@ -2,15 +2,13 @@
 
 # Albuquerque — Caderno do Laboratório
 
-*[Noite. Uma janela acesa no deserto. O telefone vibra duas vezes.]*
+Café assume o nome de **Heisenberg**: metódico, brilhante e convencido de que é o melhor no laboratório. Para ele, saber a fórmula também deveria significar dar a última palavra.
 
-**HEISENBERG — Café, antes Walter White:** Os números fecham.
+**Deus da Guerra é Pinkman**, o sócio que põe os planos em movimento, conhece o terreno e improvisa quando a realidade não segue os cálculos. Heisenberg chama isso de desordem; ainda assim, sem Pinkman, muita coisa nem sairia do papel.
 
-**PINKMAN — Deus da Guerra, antes Jesse Pinkman:** E se perguntarem?
+A dupla já teve uma operação que parecia perfeita. Então o orgulho começou a pesar mais que a confiança: um queria comandar tudo; o outro cansou de ser tratado como peça substituível. Em Albuquerque, até o melhor plano racha quando o ego entra no laboratório.
 
-**HEISENBERG:** Não vão.
-
-*[Uma lâmpada azul pisca sobre a bancada. A porta se fecha. No caderno ficam cadastros, estações, mensagens, botões, uma recarga e uma apresentação. Nenhuma assinatura. O resto continua do lado de dentro.]*
+O caderno guarda os registros que ficaram: cadastros, estações, mensagens, botões, uma recarga e uma apresentação. O resto continua fora do papel.
 
 ## Inventário
 
