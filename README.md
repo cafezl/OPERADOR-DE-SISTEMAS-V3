@@ -1,14 +1,18 @@
-# 🧪 Laboratório Heisenberg & Jesse
+> **Aviso:** o texto abaixo é uma brincadeira em formato de encenação.
 
-Projetos da dupla no curso de Operador de Sistemas: **Café** e **Deus da Guerra**.
+# Albuquerque — Caderno do Laboratório
 
-> **Codinomes da dupla, inspirados em _Breaking Bad_:** Café assume o papel de Heisenberg (Walter White); Deus da Guerra, o de Jesse Pinkman. É uma referência divertida à série — nosso laboratório aqui é de programação, com C# e Windows Forms.
+*[Noite. Uma janela acesa no deserto. O telefone vibra duas vezes.]*
 
-A série mostra como escolhas e ambição podem mudar o rumo de uma vida. A gente pegou essa energia de parceria e laboratório para batizar este repositório; os trabalhos abaixo são exercícios e projetos do curso.
+**HEISENBERG — Café, antes Walter White:** Os números fecham.
 
-Os arquivos estão reunidos na pasta [OPERADOR DE SISTEMAS V2](./OPERADOR%20DE%20SISTEMAS%20V2/).
+**PINKMAN — Deus da Guerra, antes Jesse Pinkman:** E se perguntarem?
 
-## Organização
+**HEISENBERG:** Não vão.
+
+*[Uma lâmpada azul pisca sobre a bancada. A porta se fecha. No caderno ficam cadastros, estações, mensagens, botões, uma recarga e uma apresentação. Nenhuma assinatura. O resto continua do lado de dentro.]*
+
+## Inventário
 
 - [CAFE](./OPERADOR%20DE%20SISTEMAS%20V2/CAFE/): exercícios e projetos desta pasta.
 - [DEUS DA GUERRA](./OPERADOR%20DE%20SISTEMAS%20V2/DEUS%20DA%20GUERRA/): outros projetos e trabalhos do curso.

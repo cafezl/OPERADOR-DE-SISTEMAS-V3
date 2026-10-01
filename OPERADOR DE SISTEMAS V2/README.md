@@ -1,6 +1,6 @@
-# 🧪 Arquivos do laboratório
+# Caderno do laboratório
 
-Este é o laboratório acadêmico de **Café (Heisenberg)** e **Deus da Guerra (Jesse Pinkman)** — codinomes inspirados em _Breaking Bad_. Por aqui, a química fica na série: esta pasta reúne exercícios de C# com Windows Forms e a apresentação final do grupo.
+Albuquerque, depois do expediente. **Heisenberg (Café)** mantém as anotações em ordem; **Pinkman (Deus da Guerra)** verifica as saídas. Aqui está o inventário das pastas, das telas e dos arquivos deixados pela dupla.
 
 ## CAFE
 
@@ -17,7 +17,7 @@ Este é o laboratório acadêmico de **Café (Heisenberg)** e **Deus da Guerra (
 - [Cadastro — Júlio](./DEUS%20DA%20GUERRA/cadastro%20julio/cadastro.sln)
 - [Estações — Julão](./DEUS%20DA%20GUERRA/Esta%C3%A7%C3%B5es%20jul%C3%A3o/estacoes/estacoes.sln)
 - [Primeiro projeto — Augustinho](./DEUS%20DA%20GUERRA/primeiroprojeto-%20augustinho/primeiroprojeto-main/primeiroprojeto-main/PrimeiroProjeto/PrimeiroProjeto.sln)
-- [Recarga de celular — demonstração](./DEUS%20DA%20GUERRA/Recarga%20FALTA%20TERMINAR/Recarga.sln)
+- [Recarga de celular](./DEUS%20DA%20GUERRA/Recarga%20FALTA%20TERMINAR/Recarga.sln)
 - [Tipo de mensagem — Júlio](./DEUS%20DA%20GUERRA/tipo_de_mensagem%20JULIO/tipo_de_mensagem.sln)
 
 ## Apresentação
@@ -34,4 +34,4 @@ No Windows, abra a solução `.sln` escolhida no Visual Studio 2022 com a carga 
 
 O projeto [PrimeiroProjeto](./DEUS%20DA%20GUERRA/primeiroprojeto-%20augustinho/primeiroprojeto-main/primeiroprojeto-main/PrimeiroProjeto/PrimeiroProjeto.sln) também precisa de um servidor MySQL local e de um banco chamado `primeiroprojeto`. Os dados de conexão ficam no código do projeto e devem corresponder à configuração do computador.
 
-A tela [Recarga de celular](./DEUS%20DA%20GUERRA/Recarga%20FALTA%20TERMINAR/Recarga.sln) é apenas uma demonstração escolar: permite escolher operadora e valor, mas não realiza pagamento nem recarga real.
+A tela [Recarga de celular](./DEUS%20DA%20GUERRA/Recarga%20FALTA%20TERMINAR/Recarga.sln) permite selecionar operadora e valor; nenhuma transação real é enviada.
