@@ -1,6 +1,12 @@
-# Operador de Sistemas V2
+# 🧪 Laboratório Heisenberg & Jesse
 
-Repositório compartilhado com os trabalhos desenvolvidos no curso de Operador de Sistemas. Os arquivos estão reunidos na pasta [OPERADOR DE SISTEMAS V2](./OPERADOR%20DE%20SISTEMAS%20V2/).
+Projetos da dupla no curso de Operador de Sistemas: **Café** e **Deus da Guerra**.
+
+> **Codinomes da dupla, inspirados em _Breaking Bad_:** Café assume o papel de Heisenberg (Walter White); Deus da Guerra, o de Jesse Pinkman. É uma referência divertida à série — nosso laboratório aqui é de programação, com C# e Windows Forms.
+
+A série mostra como escolhas e ambição podem mudar o rumo de uma vida. A gente pegou essa energia de parceria e laboratório para batizar este repositório; os trabalhos abaixo são exercícios e projetos do curso.
+
+Os arquivos estão reunidos na pasta [OPERADOR DE SISTEMAS V2](./OPERADOR%20DE%20SISTEMAS%20V2/).
 
 ## Organização
 
