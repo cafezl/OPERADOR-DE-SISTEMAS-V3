@@ -24,6 +24,10 @@ Este é o laboratório acadêmico de **Café (Heisenberg)** e **Deus da Guerra (
 
 O arquivo [Trabalho final.pptx](./TRABALHO%20Q%20NOIS%20FEZ%20NO%20POWERPOINT/Trabalho%20final.pptx) pode ser aberto no Microsoft PowerPoint.
 
+## Vídeo da dupla
+
+[Abrir o vídeo Heisenberg & Jesse](./VIDEO%20DA%20DUPLA/video-heisenberg-jesse.mp4) (MP4).
+
 ## Executar um projeto C#
 
 No Windows, abra a solução `.sln` escolhida no Visual Studio 2022 com a carga de trabalho **Desenvolvimento para desktop com .NET**. Os projetos usam o **.NET Framework 4.7.2**; instale o Developer Pack correspondente e permita a restauração dos pacotes NuGet.

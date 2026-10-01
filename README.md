@@ -13,6 +13,7 @@ Os arquivos estão reunidos na pasta [OPERADOR DE SISTEMAS V2](./OPERADOR%20DE%2
 - [CAFE](./OPERADOR%20DE%20SISTEMAS%20V2/CAFE/): exercícios e projetos desta pasta.
 - [DEUS DA GUERRA](./OPERADOR%20DE%20SISTEMAS%20V2/DEUS%20DA%20GUERRA/): outros projetos e trabalhos do curso.
 - [Apresentação final](./OPERADOR%20DE%20SISTEMAS%20V2/TRABALHO%20Q%20NOIS%20FEZ%20NO%20POWERPOINT/Trabalho%20final.pptx): trabalho feito no PowerPoint.
+- [Vídeo da dupla — Heisenberg & Jesse](./OPERADOR%20DE%20SISTEMAS%20V2/VIDEO%20DA%20DUPLA/video-heisenberg-jesse.mp4): vídeo enviado junto com os trabalhos.
 - [Guia dos projetos](./OPERADOR%20DE%20SISTEMAS%20V2/README.md): lista de soluções do Visual Studio e instruções.
 
 ## Abrir os projetos
