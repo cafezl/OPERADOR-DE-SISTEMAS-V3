@@ -1,4 +1,4 @@
-# Albuquerque — Caderno do Laboratório
+# Leste — Caderno do Laboratório
 
 **Café**: metódico, brilhante e convencido de que é o melhor no laboratório. Para ele, saber a fórmula também deveria significar dar a última palavra.
 
