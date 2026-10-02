@@ -13,14 +13,10 @@ namespace PrimeiroProjeto
 {
     public partial class Form1 : Form
     {
-        public static string NomeCadastrado = "";
-        public static string EmailCadastrado = "";
-        public static string SenhaCadastrada = "";
-
         public Form1()
         {
             InitializeComponent();
-
+            txtSenha.UseSystemPasswordChar = true;
             this.Resize += (s, e) => CentralizarPainel();
         }
 
@@ -46,7 +42,7 @@ namespace PrimeiroProjeto
             string senha = txtSenha.Text;
 
             // Validação para campos vazios
-            if (email == "" || senha == "")
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrEmpty(senha))
             {
                 MessageBox.Show(
                     "Preencha o email e a senha.",
@@ -62,21 +58,40 @@ namespace PrimeiroProjeto
                 using (MySqlConnection conexao = Conexao.Abrir())
                 {
                     string sql =
-                        "SELECT nome FROM usuarios " +
-                        "WHERE email = @email " +
-                        "AND senha = @senha";
+                        "SELECT nome, senha FROM usuarios " +
+                        "WHERE email = @email";
 
-                    MySqlCommand comando = new MySqlCommand(sql, conexao);
-                    comando.Parameters.AddWithValue("@email", email);
-                    comando.Parameters.AddWithValue("@senha", senha);
-
-                    object resultado = comando.ExecuteScalar();
+                    string nome = null;
+                    string senhaSalva = null;
+                    using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                    {
+                        comando.Parameters.AddWithValue("@email", email);
+                        using (MySqlDataReader leitor = comando.ExecuteReader())
+                        {
+                            if (leitor.Read())
+                            {
+                                nome = leitor.GetString(leitor.GetOrdinal("nome"));
+                                senhaSalva = leitor.GetString(leitor.GetOrdinal("senha"));
+                            }
+                        }
+                    }
 
                     // Verifica se encontrou o usuário
-                    if (resultado != null)
+                    if (nome != null && SenhaHasher.Verificar(senha, senhaSalva))
                     {
+                        if (SenhaHasher.PrecisaMigrar(senhaSalva))
+                        {
+                            const string atualizarSenha = "UPDATE usuarios SET senha = @senha WHERE email = @email";
+                            using (MySqlCommand comandoAtualizacao = new MySqlCommand(atualizarSenha, conexao))
+                            {
+                                comandoAtualizacao.Parameters.AddWithValue("@senha", SenhaHasher.Gerar(senha));
+                                comandoAtualizacao.Parameters.AddWithValue("@email", email);
+                                comandoAtualizacao.ExecuteNonQuery();
+                            }
+                        }
+
                         frmPrincipal principal = new frmPrincipal();
-                        principal.DefinirBoasVindas(resultado.ToString());
+                        principal.DefinirBoasVindas(nome);
                         principal.Show();
                         this.Hide();
                     }
@@ -96,8 +111,8 @@ namespace PrimeiroProjeto
             catch (MySqlException ex)
             {
                 MessageBox.Show(
-                    "Erro ao conectar ao banco de dados: " + ex.Message,
-                    "Erro Técnico",
+                    "Não foi possível acessar o banco de dados. Confira se o MySQL está ligado e se o banco 'primeiroprojeto' foi criado.\n\nDetalhes: " + ex.Message,
+                    "Erro no banco de dados",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }

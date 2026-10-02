@@ -42,8 +42,8 @@ namespace Recarga
             button8.Text = "R$ 50,00";
             lbl_VAl8.Text = "60 dias";
 
-            // Atribuição do evento Click para todos os botões de recarga
-            for (int i = 0; i < botoesRecarga.Length; i++)
+            // Os dois últimos botões já têm seus eventos ligados pelo Designer.
+            for (int i = 0; i < 6; i++)
             {
                 botoesRecarga[i].Click += SelecionarRecarga;
             }

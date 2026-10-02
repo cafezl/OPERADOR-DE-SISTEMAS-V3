@@ -22,6 +22,13 @@ namespace cadastro
 			rad_tema3.CheckedChanged += rad_tema3_CheckedChanged;
 			btnativar.CheckedChanged += btnativar_CheckedChanged;
 			btnativar.Checked = true;
+
+			// Mantém o resultado visível e legível quando os dados ocupam várias linhas.
+			lblresultados.AutoSize = false;
+			lblresultados.Location = new Point(344, 240);
+			lblresultados.Size = new Size(600, 230);
+			lblresultados.BorderStyle = BorderStyle.FixedSingle;
+			lblresultados.TextAlign = ContentAlignment.TopLeft;
 		}
 
 		private void ExibirCampo(string nome, TextBox campo)
@@ -54,7 +61,6 @@ namespace cadastro
 		{
 			Control[] controlesDeEdicao =
 			{
-				grptemas,
 				txt_Nome, txt_Sobrenome, txt_Idade, txt_Bairro, txt_Celular, txt_Email,
 				btn_Nome, btn_Sobrenome, btn_Idade, btn_Bairro, btn_Celular, btn_Email,
 				btn_DadosCompletos
@@ -64,6 +70,13 @@ namespace cadastro
 			{
 				controle.Enabled = ativa;
 			}
+
+			// Não desabilite o GroupBox inteiro: o botão "ativar" fica dentro dele.
+			grptemas.Enabled = true;
+			rad_tema1.Enabled = ativa;
+			rad_tema2.Enabled = ativa;
+			rad_tema3.Enabled = ativa;
+			btnativar.Enabled = true;
 		}
 
 		private void AplicarTema(Color cor)

@@ -34,24 +34,34 @@ namespace estacoes
 
         private void rad_primavera_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = Properties.Resources.imagem2; // essa bomba aqui muda a imagem de algum picturebox
-
+            if (rad_primavera.Checked)
+            {
+                pictureBox1.BackgroundImage = Properties.Resources.imagem2;
+            }
         }
 
         private void rad_verao_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = Properties.Resources.imagem4;//essa tambem
+            if (rad_verao.Checked)
+            {
+                pictureBox1.BackgroundImage = Properties.Resources.imagem4;
+            }
         }
 
         private void rad_outono_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = Properties.Resources.imagem1;//essa tambem
-
+            if (rad_outono.Checked)
+            {
+                pictureBox1.BackgroundImage = Properties.Resources.imagem1;
+            }
         }
 
         private void rad_inverno_CheckedChanged(object sender, EventArgs e)
         {
-            pictureBox1.BackgroundImage = Properties.Resources.imagem3;//essa tambem
+            if (rad_inverno.Checked)
+            {
+                pictureBox1.BackgroundImage = Properties.Resources.imagem3;
+            }
         }
     }
 }

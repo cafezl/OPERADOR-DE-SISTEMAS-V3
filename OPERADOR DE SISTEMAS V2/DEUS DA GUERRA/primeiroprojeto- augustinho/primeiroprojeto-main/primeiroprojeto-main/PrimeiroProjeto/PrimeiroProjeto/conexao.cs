@@ -19,8 +19,16 @@ namespace PrimeiroProjeto
         public static MySqlConnection Abrir()
         {
             MySqlConnection conexao = new MySqlConnection(StringConexao);
-            conexao.Open();
-            return conexao;
+            try
+            {
+                conexao.Open();
+                return conexao;
+            }
+            catch
+            {
+                conexao.Dispose();
+                throw;
+            }
         }
     }
 }

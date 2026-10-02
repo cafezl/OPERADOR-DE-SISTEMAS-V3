@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using System.Drawing.Text;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,6 +15,14 @@ namespace Recarga
             "R$ 10,00", "R$ 15,00", "R$ 20,00", "R$ 25,00",
             "R$ 30,00", "R$ 35,00", "R$ 40,00", "R$ 50,00"
         };
+        private readonly Dictionary<string, string[]> valoresPorOperadora =
+            new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "VIVO", new[] { "R$ 10,00", "R$ 15,00", "R$ 20,00", "R$ 25,00", "R$ 30,00", "R$ 35,00", "R$ 40,00", "R$ 50,00" } },
+                { "CLARO", new[] { "R$ 12,00", "R$ 17,00", "R$ 22,00", "R$ 27,00", "R$ 32,00", "R$ 37,00", "R$ 42,00", "R$ 52,00" } },
+                { "TIM", new[] { "R$ 13,00", "R$ 18,00", "R$ 23,00", "R$ 28,00", "R$ 33,00", "R$ 38,00", "R$ 43,00", "R$ 53,00" } },
+                { "OI", new[] { "R$ 14,00", "R$ 19,00", "R$ 24,00", "R$ 29,00", "R$ 34,00", "R$ 39,00", "R$ 44,00", "R$ 54,00" } }
+            };
 
         public Form1()
         {
@@ -71,9 +79,65 @@ namespace Recarga
             }
 
             txt_OperadoraSe.Text = opcao.Text;
+            AtualizarValoresRecarga(opcao.Text);
+            AplicarTemaDaOperadora(opcao.Text);
             LimparValorSelecionado();
             AtualizarCamposDaOperadora(true);
             txt_Nome.Focus();
+        }
+
+        private void AtualizarValoresRecarga(string operadora)
+        {
+            string[] valores;
+            if (!valoresPorOperadora.TryGetValue(operadora, out valores))
+            {
+                valores = valoresDemonstracao;
+            }
+
+            for (int i = 0; i < botoesRecarga.Length; i++)
+            {
+                botoesRecarga[i].Text = valores[i];
+            }
+        }
+
+        private void AplicarTemaDaOperadora(string operadora)
+        {
+            Color corFormulario;
+            Color corCampo;
+            Color corTexto;
+
+            switch (operadora.ToUpperInvariant())
+            {
+                case "VIVO":
+                    corFormulario = Color.Purple;
+                    corCampo = Color.Purple;
+                    corTexto = Color.White;
+                    break;
+                case "CLARO":
+                    corFormulario = Color.DarkRed;
+                    corCampo = Color.Red;
+                    corTexto = Color.White;
+                    break;
+                case "TIM":
+                    corFormulario = Color.DarkBlue;
+                    corCampo = Color.Blue;
+                    corTexto = Color.White;
+                    break;
+                case "OI":
+                    corFormulario = Color.DarkOrange;
+                    corCampo = Color.Orange;
+                    corTexto = Color.Black;
+                    break;
+                default:
+                    corFormulario = SystemColors.Control;
+                    corCampo = SystemColors.Window;
+                    corTexto = SystemColors.WindowText;
+                    break;
+            }
+
+            BackColor = corFormulario;
+            txt_OperadoraSe.BackColor = corCampo;
+            txt_OperadoraSe.ForeColor = corTexto;
         }
 
         private void AtualizarBotoesRecarga()
@@ -149,7 +213,6 @@ namespace Recarga
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton1);
-            BackColor = Color.Purple;
 
 
          
@@ -159,19 +222,16 @@ namespace Recarga
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton2);
-            BackColor = Color.DarkRed;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton3);
-            BackColor = Color.DarkBlue;
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton4);
-            BackColor = Color.DarkOrange;
         }
 
         private void button7_Click(object sender, EventArgs e)
