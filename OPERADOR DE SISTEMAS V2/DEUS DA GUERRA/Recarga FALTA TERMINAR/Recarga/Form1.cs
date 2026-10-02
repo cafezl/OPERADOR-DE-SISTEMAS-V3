@@ -1,12 +1,13 @@
 using System;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace Recarga
 {
     public partial class Form1 : Form
-    {
+    {// OS botões precisam aparecer valores diferentes para cada operadora selecionada. 
         private readonly Button[] botoesRecarga;
         private readonly Label[] labelsValidade;
         private readonly string[] valoresDemonstracao =
@@ -148,21 +149,29 @@ namespace Recarga
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton1);
+            BackColor = Color.Purple;
+
+
+         
+
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton2);
+            BackColor = Color.DarkRed;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton3);
+            BackColor = Color.DarkBlue;
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton4);
+            BackColor = Color.DarkOrange;
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -196,6 +205,21 @@ namespace Recarga
 
         private void lbl_nome_Click(object sender, EventArgs e)
         {
+        }
+
+        private void btn1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lbl_VAL1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

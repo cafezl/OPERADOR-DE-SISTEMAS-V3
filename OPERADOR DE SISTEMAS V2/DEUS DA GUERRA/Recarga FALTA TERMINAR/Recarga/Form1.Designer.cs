@@ -71,7 +71,7 @@
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
             this.groupBox1.Controls.Add(this.radioButton1);
-            this.groupBox1.Location = new System.Drawing.Point(14, 88);
+            this.groupBox1.Location = new System.Drawing.Point(13, 63);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -264,18 +264,19 @@
             // btn1
             // 
             this.btn1.Enabled = false;
-            this.btn1.Location = new System.Drawing.Point(315, 305);
+            this.btn1.Location = new System.Drawing.Point(100, 305);
             this.btn1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(88, 71);
             this.btn1.TabIndex = 12;
             this.btn1.Text = "R$";
             this.btn1.UseVisualStyleBackColor = true;
+            this.btn1.Click += new System.EventHandler(this.btn1_Click);
             // 
             // btn2
             // 
             this.btn2.Enabled = false;
-            this.btn2.Location = new System.Drawing.Point(409, 305);
+            this.btn2.Location = new System.Drawing.Point(245, 305);
             this.btn2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(88, 71);
@@ -286,18 +287,19 @@
             // btn3
             // 
             this.btn3.Enabled = false;
-            this.btn3.Location = new System.Drawing.Point(504, 305);
+            this.btn3.Location = new System.Drawing.Point(392, 305);
             this.btn3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn3.Name = "btn3";
             this.btn3.Size = new System.Drawing.Size(88, 71);
             this.btn3.TabIndex = 14;
             this.btn3.Text = "R$";
             this.btn3.UseVisualStyleBackColor = true;
+            this.btn3.Click += new System.EventHandler(this.btn3_Click);
             // 
             // btn4
             // 
             this.btn4.Enabled = false;
-            this.btn4.Location = new System.Drawing.Point(598, 305);
+            this.btn4.Location = new System.Drawing.Point(538, 305);
             this.btn4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn4.Name = "btn4";
             this.btn4.Size = new System.Drawing.Size(88, 71);
@@ -308,7 +310,7 @@
             // btn5
             // 
             this.btn5.Enabled = false;
-            this.btn5.Location = new System.Drawing.Point(315, 396);
+            this.btn5.Location = new System.Drawing.Point(100, 396);
             this.btn5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn5.Name = "btn5";
             this.btn5.Size = new System.Drawing.Size(88, 72);
@@ -319,7 +321,7 @@
             // btn6
             // 
             this.btn6.Enabled = false;
-            this.btn6.Location = new System.Drawing.Point(409, 396);
+            this.btn6.Location = new System.Drawing.Point(245, 396);
             this.btn6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn6.Name = "btn6";
             this.btn6.Size = new System.Drawing.Size(87, 72);
@@ -332,7 +334,7 @@
             this.label7.AutoSize = true;
             this.label7.Enabled = false;
             this.label7.Font = new System.Drawing.Font("Baskerville Old Face", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(379, 271);
+            this.label7.Location = new System.Drawing.Point(225, 280);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(265, 22);
@@ -343,7 +345,7 @@
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(504, 396);
+            this.button7.Location = new System.Drawing.Point(392, 396);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(88, 72);
@@ -355,7 +357,7 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(598, 396);
+            this.button8.Location = new System.Drawing.Point(538, 396);
             this.button8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(88, 72);
@@ -369,20 +371,21 @@
             this.lbl_VAL1.AutoSize = true;
             this.lbl_VAL1.Enabled = false;
             this.lbl_VAL1.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL1.Location = new System.Drawing.Point(328, 379);
+            this.lbl_VAL1.Location = new System.Drawing.Point(70, 379);
             this.lbl_VAL1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL1.Name = "lbl_VAL1";
             this.lbl_VAL1.Size = new System.Drawing.Size(62, 14);
             this.lbl_VAL1.TabIndex = 21;
             this.lbl_VAL1.Text = "Validade";
             this.lbl_VAL1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_VAL1.Click += new System.EventHandler(this.lbl_VAL1_Click);
             // 
             // lbl_VAL2
             // 
             this.lbl_VAL2.AutoSize = true;
             this.lbl_VAL2.Enabled = false;
             this.lbl_VAL2.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL2.Location = new System.Drawing.Point(423, 379);
+            this.lbl_VAL2.Location = new System.Drawing.Point(215, 379);
             this.lbl_VAL2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL2.Name = "lbl_VAL2";
             this.lbl_VAL2.Size = new System.Drawing.Size(62, 14);
@@ -395,7 +398,7 @@
             this.lbl_VAL3.AutoSize = true;
             this.lbl_VAL3.Enabled = false;
             this.lbl_VAL3.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL3.Location = new System.Drawing.Point(515, 379);
+            this.lbl_VAL3.Location = new System.Drawing.Point(365, 379);
             this.lbl_VAL3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL3.Name = "lbl_VAL3";
             this.lbl_VAL3.Size = new System.Drawing.Size(62, 14);
@@ -408,7 +411,7 @@
             this.lbl_VAL4.AutoSize = true;
             this.lbl_VAL4.Enabled = false;
             this.lbl_VAL4.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL4.Location = new System.Drawing.Point(616, 379);
+            this.lbl_VAL4.Location = new System.Drawing.Point(509, 379);
             this.lbl_VAL4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL4.Name = "lbl_VAL4";
             this.lbl_VAL4.Size = new System.Drawing.Size(62, 14);
@@ -421,7 +424,7 @@
             this.lbl_VAL5.AutoSize = true;
             this.lbl_VAL5.Enabled = false;
             this.lbl_VAL5.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL5.Location = new System.Drawing.Point(328, 471);
+            this.lbl_VAL5.Location = new System.Drawing.Point(70, 471);
             this.lbl_VAL5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL5.Name = "lbl_VAL5";
             this.lbl_VAL5.Size = new System.Drawing.Size(62, 14);
@@ -433,7 +436,7 @@
             this.lbl_VAL6.AutoSize = true;
             this.lbl_VAL6.Enabled = false;
             this.lbl_VAL6.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL6.Location = new System.Drawing.Point(423, 471);
+            this.lbl_VAL6.Location = new System.Drawing.Point(215, 471);
             this.lbl_VAL6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL6.Name = "lbl_VAL6";
             this.lbl_VAL6.Size = new System.Drawing.Size(62, 14);
@@ -445,7 +448,7 @@
             this.lbl_VAL7.AutoSize = true;
             this.lbl_VAL7.Enabled = false;
             this.lbl_VAL7.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAL7.Location = new System.Drawing.Point(515, 471);
+            this.lbl_VAL7.Location = new System.Drawing.Point(365, 471);
             this.lbl_VAL7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAL7.Name = "lbl_VAL7";
             this.lbl_VAL7.Size = new System.Drawing.Size(62, 14);
@@ -457,7 +460,7 @@
             this.lbl_VAl8.AutoSize = true;
             this.lbl_VAl8.Enabled = false;
             this.lbl_VAl8.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_VAl8.Location = new System.Drawing.Point(616, 471);
+            this.lbl_VAl8.Location = new System.Drawing.Point(509, 471);
             this.lbl_VAl8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_VAl8.Name = "lbl_VAl8";
             this.lbl_VAl8.Size = new System.Drawing.Size(62, 14);
