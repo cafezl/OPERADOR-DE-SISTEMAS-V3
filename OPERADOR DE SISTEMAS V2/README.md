@@ -11,14 +11,14 @@ Café é **Heisenberg**: metódico, brilhante e certo de ser o melhor. **Deus da
 
 ## DEUS DA GUERRA
 
-- [Projeto de interface — Barbudo Julão](./DEUS%20DA%20GUERRA/barbudo%20julao/framewoek%20julao/framewoek.sln)
-- [Novo projeto — Barbudo Julão](./DEUS%20DA%20GUERRA/barbudo%20julao/novo_projeto%20julao/novo_projeto.sln)
-- [Botão — Júlio](./DEUS%20DA%20GUERRA/Botao%20julio/Botao.sln)
-- [Cadastro — Júlio](./DEUS%20DA%20GUERRA/cadastro%20julio/cadastro.sln)
-- [Estações — Julão](./DEUS%20DA%20GUERRA/Esta%C3%A7%C3%B5es%20jul%C3%A3o/estacoes/estacoes.sln)
+- [Projeto de interface — Barbudo Julão](./DEUS%20DA%20GUERRA/barbudo%20deus%20da%20guerra/framewoek%20deus%20da%20guerra/framewoek.sln)
+- [Novo projeto — Barbudo Julão](./DEUS%20DA%20GUERRA/barbudo%20deus%20da%20guerra/novo_projeto%20deus%20da%20guerra/novo_projeto.sln)
+- [Botão — Júlio](./DEUS%20DA%20GUERRA/Botao%20deus%20da%20guerra/Botao.sln)
+- [Cadastro — Júlio](./DEUS%20DA%20GUERRA/cadastro%20deus%20da%20guerra/cadastro.sln)
+- [Estações — Julão](./DEUS%20DA%20GUERRA/Esta%C3%A7%C3%B5es%20deus%20da%20guerra/estacoes/estacoes.sln)
 - [Primeiro projeto — Augustinho](./DEUS%20DA%20GUERRA/primeiroprojeto-%20augustinho/primeiroprojeto-main/primeiroprojeto-main/PrimeiroProjeto/PrimeiroProjeto.sln)
 - [Recarga de celular](./DEUS%20DA%20GUERRA/Recarga%20FALTA%20TERMINAR/Recarga.sln)
-- [Tipo de mensagem — Júlio](./DEUS%20DA%20GUERRA/tipo_de_mensagem%20JULIO/tipo_de_mensagem.sln)
+- [Tipo de mensagem — Júlio](./DEUS%20DA%20GUERRA/tipo_de_mensagem%20DEUS%20DA%20GUERRA/tipo_de_mensagem.sln)
 
 ## Apresentação
 
