@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Botões coloridos
+Validação: solução compilada em Debug.
