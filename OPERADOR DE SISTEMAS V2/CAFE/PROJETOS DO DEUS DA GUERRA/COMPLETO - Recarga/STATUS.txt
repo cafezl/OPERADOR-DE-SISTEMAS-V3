@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Seleção de operadora e valores de recarga de demonstração.
+Observação: não realiza pagamento nem recarga real.
+Validação: solução compilada em Debug.

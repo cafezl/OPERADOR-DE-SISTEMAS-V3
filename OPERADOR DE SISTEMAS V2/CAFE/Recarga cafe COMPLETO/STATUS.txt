@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Recarga de demonstração do CAFE.
+Observação: não realiza pagamento nem recarga real.
+Validação: solução compilada em Debug.
