@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Cadastro com temas e ativação de edição.
+Fotos: quatro imagens alternativas reaproveitadas do acervo CAFE.
+Validação: solução compilada em Debug.
