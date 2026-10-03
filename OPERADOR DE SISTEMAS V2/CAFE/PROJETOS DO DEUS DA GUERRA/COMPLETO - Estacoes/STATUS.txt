@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Estações do ano
+Fotos: versões sazonais distintas reaproveitadas do CAFE.
+Validação: solução compilada em Debug.
