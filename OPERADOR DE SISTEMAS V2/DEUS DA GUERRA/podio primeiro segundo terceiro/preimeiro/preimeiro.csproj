@@ -49,9 +49,10 @@
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Content Include="Form1.Designer.cs">
+    <Compile Include="Form1.Designer.cs">
+      <SubType>Form</SubType>
       <DependentUpon>Form1.cs</DependentUpon>
-    </Content>
+    </Compile>
     <Compile Include="Form2.cs">
       <SubType>Form</SubType>
     </Compile>

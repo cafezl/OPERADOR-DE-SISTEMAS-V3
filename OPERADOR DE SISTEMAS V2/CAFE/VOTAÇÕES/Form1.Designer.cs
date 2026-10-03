@@ -57,8 +57,6 @@
             this.Name = "frm_Primeiro";
             this.Text = "Primeiro";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frm_Primeiro_FormClosing);
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frm_Primeiro_FormClosed_1);
-            this.Load += new System.EventHandler(this.Frm_primeiro_formClosed);
             this.ResumeLayout(false);
 
         }
