@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Cadastro
+Projeto: Cadastro de dados, exibição, edição e temas.
+Validação: solução compilada em Debug.
