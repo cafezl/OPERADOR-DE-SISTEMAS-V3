@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Pódio em três telas.
+Fotos: troféu, medalha de prata e medalha de bronze do projeto VOTAÇÕES do CAFE.
+Validação: solução compilada em Debug.
