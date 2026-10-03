@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Tipos de mensagem
+Projeto: Demonstração de caixas de mensagem e botões de resposta.
+Validação: solução compilada em Debug.
