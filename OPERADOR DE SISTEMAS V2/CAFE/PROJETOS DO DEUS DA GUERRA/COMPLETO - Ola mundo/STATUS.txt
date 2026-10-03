@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Olá Mundo com botão de mensagem.
+Imagem: substituída por uma imagem do acervo do CAFE.
+Validação: solução compilada em Debug.
