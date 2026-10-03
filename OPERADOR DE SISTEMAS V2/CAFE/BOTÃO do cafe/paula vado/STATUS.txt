@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Botão colorido
+Projeto: Botões com seleção e aplicação de cores.
+Validação: solução compilada em Debug.
