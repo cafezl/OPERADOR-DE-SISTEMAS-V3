@@ -22,6 +22,7 @@ namespace cadastro
 			rad_tema3.CheckedChanged += rad_tema3_CheckedChanged;
 			btnativar.CheckedChanged += btnativar_CheckedChanged;
 			btnativar.Checked = true;
+			rad_tema1.Checked = true;
 
 			// Mantém o resultado visível e legível quando os dados ocupam várias linhas.
 			lblresultados.AutoSize = false;
@@ -79,34 +80,58 @@ namespace cadastro
 			btnativar.Enabled = true;
 		}
 
-		private void AplicarTema(Color cor)
+		// [Deus da Guerra -> CAFE: temas com as imagens do projeto equivalente do parceiro]
+		private void AplicarTema(Color cor, string nomeRecurso)
 		{
 			BackColor = cor;
+			BackgroundImage = Properties.Resources.ResourceManager.GetObject(nomeRecurso) as Image;
+			BackgroundImageLayout = ImageLayout.Stretch;
 		}
 
 		private void rad_tema1_CheckedChanged(object sender, EventArgs e)
 		{
-			if (rad_tema1.Checked) AplicarTema(Color.MistyRose);
+			if (rad_tema1.Checked)
+			{
+				// [Deus da Guerra -> CAFE: primeira arte associada ao tema 1]
+				AplicarTema(Color.MistyRose, "tema_deus_da_guerra_1");
+			}
 		}
 
 		private void radioButton2_CheckedChanged(object sender, EventArgs e)
 		{
-			if (rad_tema2.Checked) AplicarTema(Color.Honeydew);
+			if (rad_tema2.Checked)
+			{
+				// [Deus da Guerra -> CAFE: segunda arte associada ao tema 2]
+				AplicarTema(Color.Honeydew, "tema_deus_da_guerra_2");
+			}
 		}
 
 		private void rad_tema3_CheckedChanged(object sender, EventArgs e)
 		{
-			if (rad_tema3.Checked) AplicarTema(Color.Lavender);
+			if (rad_tema3.Checked)
+			{
+				// [Deus da Guerra -> CAFE: terceira arte associada ao tema 3]
+				AplicarTema(Color.Lavender, "tema_deus_da_guerra_3");
+			}
 		}
 
 		private void btnativar_CheckedChanged(object sender, EventArgs e)
 		{
-			if (btnativar.Checked) DefinirEdicaoAtiva(true);
+			if (btnativar.Checked)
+			{
+				// Os rádios de ativar/desativar estão em contêineres diferentes no Designer.
+				btndesativar.Checked = false;
+				DefinirEdicaoAtiva(true);
+			}
 		}
 
 		private void radioButton2_CheckedChanged_1(object sender, EventArgs e)
 		{
-			if (btndesativar.Checked) DefinirEdicaoAtiva(false);
+			if (btndesativar.Checked)
+			{
+				btnativar.Checked = false;
+				DefinirEdicaoAtiva(false);
+			}
 		}
 
 		private void radioButton3_CheckedChanged(object sender, EventArgs e)
@@ -114,6 +139,7 @@ namespace cadastro
 			if (btnlimpar.Checked)
 			{
 				LimparCampos();
+				btnlimpar.Checked = false;
 				btnativar.Checked = true;
 			}
 		}

@@ -18,6 +18,46 @@ namespace paula_vado
             button7.Text = "roxo";
             button8.Text = "preto";
             button9.Text = "branco";
+            AdicionarCoresDoParceiro();
+        }
+
+        private void AdicionarCoresDoParceiro()
+        {
+            ClientSize = new Size(582, 620);
+
+            // [Deus da Guerra -> CAFE: opção rosa que faltava no seletor de cores]
+            AdicionarBotaoExtra("rosa", Color.HotPink, new Point(146, 525));
+
+            // [Deus da Guerra -> CAFE: opção ciano que faltava no seletor de cores]
+            AdicionarBotaoExtra("ciano", Color.Cyan, new Point(338, 525));
+        }
+
+        private void AdicionarBotaoExtra(string nomeCor, Color cor, Point local)
+        {
+            Button botao = new Button
+            {
+                BackColor = Color.Transparent,
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = ForeColor,
+                Location = local,
+                Name = "btnCor" + nomeCor,
+                Size = new Size(91, 74),
+                Tag = cor,
+                Text = nomeCor,
+                UseVisualStyleBackColor = false
+            };
+            botao.FlatAppearance.BorderSize = 5;
+            botao.Click += BotaoExtra_Click;
+            Controls.Add(botao);
+        }
+
+        private void BotaoExtra_Click(object sender, EventArgs e)
+        {
+            Button botao = sender as Button;
+            if (botao != null && botao.Tag is Color)
+            {
+                AplicarCor((Color)botao.Tag);
+            }
         }
 
         private void AplicarCor(Color cor)

@@ -56,6 +56,7 @@ namespace Primavera
             painelPrevia = new Panel
             {
                 BorderStyle = BorderStyle.FixedSingle,
+                BackgroundImageLayout = ImageLayout.Stretch,
                 Location = new Point(340, 64),
                 Size = new Size(260, 210)
             };
@@ -83,21 +84,35 @@ namespace Primavera
             {
                 case 0:
                     painelPrevia.BackColor = Color.PaleGreen;
+                    // [Deus da Guerra -> CAFE: fotografia importada para a primavera]
+                    painelPrevia.BackgroundImage = ObterImagemDaEstacao("estacao_primavera");
                     descricaoEstacao.Text = "Primavera — flores e renovação";
                     break;
                 case 1:
                     painelPrevia.BackColor = Color.Gold;
+                    // [Deus da Guerra -> CAFE: fotografia importada para o verão]
+                    painelPrevia.BackgroundImage = ObterImagemDaEstacao("estacao_verao");
                     descricaoEstacao.Text = "Verão — dias quentes e ensolarados";
                     break;
                 case 2:
                     painelPrevia.BackColor = Color.Peru;
+                    // [Deus da Guerra -> CAFE: fotografia importada para o outono]
+                    painelPrevia.BackgroundImage = ObterImagemDaEstacao("estacao_outono");
                     descricaoEstacao.Text = "Outono — folhas em tons quentes";
                     break;
                 case 3:
                     painelPrevia.BackColor = Color.LightSkyBlue;
+                    // [Deus da Guerra -> CAFE: fotografia importada para o inverno]
+                    painelPrevia.BackgroundImage = ObterImagemDaEstacao("estacao_inverno");
                     descricaoEstacao.Text = "Inverno — clima frio";
                     break;
             }
+        }
+
+        // [Deus da Guerra -> CAFE: busca compartilhada das fotos das estações no arquivo de recursos]
+        private Image ObterImagemDaEstacao(string nomeRecurso)
+        {
+            return Properties.Resources.ResourceManager.GetObject(nomeRecurso) as Image;
         }
     }
 }

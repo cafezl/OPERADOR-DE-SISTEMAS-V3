@@ -142,4 +142,13 @@
   <data name="ichigo_bankai (1) (1) (1) (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ichigo_bankai (1) (1) (1) (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="tema_deus_da_guerra_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tema_deus_da_guerra_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tema_deus_da_guerra_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tema_deus_da_guerra_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tema_deus_da_guerra_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tema_deus_da_guerra_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

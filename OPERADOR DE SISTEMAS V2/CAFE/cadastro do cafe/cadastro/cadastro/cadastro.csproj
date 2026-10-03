@@ -70,6 +70,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Resources\tema_deus_da_guerra_1.png" />
+    <None Include="Resources\tema_deus_da_guerra_2.png" />
+    <None Include="Resources\tema_deus_da_guerra_3.png" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

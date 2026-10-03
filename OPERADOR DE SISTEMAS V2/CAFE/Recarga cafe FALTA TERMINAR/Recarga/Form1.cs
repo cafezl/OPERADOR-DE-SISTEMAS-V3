@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -9,6 +10,20 @@ namespace Recarga
     {
         private readonly Button[] botoesRecarga;
         private readonly Label[] labelsValidade;
+        // [Deus da Guerra -> CAFE: tabela de valores de demonstração por operadora]
+        private readonly string[] valoresDemonstracao =
+        {
+            "R$ 10,00", "R$ 15,00", "R$ 20,00", "R$ 25,00",
+            "R$ 30,00", "R$ 35,00", "R$ 40,00", "R$ 50,00"
+        };
+        private readonly Dictionary<string, string[]> valoresPorOperadora =
+            new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "VIVO", new[] { "R$ 10,00", "R$ 15,00", "R$ 20,00", "R$ 25,00", "R$ 30,00", "R$ 35,00", "R$ 40,00", "R$ 50,00" } },
+                { "CLARO", new[] { "R$ 12,00", "R$ 17,00", "R$ 22,00", "R$ 27,00", "R$ 32,00", "R$ 37,00", "R$ 42,00", "R$ 52,00" } },
+                { "TIM", new[] { "R$ 13,00", "R$ 18,00", "R$ 23,00", "R$ 28,00", "R$ 33,00", "R$ 38,00", "R$ 43,00", "R$ 53,00" } },
+                { "OI", new[] { "R$ 14,00", "R$ 19,00", "R$ 24,00", "R$ 29,00", "R$ 34,00", "R$ 39,00", "R$ 44,00", "R$ 54,00" } }
+            };
 
         public Form1()
         {
@@ -17,29 +32,20 @@ namespace Recarga
             botoesRecarga = new Button[] { btn1, btn2, btn3, btn4, btn5, btn6, button7, button8 };
             labelsValidade = new Label[] { lbl_VAL1, lbl_VAL2, lbl_VAL3, lbl_VAL4, lbl_VAL5, lbl_VAL6, lbl_VAL7, lbl_VAl8 };
 
-            // Configuração individual de cada botão de recarga e sua respetiva label de validade
-            btn1.Text = "R$ 10,00";
+            // [Deus da Guerra -> CAFE: os oito valores-base agora vêm da tabela de demonstração]
+            for (int i = 0; i < botoesRecarga.Length; i++)
+            {
+                botoesRecarga[i].Text = valoresDemonstracao[i];
+            }
+
+            // Configuração individual de cada label de validade
             lbl_VAL1.Text = "30 dias";
-
-            btn2.Text = "R$ 15,00";
             lbl_VAL2.Text = "30 dias";
-
-            btn3.Text = "R$ 20,00";
             lbl_VAL3.Text = "30 dias";
-
-            btn4.Text = "R$ 25,00";
             lbl_VAL4.Text = "30 dias";
-
-            btn5.Text = "R$ 30,00";
             lbl_VAL5.Text = "30 dias";
-
-            btn6.Text = "R$ 35,00";
             lbl_VAL6.Text = "30 dias";
-
-            button7.Text = "R$ 40,00";
             lbl_VAL7.Text = "60 dias";
-
-            button8.Text = "R$ 50,00";
             lbl_VAl8.Text = "60 dias";
 
             // Os dois últimos botões já têm seus eventos ligados pelo Designer.
@@ -88,6 +94,8 @@ namespace Recarga
             }
 
             txt_OperadoraSe.Text = opcao.Text;
+            // [Deus da Guerra -> CAFE: trocar a operadora também troca os valores disponíveis]
+            AtualizarValoresRecarga(opcao.Text);
 
             // Altera a cor de fundo do Form e do campo da operadora de acordo com a seleção
             switch (opcao.Text.ToUpper())
@@ -122,6 +130,21 @@ namespace Recarga
             LimparValorSelecionado();
             AtualizarCamposDaOperadora(true);
             txt_Nome.Focus();
+        }
+
+        // [Deus da Guerra -> CAFE: preços de exemplo separados por operadora]
+        private void AtualizarValoresRecarga(string operadora)
+        {
+            string[] valores;
+            if (!valoresPorOperadora.TryGetValue(operadora, out valores))
+            {
+                valores = valoresDemonstracao;
+            }
+
+            for (int i = 0; i < botoesRecarga.Length; i++)
+            {
+                botoesRecarga[i].Text = valores[i];
+            }
         }
 
         private void AtualizarBotoesRecarga()
