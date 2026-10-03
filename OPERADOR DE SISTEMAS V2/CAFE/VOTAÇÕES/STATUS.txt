@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Votações
+Projeto: Fluxo de três telas para apresentação do pódio.
+Validação: solução compilada em Debug.
