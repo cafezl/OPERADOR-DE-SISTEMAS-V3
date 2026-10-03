@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Exemplos de caixas de mensagem.
+Foto: uma imagem substituída por arte do projeto CAFE de mensagens.
+Validação: solução compilada em Debug.
