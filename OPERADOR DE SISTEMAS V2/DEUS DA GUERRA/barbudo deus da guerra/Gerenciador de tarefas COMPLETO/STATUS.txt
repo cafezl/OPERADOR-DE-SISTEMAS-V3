@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Gerenciador de tarefas.
+Funções: adicionar com prioridade e prazo, marcar concluída, remover tarefa e limpar concluídas.
+Validação: solução compilada em Debug.
