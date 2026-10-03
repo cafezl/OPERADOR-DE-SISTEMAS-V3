@@ -1,0 +1,4 @@
+STATUS: COMPLETO
+Projeto: Estações
+Projeto: Seleção das quatro estações com prévia de imagem.
+Validação: solução compilada em Debug.
