@@ -1,0 +1,5 @@
+STATUS: COMPLETO
+Origem: Deus da Guerra
+Projeto: Login e cadastro com MySQL e senha protegida.
+Preparação: instalar/restaurar os pacotes NuGet, ligar o MySQL e executar banco.sql. Ajuste a conexão local em conexao.cs se necessário.
+Validação: solução compilada em Debug.
