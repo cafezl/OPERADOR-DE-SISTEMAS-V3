@@ -62,7 +62,9 @@
             this.lbl_VAL7 = new System.Windows.Forms.Label();
             this.lbl_VAl8 = new System.Windows.Forms.Label();
             this.lbl_bemvindo = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -146,7 +148,7 @@
             // 
             this.txt_Nome.Enabled = false;
             this.txt_Nome.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Nome.ForeColor = System.Drawing.Color.White;
+            this.txt_Nome.ForeColor = System.Drawing.Color.Black;
             this.txt_Nome.Location = new System.Drawing.Point(319, 80);
             this.txt_Nome.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_Nome.Name = "txt_Nome";
@@ -157,7 +159,7 @@
             // 
             this.txt_OperadoraSe.Enabled = false;
             this.txt_OperadoraSe.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_OperadoraSe.ForeColor = System.Drawing.Color.White;
+            this.txt_OperadoraSe.ForeColor = System.Drawing.Color.Black;
             this.txt_OperadoraSe.Location = new System.Drawing.Point(319, 144);
             this.txt_OperadoraSe.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_OperadoraSe.Name = "txt_OperadoraSe";
@@ -168,7 +170,7 @@
             // 
             this.txt_DDD.Enabled = false;
             this.txt_DDD.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_DDD.ForeColor = System.Drawing.Color.White;
+            this.txt_DDD.ForeColor = System.Drawing.Color.Black;
             this.txt_DDD.Location = new System.Drawing.Point(319, 209);
             this.txt_DDD.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_DDD.Name = "txt_DDD";
@@ -179,7 +181,7 @@
             // 
             this.txt_Numero.Enabled = false;
             this.txt_Numero.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Numero.ForeColor = System.Drawing.Color.White;
+            this.txt_Numero.ForeColor = System.Drawing.Color.Black;
             this.txt_Numero.Location = new System.Drawing.Point(409, 209);
             this.txt_Numero.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_Numero.Name = "txt_Numero";
@@ -190,7 +192,7 @@
             // 
             this.txt_Valor.Enabled = false;
             this.txt_Valor.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_Valor.ForeColor = System.Drawing.Color.White;
+            this.txt_Valor.ForeColor = System.Drawing.Color.Black;
             this.txt_Valor.Location = new System.Drawing.Point(557, 209);
             this.txt_Valor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.txt_Valor.Name = "txt_Valor";
@@ -279,8 +281,8 @@
             // btn1
             // 
             this.btn1.Enabled = false;
-            this.btn1.ForeColor = System.Drawing.Color.White;
-            this.btn1.Location = new System.Drawing.Point(315, 305);
+            this.btn1.ForeColor = System.Drawing.Color.Black;
+            this.btn1.Location = new System.Drawing.Point(319, 305);
             this.btn1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(88, 71);
@@ -292,8 +294,8 @@
             // btn2
             // 
             this.btn2.Enabled = false;
-            this.btn2.ForeColor = System.Drawing.Color.White;
-            this.btn2.Location = new System.Drawing.Point(409, 305);
+            this.btn2.ForeColor = System.Drawing.Color.Black;
+            this.btn2.Location = new System.Drawing.Point(413, 305);
             this.btn2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(88, 71);
@@ -304,8 +306,8 @@
             // btn3
             // 
             this.btn3.Enabled = false;
-            this.btn3.ForeColor = System.Drawing.Color.White;
-            this.btn3.Location = new System.Drawing.Point(504, 305);
+            this.btn3.ForeColor = System.Drawing.Color.Black;
+            this.btn3.Location = new System.Drawing.Point(508, 305);
             this.btn3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn3.Name = "btn3";
             this.btn3.Size = new System.Drawing.Size(88, 71);
@@ -316,8 +318,8 @@
             // btn4
             // 
             this.btn4.Enabled = false;
-            this.btn4.ForeColor = System.Drawing.Color.White;
-            this.btn4.Location = new System.Drawing.Point(598, 305);
+            this.btn4.ForeColor = System.Drawing.Color.Black;
+            this.btn4.Location = new System.Drawing.Point(602, 305);
             this.btn4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn4.Name = "btn4";
             this.btn4.Size = new System.Drawing.Size(88, 71);
@@ -328,8 +330,8 @@
             // btn5
             // 
             this.btn5.Enabled = false;
-            this.btn5.ForeColor = System.Drawing.Color.White;
-            this.btn5.Location = new System.Drawing.Point(315, 396);
+            this.btn5.ForeColor = System.Drawing.Color.Black;
+            this.btn5.Location = new System.Drawing.Point(319, 396);
             this.btn5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn5.Name = "btn5";
             this.btn5.Size = new System.Drawing.Size(88, 72);
@@ -340,8 +342,8 @@
             // btn6
             // 
             this.btn6.Enabled = false;
-            this.btn6.ForeColor = System.Drawing.Color.White;
-            this.btn6.Location = new System.Drawing.Point(409, 396);
+            this.btn6.ForeColor = System.Drawing.Color.Black;
+            this.btn6.Location = new System.Drawing.Point(413, 396);
             this.btn6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn6.Name = "btn6";
             this.btn6.Size = new System.Drawing.Size(87, 72);
@@ -366,8 +368,8 @@
             // button7
             // 
             this.button7.Enabled = false;
-            this.button7.ForeColor = System.Drawing.Color.White;
-            this.button7.Location = new System.Drawing.Point(504, 396);
+            this.button7.ForeColor = System.Drawing.Color.Black;
+            this.button7.Location = new System.Drawing.Point(508, 396);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(88, 72);
@@ -379,8 +381,8 @@
             // button8
             // 
             this.button8.Enabled = false;
-            this.button8.ForeColor = System.Drawing.Color.White;
-            this.button8.Location = new System.Drawing.Point(598, 396);
+            this.button8.ForeColor = System.Drawing.Color.Black;
+            this.button8.Location = new System.Drawing.Point(602, 396);
             this.button8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(88, 72);
@@ -513,12 +515,24 @@
             this.lbl_bemvindo.Text = "Seja Bem Vindo(a):";
             this.lbl_bemvindo.Click += new System.EventHandler(this.label16_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImage = global::Recarga.Properties.Resources.VIVO;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.Location = new System.Drawing.Point(21, 323);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(232, 185);
+            this.pictureBox1.TabIndex = 30;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(708, 533);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl_bemvindo);
             this.Controls.Add(this.lbl_VAl8);
             this.Controls.Add(this.lbl_VAL7);
@@ -556,6 +570,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -597,6 +612,7 @@
         private System.Windows.Forms.Label lbl_VAL7;
         private System.Windows.Forms.Label lbl_VAl8;
         private System.Windows.Forms.Label lbl_bemvindo;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 
