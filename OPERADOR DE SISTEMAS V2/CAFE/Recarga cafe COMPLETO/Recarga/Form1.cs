@@ -40,15 +40,11 @@ namespace Recarga
                 botoesRecarga[i].Text = valoresDemonstracao[i];
             }
 
-            // Configuração individual de cada label de validade
-            lbl_VAL1.Text = "30 dias";
-            lbl_VAL2.Text = "30 dias";
-            lbl_VAL3.Text = "30 dias";
-            lbl_VAL4.Text = "30 dias";
-            lbl_VAL5.Text = "30 dias";
-            lbl_VAL6.Text = "30 dias";
-            lbl_VAL7.Text = "60 dias";
-            lbl_VAl8.Text = "60 dias";
+            // O prazo depende da operadora; esta tela não consulta os sistemas dela.
+            foreach (Label validade in labelsValidade)
+            {
+                validade.Text = "Consulte a operadora";
+            }
 
             // Os dois últimos botões já têm seus eventos ligados pelo Designer.
             for (int i = 0; i < 6; i++)
@@ -149,14 +145,37 @@ namespace Recarga
 
         private void AtualizarBotoesRecarga()
         {
+            bool dddValido = txt_DDD.Text.Length == 2 && txt_DDD.Text[0] != '0';
+            bool celularValido = txt_Numero.Text.Length == 9 && txt_Numero.Text[0] == '9';
             bool dadosValidos = !string.IsNullOrWhiteSpace(txt_Nome.Text)
                 && !string.IsNullOrWhiteSpace(txt_OperadoraSe.Text)
-                && txt_DDD.Text.Length == 2
-                && (txt_Numero.Text.Length == 8 || txt_Numero.Text.Length == 9);
+                && dddValido
+                && celularValido;
 
             foreach (Button botao in botoesRecarga)
             {
                 botao.Enabled = dadosValidos;
+            }
+
+            if (string.IsNullOrWhiteSpace(txt_OperadoraSe.Text))
+            {
+                label7.Text = "Selecione uma operadora";
+            }
+            else if (string.IsNullOrWhiteSpace(txt_Nome.Text))
+            {
+                label7.Text = "Informe seu nome";
+            }
+            else if (!dddValido)
+            {
+                label7.Text = "Informe um DDD com dois dígitos";
+            }
+            else if (!celularValido)
+            {
+                label7.Text = "Celular: 9 dígitos, começando com 9";
+            }
+            else
+            {
+                label7.Text = "Selecione o valor de recarga";
             }
         }
 
@@ -168,7 +187,7 @@ namespace Recarga
                 return;
             }
 
-            string somenteDigitos = new string(campo.Text.Where(char.IsDigit).ToArray());
+            string somenteDigitos = new string(campo.Text.Where(caractere => caractere >= '0' && caractere <= '9').ToArray());
             if (campo.Text != somenteDigitos)
             {
                 int cursor = campo.SelectionStart;

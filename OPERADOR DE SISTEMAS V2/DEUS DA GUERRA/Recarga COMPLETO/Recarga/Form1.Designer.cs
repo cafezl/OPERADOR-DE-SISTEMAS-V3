@@ -62,11 +62,13 @@
             this.lbl_VAL7 = new System.Windows.Forms.Label();
             this.lbl_VAl8 = new System.Windows.Forms.Label();
             this.lbl_bemvindo = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.radioButton4);
             this.groupBox1.Controls.Add(this.radioButton3);
             this.groupBox1.Controls.Add(this.radioButton2);
@@ -480,14 +482,25 @@
             this.lbl_bemvindo.TabIndex = 29;
             this.lbl_bemvindo.Text = "Seja Bem Vindo(a):";
             this.lbl_bemvindo.Click += new System.EventHandler(this.label16_Click);
-            // 
+            //
+            // pictureBox1
+            //
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Location = new System.Drawing.Point(191, 112);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(110, 140);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 30;
+            this.pictureBox1.TabStop = false;
+            //
             // Form1
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(716, 533);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl_bemvindo);
             this.Controls.Add(this.lbl_VAl8);
             this.Controls.Add(this.lbl_VAL7);
@@ -526,6 +539,7 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -567,6 +581,7 @@
         private System.Windows.Forms.Label lbl_VAL7;
         private System.Windows.Forms.Label lbl_VAl8;
         private System.Windows.Forms.Label lbl_bemvindo;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

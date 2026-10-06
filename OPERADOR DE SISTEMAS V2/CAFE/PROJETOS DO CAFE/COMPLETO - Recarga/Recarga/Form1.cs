@@ -143,14 +143,37 @@ namespace Recarga
 
         private void AtualizarBotoesRecarga()
         {
+            bool dddValido = txt_DDD.Text.Length == 2 && txt_DDD.Text[0] != '0';
+            bool celularValido = txt_Numero.Text.Length == 9 && txt_Numero.Text[0] == '9';
             bool dadosValidos = !string.IsNullOrWhiteSpace(txt_Nome.Text)
                 && !string.IsNullOrWhiteSpace(txt_OperadoraSe.Text)
-                && txt_DDD.Text.Length == 2
-                && (txt_Numero.Text.Length == 8 || txt_Numero.Text.Length == 9);
+                && dddValido
+                && celularValido;
 
             foreach (Button botao in botoesRecarga)
             {
                 botao.Enabled = dadosValidos;
+            }
+
+            if (string.IsNullOrWhiteSpace(txt_OperadoraSe.Text))
+            {
+                label7.Text = "Selecione uma operadora";
+            }
+            else if (string.IsNullOrWhiteSpace(txt_Nome.Text))
+            {
+                label7.Text = "Informe seu nome";
+            }
+            else if (!dddValido)
+            {
+                label7.Text = "Informe um DDD com dois dígitos";
+            }
+            else if (!celularValido)
+            {
+                label7.Text = "Celular: 9 dígitos, começando com 9";
+            }
+            else
+            {
+                label7.Text = "Selecione o valor de recarga";
             }
         }
 
@@ -162,7 +185,7 @@ namespace Recarga
                 return;
             }
 
-            string somenteDigitos = new string(campo.Text.Where(char.IsDigit).ToArray());
+            string somenteDigitos = new string(campo.Text.Where(caractere => caractere >= '0' && caractere <= '9').ToArray());
             if (campo.Text != somenteDigitos)
             {
                 int cursor = campo.SelectionStart;

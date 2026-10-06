@@ -171,17 +171,39 @@ namespace Recarga
         // Verifica se os campos obrigatórios estão preenchidos para liberar (habilitar) os botões de recarga
         private void AtualizarBotoesRecarga()
         {
-            // Variável booleana (true/false) que checa se os dados são válidos:
-            // Nome não pode estar vazio, Operadora não pode estar vazia, DDD deve ter 2 dígitos, Número deve ter 8 ou 9 dígitos.
+            // Um celular usa nove dígitos e começa com 9; o DDD precisa ter dois dígitos.
+            bool dddValido = txt_DDD.Text.Length == 2 && txt_DDD.Text[0] != '0';
+            bool celularValido = txt_Numero.Text.Length == 9 && txt_Numero.Text[0] == '9';
             bool dadosValidos = !string.IsNullOrWhiteSpace(txt_Nome.Text)
                 && !string.IsNullOrWhiteSpace(txt_OperadoraSe.Text)
-                && txt_DDD.Text.Length == 2
-                && (txt_Numero.Text.Length == 8 || txt_Numero.Text.Length == 9);
+                && dddValido
+                && celularValido;
 
             // Habilita ou desabilita todos os botões de recarga dependendo se os dados são válidos ou não
             foreach (Button botao in botoesRecarga)
             {
                 botao.Enabled = dadosValidos;
+            }
+
+            if (string.IsNullOrWhiteSpace(txt_OperadoraSe.Text))
+            {
+                label7.Text = "Selecione uma operadora";
+            }
+            else if (string.IsNullOrWhiteSpace(txt_Nome.Text))
+            {
+                label7.Text = "Informe seu nome";
+            }
+            else if (!dddValido)
+            {
+                label7.Text = "Informe um DDD com dois dígitos";
+            }
+            else if (!celularValido)
+            {
+                label7.Text = "Celular: 9 dígitos, começando com 9";
+            }
+            else
+            {
+                label7.Text = "Selecione o valor de recarga";
             }
         }
 
@@ -195,7 +217,7 @@ namespace Recarga
             }
 
             // Filtra o texto, mantendo apenas os caracteres que são dígitos (0 a 9)
-            string somenteDigitos = new string(campo.Text.Where(char.IsDigit).ToArray());
+            string somenteDigitos = new string(campo.Text.Where(caractere => caractere >= '0' && caractere <= '9').ToArray());
 
             // Se o usuário digitou letras/símbolos, o texto vai ser diferente da versão filtrada
             if (campo.Text != somenteDigitos)
@@ -258,28 +280,40 @@ namespace Recarga
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton1);
-          
+            if (radioButton1.Checked)
+            {
+                pictureBox1.Image = Properties.Resources.vivo;
+            }
         }
 
         // Evento disparado quando o RadioButton da Claro é marcado/desmarcado
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton2);
-            
+            if (radioButton2.Checked)
+            {
+                pictureBox1.Image = Properties.Resources.claro;
+            }
         }
 
         // Evento disparado quando o RadioButton da TIM é marcado/desmarcado
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton3);
-           
+            if (radioButton3.Checked)
+            {
+                pictureBox1.Image = Properties.Resources.tim;
+            }
         }
 
         // Evento disparado quando o RadioButton da Oi é marcado/desmarcado
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton4);
-            
+            if (radioButton4.Checked)
+            {
+                pictureBox1.Image = Properties.Resources.oi;
+            }
         }
 
         // ---------- EVENTOS ESPECÍFICOS DOS DOIS ÚLTIMOS BOTÕES ----------
@@ -301,6 +335,7 @@ namespace Recarga
             txt_Valor.Clear();
             label7.Text = "Selecione o valor de recarga";
             AtualizarBotoesRecarga(); // Força os botões a começarem bloqueados (já que os campos estão vazios)
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
         // ---------- EVENTOS VAZIOS GERADOS SEM QUERER PELO DESIGNER ----------
