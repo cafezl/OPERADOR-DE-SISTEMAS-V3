@@ -63,9 +63,6 @@ namespace Recarga
             txt_DDD.TextChanged += CampoNumerico_TextChanged;
             txt_Numero.TextChanged += CampoNumerico_TextChanged;
             txt_Nome.TextChanged += Campo_TextChanged;
-
-            // Garante que o fundo do form comece preto
-            this.BackColor = Color.Black;
         }
 
         private void AtualizarCamposDaOperadora(bool ativos)
@@ -101,29 +98,31 @@ namespace Recarga
             txt_OperadoraSe.Text = opcao.Text;
             AtualizarValoresRecarga(opcao.Text);
 
-            // Mantém o fundo do Form preto
-            this.BackColor = Color.Black;
-
-            // Altera apenas a cor de fundo do campo da operadora (TextBox)
+            // Altera a cor de fundo do Form inteiro e do campo da operadora de acordo com a escolha
             switch (opcao.Text.ToUpper())
             {
                 case "VIVO":
+                    this.BackColor = Color.Purple;
                     txt_OperadoraSe.BackColor = Color.Purple;
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
                 case "CLARO":
+                    this.BackColor = Color.Red;
                     txt_OperadoraSe.BackColor = Color.Red;
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
                 case "TIM":
+                    this.BackColor = Color.Blue;
                     txt_OperadoraSe.BackColor = Color.Blue;
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
                 case "OI":
+                    this.BackColor = Color.DarkOrange;
                     txt_OperadoraSe.BackColor = Color.Orange;
                     txt_OperadoraSe.ForeColor = Color.Black;
                     break;
                 default:
+                    this.BackColor = SystemColors.Control;
                     txt_OperadoraSe.BackColor = SystemColors.Window;
                     txt_OperadoraSe.ForeColor = SystemColors.WindowText;
                     break;
@@ -221,7 +220,6 @@ namespace Recarga
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton1);
-            // Muda a imagem na PictureBox em vez de no fundo do form
             if (radioButton1.Checked)
                 pictureBox1.Image = Properties.Resources.VIVO;
         }
@@ -229,7 +227,6 @@ namespace Recarga
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton2);
-            // Muda a imagem na PictureBox
             if (radioButton2.Checked)
                 pictureBox1.Image = Properties.Resources.CLARO;
         }
@@ -237,7 +234,6 @@ namespace Recarga
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton3);
-            // Muda a imagem na PictureBox
             if (radioButton3.Checked)
                 pictureBox1.Image = Properties.Resources.TIM;
         }
@@ -245,7 +241,6 @@ namespace Recarga
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton4);
-            // Muda a imagem na PictureBox
             if (radioButton4.Checked)
                 pictureBox1.Image = Properties.Resources.OI;
         }
@@ -266,7 +261,11 @@ namespace Recarga
             label7.Text = "Selecione o valor de recarga";
             AtualizarBotoesRecarga();
 
-            // Define como a imagem vai se comportar na PictureBox (recomendo Zoom para caber direitinho)
+            // Cor padrão inicial antes de escolher uma operadora
+            this.BackColor = SystemColors.Control;
+
+            // Limpa conflitos de imagem de fundo na pictureBox
+            pictureBox1.BackgroundImage = null;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
@@ -278,10 +277,6 @@ namespace Recarga
         private void btn1_Click(object sender, EventArgs e) { }
         private void lbl_VAL1_Click(object sender, EventArgs e) { }
         private void lbl_VAl8_Click(object sender, EventArgs e) { }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void pictureBox1_Click(object sender, EventArgs e) { }
     }
 }
