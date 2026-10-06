@@ -10,12 +10,14 @@ namespace Recarga
     {
         private readonly Button[] botoesRecarga;
         private readonly Label[] labelsValidade;
-        // [Deus da Guerra -> CAFE: tabela de valores de demonstração por operadora]
+
+        // Tabela de valores de demonstração por operadora
         private readonly string[] valoresDemonstracao =
         {
             "R$ 10,00", "R$ 15,00", "R$ 20,00", "R$ 25,00",
             "R$ 30,00", "R$ 35,00", "R$ 40,00", "R$ 50,00"
         };
+
         private readonly Dictionary<string, string[]> valoresPorOperadora =
             new Dictionary<string, string[]>(StringComparer.OrdinalIgnoreCase)
             {
@@ -32,7 +34,7 @@ namespace Recarga
             botoesRecarga = new Button[] { btn1, btn2, btn3, btn4, btn5, btn6, button7, button8 };
             labelsValidade = new Label[] { lbl_VAL1, lbl_VAL2, lbl_VAL3, lbl_VAL4, lbl_VAL5, lbl_VAL6, lbl_VAL7, lbl_VAl8 };
 
-            // [Deus da Guerra -> CAFE: os oito valores-base agora vêm da tabela de demonstração]
+            // Os oito valores-base vêm da tabela de demonstração
             for (int i = 0; i < botoesRecarga.Length; i++)
             {
                 botoesRecarga[i].Text = valoresDemonstracao[i];
@@ -94,10 +96,9 @@ namespace Recarga
             }
 
             txt_OperadoraSe.Text = opcao.Text;
-            // [Deus da Guerra -> CAFE: trocar a operadora também troca os valores disponíveis]
             AtualizarValoresRecarga(opcao.Text);
 
-            // Altera a cor de fundo do Form e do campo da operadora de acordo com a seleção
+            // Altera a cor de fundo do Form inteiro e do campo da operadora de acordo com a escolha
             switch (opcao.Text.ToUpper())
             {
                 case "VIVO":
@@ -106,12 +107,12 @@ namespace Recarga
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
                 case "CLARO":
-                    this.BackColor = Color.DarkRed;
+                    this.BackColor = Color.Red;
                     txt_OperadoraSe.BackColor = Color.Red;
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
                 case "TIM":
-                    this.BackColor = Color.DarkBlue;
+                    this.BackColor = Color.Blue;
                     txt_OperadoraSe.BackColor = Color.Blue;
                     txt_OperadoraSe.ForeColor = Color.White;
                     break;
@@ -132,7 +133,6 @@ namespace Recarga
             txt_Nome.Focus();
         }
 
-        // [Deus da Guerra -> CAFE: preços de exemplo separados por operadora]
         private void AtualizarValoresRecarga(string operadora)
         {
             string[] valores;
@@ -220,21 +220,29 @@ namespace Recarga
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton1);
+            if (radioButton1.Checked)
+                pictureBox1.Image = Properties.Resources.VIVO;
         }
 
         private void radioButton2_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton2);
+            if (radioButton2.Checked)
+                pictureBox1.Image = Properties.Resources.CLARO;
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton3);
+            if (radioButton3.Checked)
+                pictureBox1.Image = Properties.Resources.TIM;
         }
 
         private void radioButton4_CheckedChanged(object sender, EventArgs e)
         {
             SelecionarOperadora(radioButton4);
+            if (radioButton4.Checked)
+                pictureBox1.Image = Properties.Resources.OI;
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -252,9 +260,16 @@ namespace Recarga
             txt_Valor.Clear();
             label7.Text = "Selecione o valor de recarga";
             AtualizarBotoesRecarga();
+
+            // Cor padrão inicial antes de escolher uma operadora
+            this.BackColor = SystemColors.Control;
+
+            // Limpa conflitos de imagem de fundo na pictureBox
+            pictureBox1.BackgroundImage = null;
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
 
-        // Métodos de eventos associados ao designer para evitar erros de compilação
+        // Métodos de eventos associados ao designer
         private void label7_Click(object sender, EventArgs e) { }
         private void groupBox1_Enter(object sender, EventArgs e) { }
         private void label16_Click(object sender, EventArgs e) { }
@@ -262,5 +277,6 @@ namespace Recarga
         private void btn1_Click(object sender, EventArgs e) { }
         private void lbl_VAL1_Click(object sender, EventArgs e) { }
         private void lbl_VAl8_Click(object sender, EventArgs e) { }
+        private void pictureBox1_Click(object sender, EventArgs e) { }
     }
 }
