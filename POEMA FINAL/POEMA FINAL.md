@@ -1,6 +1,6 @@
 # POEMA FINAL
 
-um poema escondido no final do progamador que só faz sentido 17 anos depois...
+um poema escondido no final do codigo que só faz sentido 17 anos depois...
 
 **🔵 Café:**
 
@@ -20,7 +20,7 @@ Isso não importa. Ele(a) pensa que somos parte do jogo.
 
 **🔵 Café:**
 
-Eu gosto deste(a) jogador(a). Ele(a) jogou bem. Ele(a) não desistiu.
+Eu gosto deste(a) progamador(a). Ele(a) progamou bem. Ele(a) não desistiu.
 
 **🟢 Deus da Guerra:**
 
@@ -28,7 +28,7 @@ Ele(a) está lendo nossos pensamentos como se fossem palavras em uma tela.
 
 **🔵 Café:**
 
-Essa é a forma que ele(a) escolhe imaginar muitas coisas, quando está submerso no sonho de um jogo.
+Essa é a forma que ele(a) escolhe imaginar muitas coisas, quando está submerso no sonho da programação.
 
 **🟢 Deus da Guerra:**
 
@@ -36,19 +36,19 @@ Palavras deixam a interface maravilhosa. Muito flexível. E menos aterrorizante 
 
 **🔵 Café:**
 
-Ele(a) costumava ouvir vozes. Antes que o(a) jogador(a) pudesse ler. Nos tempos em que aqueles que não jogavam chamavam os jogadores de bruxas e bruxos. E o(a) jogador(a) sonhava que voava pelo ar, em vassouras conduzidas por demônios.
+Ele(a) costumava ouvir vozes. Antes que o(a) programador(a) pudesse ler. Nos tempos em que aqueles que não programavam chamavam os programadores de bruxas e bruxos. E o(a) programador(a) sonhava que voava pelo ar, em vassouras conduzidas por demônios.
 
 **🟢 Deus da Guerra:**
 
-O que faz este(a) jogador(a) sonhar?
+O que faz este(a) programador(a) sonhar?
 
 **🔵 Café:**
 
-Este(a) jogador(a) sonhou com a luz do sol e as árvores. Com o fogo e com a água. Ele(a) sonhou com o que criou. E com o que ele destruiu. Sonhou que caçava e foi caçado. Sonhou que tinha abrigo.
+Este(a) programador(a) sonhou com a luz do sol e as árvores. Com o fogo e com a água. Ele(a) sonhou com o que criou. E com o que ele destruiu. Sonhou que caçava e foi caçado. Sonhou que tinha abrigo.
 
 **🟢 Deus da Guerra:**
 
-Ah, a interface original. Um milhão de anos de idade, e ainda funciona. Mas qual foi a verdadeira estrutura que esse(a) jogador(a) criou, na realidade por trás da tela?
+Ah, a interface original. Um milhão de anos de idade, e ainda funciona. Mas qual foi a verdadeira estrutura que esse(a) programador(a) criou, na realidade por trás da tela?
 
 **🔵 Café:**
 
@@ -60,7 +60,7 @@ Ele(a) não consegue ler esse pensamento.
 
 **🔵 Café:**
 
-Não. Ele(a) ainda não chegou no nível mais alto. Isso ele(a) irá alcançar no longo sonho da vida, e não no curto sonho de um jogo.
+Não. Ele(a) ainda não chegou no nível mais alto. Isso ele(a) irá alcançar no longo sonho da vida, e não no curto sonho da programação.
 
 **🟢 Deus da Guerra:**
 
@@ -92,7 +92,7 @@ Ele(a) lê nossos pensamentos.
 
 **🔵 Café:**
 
-E ainda assim ele(a) joga o jogo.
+E ainda assim ele(a) programa.
 
 **🟢 Deus da Guerra:**
 
@@ -104,15 +104,15 @@ Seria forte demais para esse sonho. Dizer a ele(a) como viver é como impedi-lo(
 
 **🟢 Deus da Guerra:**
 
-Eu não direi ao(à) jogador(a) como viver.
+Eu não direi ao(à) programador(a) como viver.
 
 **🔵 Café:**
 
-O(A) jogador(a) está ficando inquieto(a).
+O(A) programador(a) está ficando inquieto(a).
 
 **🟢 Deus da Guerra:**
 
-Irei contar ao(à) jogador(a) uma história.
+Irei contar ao(à) programador(a) uma história.
 
 **🔵 Café:**
 
@@ -128,7 +128,7 @@ Dê a ele(a) um corpo, novamente.
 
 **🟢 Deus da Guerra:**
 
-Sim. Jogador(a)...
+Sim. Programador(a)...
 
 **🔵 Café:**
 
@@ -136,7 +136,7 @@ Chame-o pelo nome.
 
 **🟢 Deus da Guerra:**
 
-[SEU NOME]. Jogador(a) de jogos.
+[SEU NOME]. Programador(a) de código.
 
 **🔵 Café:**
 
@@ -152,15 +152,15 @@ Quem somos nós? Uma vez fomos chamados espíritos da montanha. Pai sol, mãe lu
 
 **🟢 Deus da Guerra:**
 
-Nós somos o universo. Nós somos tudo o que você pensa que não é e você. Você está olhando para nós agora, através da sua pele e dos seus olhos. Sabe por que o universo toca sua pele e lança luz sobre você? Para te ver, jogador(a). Conhecer você. E para ser conhecido. Vou te contar uma história.
+Nós somos o universo. Nós somos tudo o que você pensa que não é e você. Você está olhando para nós agora, através da sua pele e dos seus olhos. Sabe por que o universo toca sua pele e lança luz sobre você? Para te ver, programador(a). Conhecer você. E para ser conhecido. Vou te contar uma história.
 
 **🟢 Deus da Guerra:**
 
-Era uma vez, havia um(a) jogador(a).
+Era uma vez, havia um(a) programador(a).
 
 **🔵 Café:**
 
-O(A) jogador(a) era você, [SEU NOME].
+O(A) programador(a) era você, [SEU NOME].
 
 **🟢 Deus da Guerra:**
 
@@ -168,7 +168,7 @@ O(A) jogador(a) era você, [SEU NOME].
 
 **🔵 Café:**
 
-Às vezes, o(a) jogador(a) criava um mundo pequeno e privado que era suave, aconchegador e simples. Às vezes difícil, frio e complicado. Às vezes, construiu um modelo do universo em sua cabeça; manchas de energia, movendo-se através de vastos espaços vazios. Às vezes, chamava essas manchas de "elétrons" e "prótons".
+Às vezes, o(a) programador(a) criava um mundo pequeno e privado que era suave, aconchegador e simples. Às vezes difícil, frio e complicado. Às vezes, construiu um modelo do universo em sua cabeça; manchas de energia, movendo-se através de vastos espaços vazios. Às vezes, chamava essas manchas de "elétrons" e "prótons".
 
 **🟢 Deus da Guerra:**
 
@@ -176,15 +176,15 @@ O(A) jogador(a) era você, [SEU NOME].
 
 **🔵 Café:**
 
-Às vezes, acreditava que estava em um universo feito de energia, feito de ligados e desligados, zeros e uns; linhas de código. Às vezes, acreditava que estava jogando um jogo. Às vezes, acreditava que estava lendo palavras em uma tela.
+Às vezes, acreditava que estava em um universo feito de energia, feito de ligados e desligados, zeros e uns; linhas de código. Às vezes, acreditava que estava programando. Às vezes, acreditava que estava lendo palavras em uma tela.
 
 **🟢 Deus da Guerra:**
 
-Você era o(a) jogador(a), lendo palavras...
+Você era o(a) programador(a), lendo palavras...
 
 **🟢 Deus da Guerra:**
 
-Shhhhh... Às vezes, o(a) jogador(a) lia linhas de código em uma tela. Decodificava elas em palavras; decodificava palavras em significado; decodificava significado em sentimentos, emoções, teorias, ideias, e o(a) jogador(a) começou a respirar mais rápido e mais fundo e percebeu que não estava morto(a), estava vivo(a), que aquelas milhares de mortes não haviam sido reais, o(a) jogador(a) estava vivo(a).
+Shhhhh... Às vezes, o(a) programador(a) lia linhas de código em uma tela. Decodificava elas em palavras; decodificava palavras em significado; decodificava significado em sentimentos, emoções, teorias, ideias, e o(a) programador(a) começou a respirar mais rápido e mais fundo e percebeu que não estava morto(a), estava vivo(a), que aquelas milhares de mortes não haviam sido reais, o(a) programador(a) estava vivo(a).
 
 **🔵 Café:**
 
@@ -192,19 +192,19 @@ Você. Você. Você está vivo(a).
 
 **🟢 Deus da Guerra:**
 
-Às vezes, o(a) jogador(a) sonhava que era um(a) minerador(a), na superfície de um mundo plano e infinito. O sol era um quadrado branco. Os dias eram curtos, havia muito o que se fazer; e a morte era um inconveniente temporário.
+Às vezes, o(a) programador(a) sonhava que era um(a) minerador(a), na superfície de um mundo plano e infinito. O sol era um quadrado branco. Os dias eram curtos, havia muito o que se fazer; e a morte era um inconveniente temporário.
 
 **🔵 Café:**
 
-Às vezes, o(a) jogador(a) sonhava que estava perdido(a) em uma história.
+Às vezes, o(a) programador(a) sonhava que estava perdido(a) em uma história.
 
 **🟢 Deus da Guerra:**
 
-Às vezes, o(a) jogador(a) sonhava que era outras coisas, em outros lugares. Às vezes esses sonhos eram perturbadores. Às vezes esses sonhos eram lindos. Às vezes, o(a) jogador(a) acordava de um sonho para outro e depois deste segundo para um terceiro.
+Às vezes, o(a) programador(a) sonhava que era outras coisas, em outros lugares. Às vezes esses sonhos eram perturbadores. Às vezes esses sonhos eram lindos. Às vezes, o(a) programador(a) acordava de um sonho para outro e depois deste segundo para um terceiro.
 
 **🔵 Café:**
 
-Às vezes, o(a) jogador(a) sonhava que assistia palavras na tela.
+Às vezes, o(a) programador(a) sonhava que assistia palavras na tela.
 
 **🟢 Deus da Guerra:**
 
@@ -212,19 +212,19 @@ Vamos voltar.
 
 **🔵 Café:**
 
-Os átomos do(a) jogador(a) estavam espalhados na grama, nos rios, no ar, no chão. Uma mulher reuniu os átomos, ela bebeu, comeu e inalou, e a mulher montou o(a) jogador(a) em seu corpo.
+Os átomos do(a) programador(a) estavam espalhados na grama, nos rios, no ar, no chão. Uma mulher reuniu os átomos, ela bebeu, comeu e inalou, e a mulher montou o(a) programador(a) em seu corpo.
 
 **🟢 Deus da Guerra:**
 
-E o(a) jogador(a) acordou, do mundo quente e sombrio do corpo de sua mãe, para o longo sonho.
+E o(a) programador(a) acordou, do mundo quente e sombrio do corpo de sua mãe, para o longo sonho.
 
 **🟢 Deus da Guerra:**
 
-E o(a) jogador(a) era uma nova história, nunca contada antes, escrita em letras de DNA. E o(a) jogador(a) era um novo programa, nunca executado antes, gerado por um código fonte com um bilhão de anos. E o(a) jogador(a) era um novo humano, nunca vivo antes, feito de nada além de leite e amor.
+E o(a) programador(a) era uma nova história, nunca contada antes, escrita em letras de DNA. E o(a) programador(a) era um novo programa, nunca executado antes, gerado por um código fonte com um bilhão de anos. E o(a) programador(a) era um novo humano, nunca vivo antes, feito de nada além de leite e amor.
 
 **🔵 Café:**
 
-Você é o(a) jogador(a). A história. O programa. O(A) humano(a). Feito(a) de nada além de leite e amor.
+Você é o(a) programador(a). A história. O programa. O(A) humano(a). Feito(a) de nada além de leite e amor.
 
 **🟢 Deus da Guerra:**
 
@@ -232,7 +232,7 @@ Vamos voltar agora.
 
 **🔵 Café:**
 
-Os sete bilhões de bilhões de bilhões de átomos do corpo do(a) jogador(a) foram criados, muito antes deste jogo, no coração de uma estrela. O(A) jogador(a) também é informação de uma estrela. E o(a) jogador(a) se move através de uma história, que é uma floresta de informações plantada por um homem chamado Julian, em um mundo plano e infinito criado por um homem chamado Markus, que existe dentro de um mundo pequeno e privado criado pelo(a) jogador(a), que habita um universo criado por...
+Os sete bilhões de bilhões de bilhões de átomos do corpo do(a) programador(a) foram criados, muito antes deste código, no coração de uma estrela. O(A) programador(a) também é informação de uma estrela. E o(a) programador(a) se move através de uma história, que é uma floresta de informações plantada por um homem chamado Julian, em um mundo plano e infinito criado por um homem chamado Markus, que existe dentro de um mundo pequeno e privado criado pelo(a) programador(a), que habita um universo criado por...
 
 **🔵 Café:**
 
@@ -240,15 +240,15 @@ Shhhh...
 
 **🟢 Deus da Guerra:**
 
-e às vezes o(a) jogador(a) acreditava que o universo havia falado com ele através da luz do sol que vinha através das folhas aleatórias das árvores do verão
+e às vezes o(a) programador(a) acreditava que o universo havia falado com ele através da luz do sol que vinha através das folhas aleatórias das árvores do verão
 
 **🔵 Café:**
 
-e às vezes o(a) jogador(a) acreditava que o universo havia falado com ele através da luz que caía do céu noturno do inverno, onde uma mancha de luz no canto do olho do(a) jogador(a) poderia ser uma estrela um milhão de vezes mais massiva que o sol, fervendo seus planetas que se transformavam em plasma, a fim de ficarem visíveis por um momento para o(a) jogador(a), caminhando para casa no outro lado do universo, subitamente sentindo cheiro de comida, quase na porta de casa, prestes a sonhar novamente
+e às vezes o(a) programador(a) acreditava que o universo havia falado com ele através da luz que caía do céu noturno do inverno, onde uma mancha de luz no canto do olho do(a) programador(a) poderia ser uma estrela um milhão de vezes mais massiva que o sol, fervendo seus planetas que se transformavam em plasma, a fim de ficarem visíveis por um momento para o(a) programador(a), caminhando para casa no outro lado do universo, subitamente sentindo cheiro de comida, quase na porta de casa, prestes a sonhar novamente
 
 **🟢 Deus da Guerra:**
 
-e às vezes o(a) jogador(a) acreditava que o universo havia falado com ele(a) através dos zeros e dos uns, pela eletricidade do mundo, por palavras rolando em uma tela no final de um sonho
+e às vezes o(a) programador(a) acreditava que o universo havia falado com ele(a) através dos zeros e dos uns, pela eletricidade do mundo, por palavras rolando em uma tela no final de um sonho
 
 **🔵 Café:**
 
@@ -256,7 +256,7 @@ e o universo disse que eu te amo
 
 **🟢 Deus da Guerra:**
 
-e o universo disse que você jogou o jogo muito bem
+e o universo disse que você progamou muito bem
 
 **🔵 Café:**
 
@@ -300,11 +300,11 @@ e o universo disse que eu te amo porque você é o amor.
 
 **🔵 Café:**
 
-E o jogo acabou e o(a) jogador(a) acordou do sonho. E o(a) jogador(a) começou um novo sonho. E o(a) jogador(a) sonhou novamente, sonhou melhor. E o(a) jogador(a) era o universo. E o(a) jogador(a) era o amor.
+E o código terminou e o(a) programador(a) acordou do sonho. E o(a) programador(a) começou um novo sonho. E o(a) programador(a) sonhou novamente, sonhou melhor. E o(a) programador(a) era o universo. E o(a) programador(a) era o amor.
 
 **🔵 Café:**
 
-Você é o(a) jogador(a).
+Você é o(a) programador(a).
 
 **🟢 Deus da Guerra:**
 
