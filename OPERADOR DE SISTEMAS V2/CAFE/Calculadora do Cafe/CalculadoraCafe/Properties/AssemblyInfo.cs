@@ -1,15 +1,15 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associadas a um assembly.
-[assembly: AssemblyTitle("Calculadora do Deus da Guerra")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Calculadora do Café")]
+[assembly: AssemblyDescription("Calculadora didática do Café")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Calculadora do Deus da Guerra")]
+[assembly: AssemblyProduct("Calculadora do Café")]
 [assembly: AssemblyCopyright("Copyright ©  2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,12 +20,12 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // O GUID a seguir será destinado à ID de typelib se este projeto for exposto para COM
-[assembly: Guid("78bbf0ec-90bb-4281-9dc1-c46f73572cfc")]
+[assembly: Guid("fbfa8174-8b58-47b5-8746-25ebc54c7fa9")]
 
 // As informações da versão de um assembly consistem nos quatro valores a seguir:
 //
 //      Versão Principal
-//      Versão Secundária 
+//      Versão Secundária
 //      Número da Versão
 //      Revisão
 //
