@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36811.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bleach", "bleach\bleach.csproj", "{643108D5-4EB9-4ACA-8864-4040C4300975}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{643108D5-4EB9-4ACA-8864-4040C4300975}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643108D5-4EB9-4ACA-8864-4040C4300975}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643108D5-4EB9-4ACA-8864-4040C4300975}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643108D5-4EB9-4ACA-8864-4040C4300975}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1426D0E2-F756-4C72-9482-A7B90BBE5374}
+	EndGlobalSection
+EndGlobal

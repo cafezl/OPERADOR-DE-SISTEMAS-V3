@@ -104,65 +104,12 @@ namespace cadastro
         {
             grp_Temas.Enabled = true;
 
-            btn_Desativar.Enabled = true;
-            btn_Limpar.Enabled = true;
-            btn_Nome.Enabled = true;
-            btn_Sobrenome.Enabled = true;
-            btn_Idade.Enabled = true;
-            btn_Bairro.Enabled = true;
-            btn_Celular.Enabled = true;
-            btn_Email.Enabled = true;
-            btn_DadosCompletos.Enabled = true;
-
-            lbl_DadosP.Enabled = true;
-            lbl_Nome.Enabled = true;
-            lbl_Sobrenome.Enabled = true;
-            lbl_Idade.Enabled = true;
-            lbl_Bairro.Enabled = true;
-            lbl_Celular.Enabled = true;
-            lbl_Email.Enabled = true;
-            lbl_ConfirmaçãoDa.Enabled = true;
-            lbl_Resultado.Enabled = true;
-
-            txt_Nome.Enabled = true;
-            txt_Sobrenome.Enabled = true;
-            txt_Idade.Enabled = true;
-            txt_Bairro.Enabled = true;
-            txt_Celular.Enabled = true;
-            txt_Email.Enabled = true;
+           
         }
 
         private void btn_Desativar_Click(object sender, EventArgs e)
         {
-            grp_Temas.Enabled = false;
-
-            btn_Desativar.Enabled = false;
-            btn_ativar.Enabled = true;
-            btn_Limpar.Enabled = false;
-            btn_Nome.Enabled = false;
-            btn_Sobrenome.Enabled = false;
-            btn_Idade.Enabled = false;
-            btn_Bairro.Enabled = false;
-            btn_Celular.Enabled = false;
-            btn_Email.Enabled = false;
-            btn_DadosCompletos.Enabled = false;
-
-            lbl_DadosP.Enabled = false;
-            lbl_Nome.Enabled = false;
-            lbl_Sobrenome.Enabled = false;
-            lbl_Idade.Enabled = false;
-            lbl_Bairro.Enabled = false;
-            lbl_Celular.Enabled = false;
-            lbl_Email.Enabled = false;
-            lbl_ConfirmaçãoDa.Enabled = false;
-            lbl_Resultado.Enabled = false;
-
-            txt_Nome.Enabled = false;
-            txt_Sobrenome.Enabled = false;
-            txt_Idade.Enabled = false;
-            txt_Bairro.Enabled = false;
-            txt_Celular.Enabled = false;
-            txt_Email.Enabled = false;
+           
         }
     }
 }
