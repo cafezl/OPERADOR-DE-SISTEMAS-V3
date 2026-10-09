@@ -40,17 +40,20 @@ namespace Recarga
                 botoesRecarga[i].Text = valoresDemonstracao[i];
             }
 
-            // O prazo depende da operadora; esta tela não consulta os sistemas dela.
+            // O prazo começa vazio até escolher a operadora
             foreach (Label validade in labelsValidade)
             {
-                validade.Text = "Consulte a operadora";
+                validade.Text = "--";
             }
 
-            // Os dois últimos botões já têm seus eventos ligados pelo Designer.
             for (int i = 0; i < 6; i++)
             {
                 botoesRecarga[i].Click += SelecionarRecarga;
             }
+
+            // Garantindo que os botões 7 e 8 também acionem o evento
+            button7.Click += SelecionarRecarga;
+            button8.Click += SelecionarRecarga;
 
             txt_OperadoraSe.ReadOnly = true;
             txt_Valor.ReadOnly = true;
@@ -91,6 +94,9 @@ namespace Recarga
                 return;
             }
 
+            // Apaga o número quando o usuário troca de operadora
+            txt_Numero.Clear();
+
             txt_OperadoraSe.Text = opcao.Text;
             AtualizarValoresRecarga(opcao.Text);
 
@@ -118,9 +124,9 @@ namespace Recarga
                     txt_OperadoraSe.ForeColor = Color.Black;
                     break;
                 default:
-                    this.BackColor = SystemColors.Control;
-                    txt_OperadoraSe.BackColor = SystemColors.Window;
-                    txt_OperadoraSe.ForeColor = SystemColors.WindowText;
+                    this.BackColor = Color.Black;
+                    txt_OperadoraSe.BackColor = Color.Black;
+                    txt_OperadoraSe.ForeColor = Color.White;
                     break;
             }
 
@@ -140,6 +146,20 @@ namespace Recarga
             for (int i = 0; i < botoesRecarga.Length; i++)
             {
                 botoesRecarga[i].Text = valores[i];
+
+                // Exibe os dias de validade (exemplo: os 4 primeiros = 30 dias, próximos 2 = 60 dias, etc)
+                if (i < 4)
+                {
+                    labelsValidade[i].Text = "30 dias";
+                }
+                else if (i < 6)
+                {
+                    labelsValidade[i].Text = "60 dias";
+                }
+                else
+                {
+                    labelsValidade[i].Text = "90 dias";
+                }
             }
         }
 
@@ -223,17 +243,9 @@ namespace Recarga
                 return;
             }
 
+            // Manda o valor clicado direto pra textbox e avisa
             txt_Valor.Text = botao.Text;
-            label7.Text = "Valor escolhido (demonstração)";
-            MessageBox.Show(
-                this,
-                "Seleção de demonstração registrada para " + txt_OperadoraSe.Text + ".\n" +
-                "Número: (" + txt_DDD.Text + ") " + txt_Numero.Text + "\n" +
-                "Valor: " + botao.Text + "\n\n" +
-                "Esta tela não realiza pagamento nem recarga real.",
-                "Recarga de demonstração",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            label7.Text = "Valor escolhido";
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -277,15 +289,38 @@ namespace Recarga
         private void Form1_Load(object sender, EventArgs e)
         {
             txt_Valor.Clear();
-            label7.Text = "Selecione o valor de recarga";
+            label7.Text = "Selecione uma operadora";
             AtualizarBotoesRecarga();
 
-            // Cor padrão inicial antes de escolher uma operadora
-            this.BackColor = SystemColors.Control;
+            // Inicia o app com TELA PRETA
+            this.BackColor = Color.Black;
+            txt_OperadoraSe.BackColor = Color.Black;
+            txt_OperadoraSe.ForeColor = Color.White;
 
-            // Limpa conflitos de imagem de fundo na pictureBox
+            // Desmarca todos os RadioButtons reais
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+
+            // -------------------------------------------------------------
+            // TRUQUE PARA EVITAR QUE A VIVO SEJA SELECIONADA SOZINHA
+            // O WinForms marca o primeiro radiobutton ao focar na tela. 
+            // Criamos um botão falso e invisível para absorver essa marcação.
+            RadioButton rbFalso = new RadioButton();
+            groupBox1.Controls.Add(rbFalso);
+            rbFalso.Visible = false;
+            rbFalso.Checked = true;
+            // -------------------------------------------------------------
+
+            // Limpa a logo
+            pictureBox1.Image = null;
             pictureBox1.BackgroundImage = null;
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+            // Oculta/desativa as coisas até a pessoa clicar numa operadora
+            AtualizarCamposDaOperadora(false);
+            groupBox1.Enabled = true; // Para garantir que você pode selecionar a operadora
         }
 
         // Métodos de eventos associados ao designer
@@ -297,5 +332,26 @@ namespace Recarga
         private void lbl_VAL1_Click(object sender, EventArgs e) { }
         private void lbl_VAl8_Click(object sender, EventArgs e) { }
         private void pictureBox1_Click(object sender, EventArgs e) { }
+
+        private void txt_Nome_TextChanged(object sender, EventArgs e) { }
+        private void txt_OperadoraSe_TextChanged(object sender, EventArgs e) { }
+        private void txt_DDD_TextChanged(object sender, EventArgs e) { }
+        private void txt_Numero_TextChanged(object sender, EventArgs e) { }
+        private void txt_Valor_TextChanged(object sender, EventArgs e) { }
+        private void lbl_operadoraS_Click(object sender, EventArgs e) { }
+        private void lbl_ddd_Click(object sender, EventArgs e) { }
+        private void lbl_Celular_Click(object sender, EventArgs e) { }
+        private void lbl_ValorRecar_Click(object sender, EventArgs e) { }
+        private void btn2_Click(object sender, EventArgs e) { }
+        private void btn3_Click(object sender, EventArgs e) { }
+        private void btn4_Click(object sender, EventArgs e) { }
+        private void btn5_Click(object sender, EventArgs e) { }
+        private void btn6_Click(object sender, EventArgs e) { }
+        private void lbl_VAL2_Click(object sender, EventArgs e) { }
+        private void lbl_VAL3_Click(object sender, EventArgs e) { }
+        private void lbl_VAL4_Click(object sender, EventArgs e) { }
+        private void lbl_VAL5_Click(object sender, EventArgs e) { }
+        private void lbl_VAL6_Click(object sender, EventArgs e) { }
+        private void lbl_VAL7_Click(object sender, EventArgs e) { }
     }
 }

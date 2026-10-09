@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
@@ -146,7 +147,6 @@
             // 
             // txt_Nome
             // 
-            this.txt_Nome.Enabled = false;
             this.txt_Nome.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_Nome.ForeColor = System.Drawing.Color.Black;
             this.txt_Nome.Location = new System.Drawing.Point(319, 80);
@@ -154,10 +154,10 @@
             this.txt_Nome.Name = "txt_Nome";
             this.txt_Nome.Size = new System.Drawing.Size(367, 22);
             this.txt_Nome.TabIndex = 1;
+            this.txt_Nome.TextChanged += new System.EventHandler(this.txt_Nome_TextChanged);
             // 
             // txt_OperadoraSe
             // 
-            this.txt_OperadoraSe.Enabled = false;
             this.txt_OperadoraSe.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_OperadoraSe.ForeColor = System.Drawing.Color.Black;
             this.txt_OperadoraSe.Location = new System.Drawing.Point(319, 144);
@@ -165,10 +165,10 @@
             this.txt_OperadoraSe.Name = "txt_OperadoraSe";
             this.txt_OperadoraSe.Size = new System.Drawing.Size(171, 22);
             this.txt_OperadoraSe.TabIndex = 2;
+            this.txt_OperadoraSe.TextChanged += new System.EventHandler(this.txt_OperadoraSe_TextChanged);
             // 
             // txt_DDD
             // 
-            this.txt_DDD.Enabled = false;
             this.txt_DDD.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_DDD.ForeColor = System.Drawing.Color.Black;
             this.txt_DDD.Location = new System.Drawing.Point(319, 209);
@@ -176,10 +176,10 @@
             this.txt_DDD.Name = "txt_DDD";
             this.txt_DDD.Size = new System.Drawing.Size(42, 22);
             this.txt_DDD.TabIndex = 3;
+            this.txt_DDD.TextChanged += new System.EventHandler(this.txt_DDD_TextChanged);
             // 
             // txt_Numero
             // 
-            this.txt_Numero.Enabled = false;
             this.txt_Numero.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_Numero.ForeColor = System.Drawing.Color.Black;
             this.txt_Numero.Location = new System.Drawing.Point(409, 209);
@@ -187,10 +187,10 @@
             this.txt_Numero.Name = "txt_Numero";
             this.txt_Numero.Size = new System.Drawing.Size(140, 22);
             this.txt_Numero.TabIndex = 4;
+            this.txt_Numero.TextChanged += new System.EventHandler(this.txt_Numero_TextChanged);
             // 
             // txt_Valor
             // 
-            this.txt_Valor.Enabled = false;
             this.txt_Valor.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_Valor.ForeColor = System.Drawing.Color.Black;
             this.txt_Valor.Location = new System.Drawing.Point(557, 209);
@@ -198,11 +198,11 @@
             this.txt_Valor.Name = "txt_Valor";
             this.txt_Valor.Size = new System.Drawing.Size(129, 22);
             this.txt_Valor.TabIndex = 5;
+            this.txt_Valor.TextChanged += new System.EventHandler(this.txt_Valor_TextChanged);
             // 
             // lbl_nome
             // 
             this.lbl_nome.AutoSize = true;
-            this.lbl_nome.Enabled = false;
             this.lbl_nome.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_nome.ForeColor = System.Drawing.Color.White;
             this.lbl_nome.Location = new System.Drawing.Point(319, 63);
@@ -229,7 +229,6 @@
             // lbl_operadoraS
             // 
             this.lbl_operadoraS.AutoSize = true;
-            this.lbl_operadoraS.Enabled = false;
             this.lbl_operadoraS.Font = new System.Drawing.Font("Baskerville Old Face", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_operadoraS.ForeColor = System.Drawing.Color.White;
             this.lbl_operadoraS.Location = new System.Drawing.Point(319, 127);
@@ -238,11 +237,11 @@
             this.lbl_operadoraS.Size = new System.Drawing.Size(170, 17);
             this.lbl_operadoraS.TabIndex = 8;
             this.lbl_operadoraS.Text = "Operadora Selecionada";
+            this.lbl_operadoraS.Click += new System.EventHandler(this.lbl_operadoraS_Click);
             // 
             // lbl_ddd
             // 
             this.lbl_ddd.AutoSize = true;
-            this.lbl_ddd.Enabled = false;
             this.lbl_ddd.Font = new System.Drawing.Font("Baskerville Old Face", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ddd.ForeColor = System.Drawing.Color.White;
             this.lbl_ddd.Location = new System.Drawing.Point(316, 192);
@@ -251,11 +250,11 @@
             this.lbl_ddd.Size = new System.Drawing.Size(47, 17);
             this.lbl_ddd.TabIndex = 9;
             this.lbl_ddd.Text = "DDD";
+            this.lbl_ddd.Click += new System.EventHandler(this.lbl_ddd_Click);
             // 
             // lbl_Celular
             // 
             this.lbl_Celular.AutoSize = true;
-            this.lbl_Celular.Enabled = false;
             this.lbl_Celular.Font = new System.Drawing.Font("Baskerville Old Face", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Celular.ForeColor = System.Drawing.Color.White;
             this.lbl_Celular.Location = new System.Drawing.Point(410, 192);
@@ -264,11 +263,11 @@
             this.lbl_Celular.Size = new System.Drawing.Size(143, 17);
             this.lbl_Celular.TabIndex = 10;
             this.lbl_Celular.Text = "Número de Celular";
+            this.lbl_Celular.Click += new System.EventHandler(this.lbl_Celular_Click);
             // 
             // lbl_ValorRecar
             // 
             this.lbl_ValorRecar.AutoSize = true;
-            this.lbl_ValorRecar.Enabled = false;
             this.lbl_ValorRecar.Font = new System.Drawing.Font("Baskerville Old Face", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_ValorRecar.ForeColor = System.Drawing.Color.White;
             this.lbl_ValorRecar.Location = new System.Drawing.Point(555, 192);
@@ -277,10 +276,10 @@
             this.lbl_ValorRecar.Size = new System.Drawing.Size(131, 17);
             this.lbl_ValorRecar.TabIndex = 11;
             this.lbl_ValorRecar.Text = "Valor de Recarga ";
+            this.lbl_ValorRecar.Click += new System.EventHandler(this.lbl_ValorRecar_Click);
             // 
             // btn1
             // 
-            this.btn1.Enabled = false;
             this.btn1.ForeColor = System.Drawing.Color.Black;
             this.btn1.Location = new System.Drawing.Point(319, 305);
             this.btn1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -293,7 +292,6 @@
             // 
             // btn2
             // 
-            this.btn2.Enabled = false;
             this.btn2.ForeColor = System.Drawing.Color.Black;
             this.btn2.Location = new System.Drawing.Point(413, 305);
             this.btn2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -302,10 +300,10 @@
             this.btn2.TabIndex = 13;
             this.btn2.Text = "R$";
             this.btn2.UseVisualStyleBackColor = true;
+            this.btn2.Click += new System.EventHandler(this.btn2_Click);
             // 
             // btn3
             // 
-            this.btn3.Enabled = false;
             this.btn3.ForeColor = System.Drawing.Color.Black;
             this.btn3.Location = new System.Drawing.Point(508, 305);
             this.btn3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -314,10 +312,10 @@
             this.btn3.TabIndex = 14;
             this.btn3.Text = "R$";
             this.btn3.UseVisualStyleBackColor = true;
+            this.btn3.Click += new System.EventHandler(this.btn3_Click);
             // 
             // btn4
             // 
-            this.btn4.Enabled = false;
             this.btn4.ForeColor = System.Drawing.Color.Black;
             this.btn4.Location = new System.Drawing.Point(602, 305);
             this.btn4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -326,10 +324,10 @@
             this.btn4.TabIndex = 15;
             this.btn4.Text = "R$";
             this.btn4.UseVisualStyleBackColor = true;
+            this.btn4.Click += new System.EventHandler(this.btn4_Click);
             // 
             // btn5
             // 
-            this.btn5.Enabled = false;
             this.btn5.ForeColor = System.Drawing.Color.Black;
             this.btn5.Location = new System.Drawing.Point(319, 396);
             this.btn5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -338,10 +336,10 @@
             this.btn5.TabIndex = 16;
             this.btn5.Text = "R$";
             this.btn5.UseVisualStyleBackColor = true;
+            this.btn5.Click += new System.EventHandler(this.btn5_Click);
             // 
             // btn6
             // 
-            this.btn6.Enabled = false;
             this.btn6.ForeColor = System.Drawing.Color.Black;
             this.btn6.Location = new System.Drawing.Point(413, 396);
             this.btn6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -350,11 +348,11 @@
             this.btn6.TabIndex = 17;
             this.btn6.Text = "R$";
             this.btn6.UseVisualStyleBackColor = true;
+            this.btn6.Click += new System.EventHandler(this.btn6_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Enabled = false;
             this.label7.Font = new System.Drawing.Font("Baskerville Old Face", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.White;
             this.label7.Location = new System.Drawing.Point(379, 271);
@@ -367,7 +365,6 @@
             // 
             // button7
             // 
-            this.button7.Enabled = false;
             this.button7.ForeColor = System.Drawing.Color.Black;
             this.button7.Location = new System.Drawing.Point(508, 396);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -380,7 +377,6 @@
             // 
             // button8
             // 
-            this.button8.Enabled = false;
             this.button8.ForeColor = System.Drawing.Color.Black;
             this.button8.Location = new System.Drawing.Point(602, 396);
             this.button8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -394,7 +390,6 @@
             // lbl_VAL1
             // 
             this.lbl_VAL1.AutoSize = true;
-            this.lbl_VAL1.Enabled = false;
             this.lbl_VAL1.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL1.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL1.Location = new System.Drawing.Point(328, 379);
@@ -409,7 +404,6 @@
             // lbl_VAL2
             // 
             this.lbl_VAL2.AutoSize = true;
-            this.lbl_VAL2.Enabled = false;
             this.lbl_VAL2.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL2.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL2.Location = new System.Drawing.Point(423, 379);
@@ -419,11 +413,11 @@
             this.lbl_VAL2.TabIndex = 22;
             this.lbl_VAL2.Text = "Validade";
             this.lbl_VAL2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_VAL2.Click += new System.EventHandler(this.lbl_VAL2_Click);
             // 
             // lbl_VAL3
             // 
             this.lbl_VAL3.AutoSize = true;
-            this.lbl_VAL3.Enabled = false;
             this.lbl_VAL3.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL3.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL3.Location = new System.Drawing.Point(515, 379);
@@ -433,11 +427,11 @@
             this.lbl_VAL3.TabIndex = 23;
             this.lbl_VAL3.Text = "Validade";
             this.lbl_VAL3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_VAL3.Click += new System.EventHandler(this.lbl_VAL3_Click);
             // 
             // lbl_VAL4
             // 
             this.lbl_VAL4.AutoSize = true;
-            this.lbl_VAL4.Enabled = false;
             this.lbl_VAL4.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL4.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL4.Location = new System.Drawing.Point(616, 379);
@@ -447,11 +441,11 @@
             this.lbl_VAL4.TabIndex = 24;
             this.lbl_VAL4.Text = "Validade";
             this.lbl_VAL4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_VAL4.Click += new System.EventHandler(this.lbl_VAL4_Click);
             // 
             // lbl_VAL5
             // 
             this.lbl_VAL5.AutoSize = true;
-            this.lbl_VAL5.Enabled = false;
             this.lbl_VAL5.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL5.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL5.Location = new System.Drawing.Point(328, 471);
@@ -460,11 +454,11 @@
             this.lbl_VAL5.Size = new System.Drawing.Size(62, 14);
             this.lbl_VAL5.TabIndex = 25;
             this.lbl_VAL5.Text = "Validade";
+            this.lbl_VAL5.Click += new System.EventHandler(this.lbl_VAL5_Click);
             // 
             // lbl_VAL6
             // 
             this.lbl_VAL6.AutoSize = true;
-            this.lbl_VAL6.Enabled = false;
             this.lbl_VAL6.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL6.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL6.Location = new System.Drawing.Point(423, 471);
@@ -473,11 +467,11 @@
             this.lbl_VAL6.Size = new System.Drawing.Size(62, 14);
             this.lbl_VAL6.TabIndex = 26;
             this.lbl_VAL6.Text = "Validade";
+            this.lbl_VAL6.Click += new System.EventHandler(this.lbl_VAL6_Click);
             // 
             // lbl_VAL7
             // 
             this.lbl_VAL7.AutoSize = true;
-            this.lbl_VAL7.Enabled = false;
             this.lbl_VAL7.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAL7.ForeColor = System.Drawing.Color.White;
             this.lbl_VAL7.Location = new System.Drawing.Point(515, 471);
@@ -486,11 +480,11 @@
             this.lbl_VAL7.Size = new System.Drawing.Size(62, 14);
             this.lbl_VAL7.TabIndex = 27;
             this.lbl_VAL7.Text = "Validade";
+            this.lbl_VAL7.Click += new System.EventHandler(this.lbl_VAL7_Click);
             // 
             // lbl_VAl8
             // 
             this.lbl_VAl8.AutoSize = true;
-            this.lbl_VAl8.Enabled = false;
             this.lbl_VAl8.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_VAl8.ForeColor = System.Drawing.Color.White;
             this.lbl_VAl8.Location = new System.Drawing.Point(616, 471);
@@ -504,7 +498,6 @@
             // lbl_bemvindo
             // 
             this.lbl_bemvindo.AutoSize = true;
-            this.lbl_bemvindo.Enabled = false;
             this.lbl_bemvindo.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_bemvindo.ForeColor = System.Drawing.Color.White;
             this.lbl_bemvindo.Location = new System.Drawing.Point(192, 83);
@@ -565,8 +558,10 @@
             this.Controls.Add(this.txt_Nome);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("Baskerville Old Face", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RECARGA PARA CELULAR";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBox1.ResumeLayout(false);
