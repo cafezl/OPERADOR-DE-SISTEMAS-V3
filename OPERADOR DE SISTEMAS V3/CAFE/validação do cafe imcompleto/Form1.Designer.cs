@@ -61,7 +61,7 @@
             this.lbl_nome.AutoSize = true;
             this.lbl_nome.Font = new System.Drawing.Font("Algerian", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_nome.ForeColor = System.Drawing.Color.White;
-            this.lbl_nome.Location = new System.Drawing.Point(138, 173);
+            this.lbl_nome.Location = new System.Drawing.Point(138, 165);
             this.lbl_nome.Name = "lbl_nome";
             this.lbl_nome.Size = new System.Drawing.Size(68, 24);
             this.lbl_nome.TabIndex = 1;
@@ -73,7 +73,7 @@
             this.lbl_idade.AutoSize = true;
             this.lbl_idade.Font = new System.Drawing.Font("Algerian", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_idade.ForeColor = System.Drawing.Color.White;
-            this.lbl_idade.Location = new System.Drawing.Point(138, 199);
+            this.lbl_idade.Location = new System.Drawing.Point(138, 195);
             this.lbl_idade.Name = "lbl_idade";
             this.lbl_idade.Size = new System.Drawing.Size(76, 24);
             this.lbl_idade.TabIndex = 2;
@@ -84,7 +84,7 @@
             this.lbl_CPF.AutoSize = true;
             this.lbl_CPF.Font = new System.Drawing.Font("Algerian", 15.75F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_CPF.ForeColor = System.Drawing.Color.White;
-            this.lbl_CPF.Location = new System.Drawing.Point(152, 225);
+            this.lbl_CPF.Location = new System.Drawing.Point(152, 228);
             this.lbl_CPF.Name = "lbl_CPF";
             this.lbl_CPF.Size = new System.Drawing.Size(49, 24);
             this.lbl_CPF.TabIndex = 3;
@@ -101,27 +101,30 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(222, 173);
+            this.textBox1.Font = new System.Drawing.Font("Ravie", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(225, 165);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(142, 20);
+            this.textBox1.Size = new System.Drawing.Size(177, 25);
             this.textBox1.TabIndex = 1;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(222, 200);
+            this.textBox2.Font = new System.Drawing.Font("Ravie", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(225, 196);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(142, 20);
+            this.textBox2.Size = new System.Drawing.Size(177, 25);
             this.textBox2.TabIndex = 2;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             this.textBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox2_KeyPress);
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(222, 226);
+            this.textBox3.Font = new System.Drawing.Font("Ravie", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox3.Location = new System.Drawing.Point(225, 227);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(142, 20);
+            this.textBox3.Size = new System.Drawing.Size(177, 25);
             this.textBox3.TabIndex = 3;
             this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             this.textBox3.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox3_KeyPress);
@@ -150,7 +153,7 @@
             this.BTN_enviar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.BTN_enviar.Font = new System.Drawing.Font("Yu Gothic UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTN_enviar.ForeColor = System.Drawing.Color.White;
-            this.BTN_enviar.Location = new System.Drawing.Point(225, 258);
+            this.BTN_enviar.Location = new System.Drawing.Point(242, 258);
             this.BTN_enviar.Name = "BTN_enviar";
             this.BTN_enviar.Size = new System.Drawing.Size(142, 42);
             this.BTN_enviar.TabIndex = 4;
