@@ -508,7 +508,7 @@
             // 
             this.panel1.BackgroundImage = global::BIG_MAC.Properties.Resources.KV_Mc_Dia_Feliz_2026_page_0001_3_1_e60d1d1757;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.panel1.Location = new System.Drawing.Point(440, 436);
+            this.panel1.Location = new System.Drawing.Point(440, 423);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(490, 202);
             this.panel1.TabIndex = 5;
