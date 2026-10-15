@@ -63,9 +63,9 @@ namespace sei_la.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bbfd139b1304358dd4314364736e163d {
+        internal static System.Drawing.Bitmap FUNDO_gif {
             get {
-                object obj = ResourceManager.GetObject("bbfd139b1304358dd4314364736e163d", resourceCulture);
+                object obj = ResourceManager.GetObject("FUNDO.gif", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,29 @@ namespace sei_la.Properties {
         /// <summary>
         ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Captura_de_tela_2026_10_13_210608 {
+        internal static System.Drawing.Bitmap textura_de_grama {
             get {
-                object obj = ResourceManager.GetObject("Captura de tela 2026-10-13 210608", resourceCulture);
+                object obj = ResourceManager.GetObject("textura_de_grama", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Byte[].
+        /// </summary>
+        internal static byte[] Thor_s_Hammer {
+            get {
+                object obj = ResourceManager.GetObject("Thor_s_Hammer", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta um recurso localizado do tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap topeira {
+            get {
+                object obj = ResourceManager.GetObject("topeira", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,104 +1,83 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace sei_la
 {
+    // Form1 - TELA DE INÍCIO do jogo
+    // Estilo similar ao menu do Crash Bandicoot
     public partial class Form1 : Form
     {
-        private int nivel = 1;
-        private int nivelAlvo = 30;
-        private Random random = new Random();
-        private Cursor cursorMartelo;
-
         public Form1()
         {
+            // Inicializa os componentes visuais do formulário
             InitializeComponent();
-            ConfigurarCursorMartelo();
-            ConfigurarBotaoToupeira();
         }
 
-        private void ConfigurarCursorMartelo()
+        // Evento que ocorre quando o formulário é carregado
+        private void Form1_Load(object sender, EventArgs e)
         {
-            try
-            {
-                string caminhoCursor = Path.Combine(Application.StartupPath, "Thor's Hammer.cur");
+            // Define o título da janela
+            this.Text = "Jogo da Toupeira - Menu Principal";
 
-                if (!File.Exists(caminhoCursor))
-                {
-                    string pastaProjeto = Directory.GetParent(Application.StartupPath).FullName;
-                    caminhoCursor = Path.Combine(pastaProjeto, "Thor's Hammer.cur");
-                }
-
-                if (File.Exists(caminhoCursor))
-                {
-                    cursorMartelo = new Cursor(caminhoCursor);
-                    this.Cursor = cursorMartelo;
-                    btnMovel.Cursor = cursorMartelo;
-                }
-                else
-                {
-                    this.Cursor = Cursors.Default;
-                    btnMovel.Cursor = Cursors.Default;
-                }
-            }
-            catch
-            {
-                this.Cursor = Cursors.Default;
-                btnMovel.Cursor = Cursors.Default;
-            }
+            // Configura o cursor de martelo em TODOS os controles do menu
+            // O cursor foi adicionado nos Resources como "Thor_s_Hammer"
+            this.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
+            btnStart.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
+            btnLoadGame.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
+            btnPassword.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
+            btnOptions.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
         }
 
-        private void ConfigurarBotaoToupeira()
+        // Botão START - Inicia o jogo
+        // Abre o Form2 onde o jogo da toupeira acontece
+        private void btnStart_Click(object sender, EventArgs e)
         {
-            btnMovel.Text = "";
-            btnMovel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
-            btnMovel.BackgroundImage = global::sei_la.Properties.Resources.Captura_de_tela_2026_10_13_210608;
-            btnMovel.BackgroundImageLayout = ImageLayout.Stretch;
-            btnMovel.FlatAppearance.BorderSize = 0;
-            btnMovel.FlatStyle = FlatStyle.Flat;
+            // Cria uma nova instância do Form2 (tela do jogo)
+            Form2 jogo = new Form2();
+
+            // Esconde o menu principal (Form1)
+            this.Hide();
+
+            // Abre o jogo (Form2)
+            jogo.ShowDialog();
+
+            // Quando o jogo fechar, volta a mostrar o menu
+            this.Show();
         }
 
-        private void btnMovel_Click(object sender, EventArgs e)
+        // Botão LOAD GAME - Carregar jogo salvo
+        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
+        private void btnLoadGame_Click(object sender, EventArgs e)
         {
-            nivel++;
-            lblLevel.Text = "Nível: " + nivel + " / " + nivelAlvo;
-
-            if (nivel >= nivelAlvo)
-            {
-                MostrarVideo();
-            }
-            else
-            {
-                lblInfo.Text = "✅ ACERTEI! Faltam " + (nivelAlvo - nivel) + " toupeiras!";
-                MoverBotaoAleatorio();
-            }
+            MessageBox.Show("Funcionalidade de carregar jogo em desenvolvimento!",
+                "Load Game", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void MoverBotaoAleatorio()
+        // Botão PASSWORD - Inserir senha/código
+        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
+        private void btnPassword_Click(object sender, EventArgs e)
         {
-            int posX = random.Next(50, 650);
-            int posY = random.Next(100, 350);
-            btnMovel.Location = new Point(posX, posY);
+            MessageBox.Show("Funcionalidade de senha em desenvolvimento!",
+                "Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void MostrarVideo()
+        // Botão OPTIONS - Configurações do jogo
+        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
+        private void btnOptions_Click(object sender, EventArgs e)
         {
-            btnMovel.Visible = false;
-            lblInfo.Text = "🏆 PARABÉNS! Você pegou todas as 30 toupeiras!";
-            lblLevel.Text = "🎮 JOGO CONCLUÍDO! 🎮";
-            pnlVideo.Visible = true;
-        }
-
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            pnlVideo.Visible = false;
-            nivel = 1;
-            lblLevel.Text = "Nível: 1 / " + nivelAlvo;
-            lblInfo.Text = "🔨 MARTELE AS TOPEIRAS PARA LIBERAR O PRÊMIO!";
-            btnMovel.Visible = true;
-            MoverBotaoAleatorio();
+            MessageBox.Show("Funcionalidade de opções em desenvolvimento!\n\n" +
+                "Configurações disponíveis:\n" +
+                "- Volume do som\n" +
+                "- Dificuldade do jogo\n" +
+                "- Tamanho da tela",
+                "Options", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
