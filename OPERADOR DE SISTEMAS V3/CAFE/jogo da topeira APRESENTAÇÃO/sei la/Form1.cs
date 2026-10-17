@@ -1,83 +1,128 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace sei_la
 {
-    // Form1 - TELA DE INÍCIO do jogo
-    // Estilo similar ao menu do Crash Bandicoot
     public partial class Form1 : Form
     {
+        private Image gifMenu;
+        private bool animandoMenu = false;
+        private Button botaoSetaAtual; // guarda qual botão a seta está em cima
+
         public Form1()
         {
-            // Inicializa os componentes visuais do formulário
             InitializeComponent();
+            this.DoubleBuffered = true; // evita flicker na animação
         }
 
-        // Evento que ocorre quando o formulário é carregado
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Define o título da janela
-            this.Text = "Jogo da Toupeira - Menu Principal";
-
-            // Configura o cursor de martelo em TODOS os controles do menu
-            // O cursor foi adicionado nos Resources como "Thor_s_Hammer"
-            this.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
-            btnStart.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
-            btnLoadGame.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
-            btnPassword.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
-            btnOptions.Cursor = new Cursor(sei_la.Properties.Resources.Thor_s_Hammer.Handle);
+            this.Resize += Form1_Resize; // registra o evento de redimensionar
+            MoverSeta(btnStart); // setinha começa no START, igual ao Crash
+            IniciarGifAnimado();
         }
 
-        // Botão START - Inicia o jogo
-        // Abre o Form2 onde o jogo da toupeira acontece
+        // ---------- ANIMA O GIF DO FUNDO (FUNDO.gif) ----------
+        private void IniciarGifAnimado()
+        {
+            gifMenu = Properties.Resources.FUNDO_gif;
+
+            if (gifMenu != null && ImageAnimator.CanAnimate(gifMenu))
+            {
+                ImageAnimator.Animate(gifMenu, OnFrameChanged);
+                animandoMenu = true;
+            }
+        }
+
+        private void OnFrameChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.IsHandleCreated && !this.IsDisposed && !this.Disposing)
+                {
+                    this.BeginInvoke((MethodInvoker)delegate
+                    {
+                        this.Invalidate(true);
+                    });
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        // Desenha o frame atual do GIF no fundo (estica junto com a janela)
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            if (animandoMenu && gifMenu != null)
+            {
+                ImageAnimator.UpdateFrames(gifMenu);
+                e.Graphics.DrawImage(gifMenu, this.ClientRectangle);
+            }
+            else
+            {
+                base.OnPaintBackground(e);
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            if (animandoMenu && gifMenu != null)
+            {
+                ImageAnimator.StopAnimate(gifMenu, OnFrameChanged);
+            }
+            base.OnFormClosing(e);
+        }
+
+        // ---------- REPOSICIONA A SETA QUANDO ESTICA A TELA ----------
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if (botaoSetaAtual != null)
+                MoverSeta(botaoSetaAtual);
+        }
+
+        // Move a setinha verde ▶ pro botão que o mouse está em cima
+        private void MoverSeta(Button botao)
+        {
+            botaoSetaAtual = botao; // salva o botão atual
+            lblSeta.Location = new Point(botao.Left - 35, botao.Top + 5);
+            lblSeta.BringToFront();
+        }
+
+        private void Menu_MouseEnter(object sender, EventArgs e)
+        {
+            MoverSeta((Button)sender);
+        }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
-            // Cria uma nova instância do Form2 (tela do jogo)
             Form2 jogo = new Form2();
-
-            // Esconde o menu principal (Form1)
             this.Hide();
-
-            // Abre o jogo (Form2)
-            jogo.ShowDialog();
-
-            // Quando o jogo fechar, volta a mostrar o menu
-            this.Show();
+            jogo.FormClosed += (s, args) => this.Show();
+            jogo.Show();
         }
 
-        // Botão LOAD GAME - Carregar jogo salvo
-        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
         private void btnLoadGame_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Funcionalidade de carregar jogo em desenvolvimento!",
+            MessageBox.Show("Nenhum jogo salvo encontrado!\nComece um novo jogo no START.",
                 "Load Game", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Botão PASSWORD - Inserir senha/código
-        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
         private void btnPassword_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Funcionalidade de senha em desenvolvimento!",
+            MessageBox.Show("🔑 Password secreta: TOUPEIRA30",
                 "Password", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Botão OPTIONS - Configurações do jogo
-        // (Funcionalidade futura - apenas exibe mensagem por enquanto)
         private void btnOptions_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Funcionalidade de opções em desenvolvimento!\n\n" +
-                "Configurações disponíveis:\n" +
-                "- Volume do som\n" +
-                "- Dificuldade do jogo\n" +
-                "- Tamanho da tela",
+            MessageBox.Show("🔨 Cursor: Martelo do Thor\n🦫 Toupeiras: 30\n🎬 Vídeo de recompensa no final",
                 "Options", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void lblSeta_Click(object sender, EventArgs e)
+        {
         }
     }
 }
