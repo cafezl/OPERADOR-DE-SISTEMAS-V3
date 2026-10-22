@@ -18,9 +18,9 @@ Abra [sei la.sln](./sei%20la.sln) no **Visual Studio 2022**, com **Desenvolvimen
 | Tela cheia | F11 durante a partida |
 | Recomeçar após vencer | JOGAR DE NOVO ou R |
 
-**START** começa uma rodada; **LOAD GAME** retoma os acertos salvos; **OPTIONS** configura o som. O progresso fica no computador, em `%LOCALAPPDATA%\Cafe\IlhaDaToupeira\progresso.xml`.
+**JOGAR** começa uma rodada; **CONTINUAR** retoma os acertos salvos; **OPÇÕES** liga o som e escolhe entre efeitos originais de moeda 8-bit, anel 16-bit ou caixa de aventura. Os sons são sintetizados para este projeto, sem gravações dos jogos citados como inspiração. O progresso e a preferência de áudio ficam no computador, em `%LOCALAPPDATA%\Cafe\IlhaDaToupeira\progresso.xml`.
 
-**Para apresentar o final:** escolha **PASSWORD** e use **TOUPEIRA30**. A demonstração começa em 27/30 e não altera os acertos salvos nem o recorde.
+**Para apresentar o final:** escolha **DEMONSTRAÇÃO** e use **TOUPEIRA30**. A demonstração começa em 27/30 e não altera os acertos salvos nem o recorde.
 
 ## Apresentação e vídeo
 
@@ -37,6 +37,6 @@ A mesma cena é animada dentro do jogo. O botão **ABRIR VÍDEO**, na vitória, 
 | `EstadoPartida.cs` | Contagem, pontuação e condição de vitória |
 | `Form2.cs` | Eventos da partida, posição aleatória, pausa e timers |
 | `ProgressoJogo.cs` | Leitura e gravação do progresso |
-| `AudioRetro.cs`, `CenaVitoria.cs`, `MarteloCursor.cs` | Som, animação e cursor |
+| `AudioRetro.cs`, `CenaVitoria.cs`, `MarteloCursor.cs`, `TemaIlha.cs` | Efeitos retrô originais, animação, cursor e identidade visual pixelada |
 
 Os comentários explicam cada bloco de lógica. Os arquivos `.Designer.cs` e `Properties` contêm a estrutura gerada pelo Visual Studio.

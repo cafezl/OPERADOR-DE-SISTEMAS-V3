@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="EstadoPartida.cs" />
+    <Compile Include="TemaIlha.cs" />
     <Compile Include="MarteloCursor.cs" />
     <Compile Include="AudioRetro.cs" />
     <Compile Include="CenaVitoria.cs" />

@@ -48,12 +48,13 @@ namespace sei_la
             KeyDown += TratarAtalhos;
             MinimumSize = new Size(800, 560);
             ClientSize = new Size(1024, 640);
-            Text = "Jogo da Toupeira • Café";
+            Text = "Ilha da Toupeira • Proteja o jardim";
         }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             ProgressoJogo.Carregar();
+            AudioRetro.EstiloAcerto = ProgressoJogo.EstiloSom;
             AudioRetro.Ativo = ProgressoJogo.SomAtivo;
             CriarInterface();
             martelos = new MarteloCursor();
@@ -81,19 +82,29 @@ namespace sei_la
             rodape = new Panel { BackColor = Color.FromArgb(17, 30, 29) };
             campo = new PainelCampo
             {
-                BackgroundImage = Properties.Resources.textura_de_grama,
-                BackgroundImageLayout = ImageLayout.Tile,
                 TabStop = true
             };
             // Reaproveitamos as labels do Designer; os dados agora vêm do mesmo estado.
             cabecalho.Controls.AddRange(new Control[] { lblNivel, lblPontos, lblRestantes, lblInstrucao });
             foreach (Control item in cabecalho.Controls) item.BackColor = Color.Transparent;
-            lblNivel.Font = new Font("Arial", 17, FontStyle.Bold);
-            lblPontos.Font = new Font("Arial", 17, FontStyle.Bold);
-            lblRestantes.Font = new Font("Arial", 11, FontStyle.Bold);
-            lblInstrucao.Font = new Font("Arial", 10, FontStyle.Bold);
+            lblNivel.Font = new Font("Consolas", 17, FontStyle.Bold);
+            lblPontos.Font = new Font("Consolas", 17, FontStyle.Bold);
+            lblRestantes.Font = new Font("Consolas", 11, FontStyle.Bold);
+            lblInstrucao.Font = new Font("Consolas", 10, FontStyle.Bold);
+            // Ícones e cores repetidos no menu e no placar dão identidade à aventura.
+            CriarIconePlacar("alvo", 20);
+            CriarIconePlacar("trofeu", 235);
+            foreach (Label numero in new[] { lblNivel, lblPontos })
+            {
+                numero.AutoSize = false;
+                numero.ImageAlign = ContentAlignment.MiddleLeft;
+                numero.TextAlign = ContentAlignment.MiddleLeft;
+                numero.Padding = Padding.Empty;
+                numero.AutoEllipsis = true;
+                numero.ForeColor = Color.FromArgb(255, 211, 96);
+            }
             lblInstrucao.ForeColor = Color.FromArgb(173, 218, 188);
-            lblInstrucao.Text = modoApresentacao ? "DEMONSTRAÇÃO • faltam 3 acertos para a vitória" : "ILHA DO CAFÉ • 30 acertos para conquistar o troféu";
+            lblInstrucao.Text = modoApresentacao ? "DEMONSTRAÇÃO • salve o jardim da ilha" : "SUA MISSÃO • proteja o jardim e devolva a paz à ilha";
             btnPausa = CriarBotao("PAUSAR", delegate { Pausar(); });
             btnSom = CriarBotao("", delegate { AlternarSom(); });
             cabecalho.Controls.AddRange(new Control[] { btnPausa, btnSom });
@@ -101,13 +112,13 @@ namespace sei_la
             lblAjuda = new Label
             {
                 AutoSize = false, ForeColor = Color.WhiteSmoke,
-                Font = new Font("Arial", 10), TextAlign = ContentAlignment.MiddleLeft,
+                Font = new Font("Consolas", 10), TextAlign = ContentAlignment.MiddleLeft,
                 Text = "Clique na toupeira • Esc: pausa • M: som • F11: tela cheia"
             };
             lblSituacao = new Label
             {
                 AutoSize = false, ForeColor = Color.FromArgb(255, 210, 92),
-                Font = new Font("Arial", 10, FontStyle.Bold), TextAlign = ContentAlignment.MiddleRight
+                Font = new Font("Consolas", 10, FontStyle.Bold), TextAlign = ContentAlignment.MiddleRight
             };
             rodape.Controls.AddRange(new Control[] { lblAjuda, lblSituacao });
             toupeira = new AlvoToupeira { Size = new Size(116, 116), TabStop = false, AccessibleName = "Toupeira" };
@@ -129,15 +140,29 @@ namespace sei_la
         }
 
         // Botões comuns usam o cursor normal, para o martelo ficar só na área de jogo.
+        private void CriarIconePlacar(string nome, int x)
+        {
+            PictureBox icone = new PictureBox
+            {
+                Image = TemaIlha.CriarIcone(nome, Color.FromArgb(255, 211, 96)),
+                Bounds = new Rectangle(x, 17, 24, 24), BackColor = Color.Transparent
+            };
+            icone.Disposed += delegate { icone.Image.Dispose(); };
+            cabecalho.Controls.Add(icone);
+        }
+
         private static Button CriarBotao(string texto, EventHandler acao)
         {
             Button botao = new Button
             {
                 Text = texto, FlatStyle = FlatStyle.Flat, ForeColor = Color.White,
                 BackColor = Color.FromArgb(38, 77, 57), Cursor = Cursors.Hand,
-                Font = new Font("Arial", 10, FontStyle.Bold), Size = new Size(148, 38)
+                Font = new Font("Consolas", 10, FontStyle.Bold), Size = new Size(148, 38)
             };
-            botao.FlatAppearance.BorderColor = Color.FromArgb(112, 155, 100);
+            string icone = texto == "PAUSAR" ? "pausa" : texto == "CONTINUAR" ? "continuar"
+                : texto == "VOLTAR AO MENU" ? "menu" : texto == "ABRIR VÍDEO" ? "video"
+                : texto == "JOGAR DE NOVO" ? "repetir" : "som";
+            TemaIlha.Aplicar(botao, icone, texto == "CONTINUAR" || texto == "JOGAR DE NOVO");
             botao.Click += acao;
             return botao;
         }
@@ -147,12 +172,12 @@ namespace sei_la
             painelPausa = new Panel { Visible = false, BackColor = Color.FromArgb(19, 30, 35), Size = new Size(440, 226) };
             Label titulo = new Label
             {
-                Text = "PAUSA", ForeColor = Color.Gold, Font = new Font("Arial", 26, FontStyle.Bold),
+                Text = "UMA PAUSA NA AVENTURA", ForeColor = Color.Gold, Font = new Font("Consolas", 16, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter, Bounds = new Rectangle(20, 18, 400, 48)
             };
             Label descricao = new Label
             {
-                Text = modoApresentacao ? "Modo de apresentação • o progresso não é salvo." : "Seu progresso é salvo a cada acerto.",
+                Text = modoApresentacao ? "O jardim espera por você. Pronto para continuar?" : "Pode respirar: sua aventura está salva.",
                 ForeColor = Color.WhiteSmoke, TextAlign = ContentAlignment.MiddleCenter,
                 Bounds = new Rectangle(20, 78, 400, 45)
             };
@@ -161,6 +186,11 @@ namespace sei_la
             retomar.Location = new Point(50, 158);
             menu.Location = new Point(242, 158);
             painelPausa.Controls.AddRange(new Control[] { titulo, descricao, retomar, menu });
+            painelPausa.Paint += delegate(object s, PaintEventArgs e)
+            {
+                using (Pen borda = new Pen(Color.FromArgb(220, 179, 83), 2))
+                    e.Graphics.DrawRectangle(borda, 1, 1, painelPausa.Width - 3, painelPausa.Height - 3);
+            };
         }
 
         private void CriarVitoria()
@@ -171,7 +201,7 @@ namespace sei_la
             lblResumo = new Label
             {
                 Dock = DockStyle.Top, Height = 35, ForeColor = Color.Gold,
-                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Arial", 12, FontStyle.Bold)
+                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Consolas", 12, FontStyle.Bold)
             };
             FlowLayoutPanel botoes = new FlowLayoutPanel
             {
@@ -219,12 +249,12 @@ namespace sei_la
             progresso.SetBounds(0, 105, w, 8);
             rodape.SetBounds(0, h - 44, w, 44);
             campo.SetBounds(0, 113, w, Math.Max(130, h - 157));
-            lblNivel.Location = new Point(20, 14);
-            lblPontos.Location = new Point(240, 14);
+            lblNivel.SetBounds(54, 10, 170, 38);
+            lblPontos.SetBounds(269, 10, 200, 38);
             lblRestantes.Location = new Point(20, 48);
             lblInstrucao.Location = new Point(20, 78);
             btnPausa.SetBounds(w - 130, 15, 110, 34);
-            btnSom.SetBounds(w - 250, 15, 110, 34);
+            btnSom.SetBounds(w - 275, 15, 135, 34);
             lblAjuda.SetBounds(14, 0, Math.Max(475, w - 280), 44);
             lblSituacao.SetBounds(w - 260, 0, 246, 44);
             painelPausa.Location = new Point((w - painelPausa.Width) / 2, Math.Max(120, (h - painelPausa.Height) / 2));
@@ -283,11 +313,13 @@ namespace sei_la
 
         private void AtualizarPlacar()
         {
-            lblNivel.Text = "Acertos: " + partida.Acertos + " / " + EstadoPartida.Meta;
-            lblPontos.Text = "Pontos: " + partida.Pontos;
+            lblNivel.Text = partida.Acertos + " / " + EstadoPartida.Meta;
+            lblPontos.Text = partida.Pontos + " pontos";
             lblRestantes.Text = "Toupeiras restantes: " + partida.Restantes;
             progresso.Value = partida.Acertos;
             btnSom.Text = AudioRetro.Ativo ? "SOM: ON" : "SOM: OFF";
+            // O desenho do alto-falante também muda quando o som é desligado.
+            TemaIlha.AtualizarIcone(btnSom, AudioRetro.Ativo ? "som" : "mudo", Color.WhiteSmoke);
             AtualizarSituacao();
         }
 
@@ -304,7 +336,7 @@ namespace sei_la
             if (!modoApresentacao) ProgressoJogo.RegistrarVitoria(partida.Pontos);
             toupeira.Visible = false;
             campo.Enabled = false;
-            lblResumo.Text = "30 / 30 TOUPEIRAS • " + partida.Pontos + " PONTOS"
+            lblResumo.Text = "JARDIM SALVO! • 30 / 30 TOUPEIRAS • " + partida.Pontos + " PONTOS"
                 + (modoApresentacao ? " • DEMONSTRAÇÃO" : "");
             painelVitoria.Visible = true;
             painelVitoria.BringToFront();
@@ -322,7 +354,7 @@ namespace sei_la
             if (!modoApresentacao) ProgressoJogo.SalvarAcertos(0);
             campo.Enabled = true;
             toupeira.Visible = true;
-            lblInstrucao.Text = modoApresentacao ? "DEMONSTRAÇÃO • nova rodada de 30 toupeiras" : "ILHA DO CAFÉ • 30 acertos para conquistar o troféu";
+            lblInstrucao.Text = "SUA MISSÃO • proteja o jardim e devolva a paz à ilha";
             AtualizarPlacar();
             MoverToupeira();
             campo.Focus();
@@ -331,6 +363,7 @@ namespace sei_la
         private void Pausar()
         {
             if (pausado || partida.Venceu) return;
+            AudioRetro.Pausa();
             pausado = true;
             timerImpacto.Stop();
             campo.Enabled = false;
@@ -353,7 +386,7 @@ namespace sei_la
         private void AlternarSom()
         {
             AudioRetro.Ativo = !AudioRetro.Ativo;
-            ProgressoJogo.SalvarOpcoes(AudioRetro.Ativo);
+            ProgressoJogo.SalvarAudio(AudioRetro.Ativo, AudioRetro.EstiloAcerto);
             if (AudioRetro.Ativo) AudioRetro.Menu();
             else AudioRetro.Parar();
             AtualizarPlacar();
@@ -424,6 +457,8 @@ namespace sei_la
             if (campo != null) campo.Cursor = Cursors.Default;
             if (toupeira != null) toupeira.Cursor = Cursors.Default;
             if (martelos != null) { martelos.Dispose(); martelos = null; }
+            if (lblNivel.Image != null) { lblNivel.Image.Dispose(); lblNivel.Image = null; }
+            if (lblPontos.Image != null) { lblPontos.Image.Dispose(); lblPontos.Image = null; }
         }
     }
 
@@ -434,6 +469,37 @@ namespace sei_la
         {
             DoubleBuffered = true;
             ResizeRedraw = true;
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            base.OnPaintBackground(e);
+            // Grama em blocos com paleta curta para um clima de plataforma retrô.
+            e.Graphics.SmoothingMode = SmoothingMode.None;
+            e.Graphics.Clear(Color.FromArgb(43, 126, 65));
+            int bloco = 32;
+            Color[] tons = { Color.FromArgb(46, 132, 68), Color.FromArgb(39, 119, 60),
+                Color.FromArgb(51, 139, 70), Color.FromArgb(44, 128, 62) };
+            for (int y = 0; y < Height; y += bloco)
+                for (int x = 0; x < Width; x += bloco)
+                {
+                    int variante = ((x / bloco) * 17 + (y / bloco) * 31 + (x / bloco) * (y / bloco)) & 3;
+                    using (Brush quadrado = new SolidBrush(tons[variante]))
+                        e.Graphics.FillRectangle(quadrado, x, y, Math.Min(bloco, Width - x), Math.Min(bloco, Height - y));
+                    if (variante == 1 || variante == 3)
+                    {
+                        using (Brush grama = new SolidBrush(Color.FromArgb(72, 166, 78)))
+                        {
+                            e.Graphics.FillRectangle(grama, x + 7, y + 8, 5, 3);
+                            e.Graphics.FillRectangle(grama, x + 20, y + 22, 4, 4);
+                        }
+                    }
+                }
+            using (Brush sombra = new SolidBrush(Color.FromArgb(28, 9, 32, 23)))
+                e.Graphics.FillRectangle(sombra, ClientRectangle);
+            if (Width > 20 && Height > 20)
+                using (Pen margem = new Pen(Color.FromArgb(230, 255, 211, 96), 4))
+                    e.Graphics.DrawRectangle(margem, 8, 8, Width - 17, Height - 17);
         }
     }
 
@@ -480,7 +546,7 @@ namespace sei_la
             {
                 using (Brush brilho = new SolidBrush(Color.FromArgb(150, 255, 222, 70)))
                     e.Graphics.FillEllipse(brilho, 6, 6, 104, 104);
-                using (Font fonte = new Font("Arial", 24, FontStyle.Bold))
+                using (Font fonte = new Font("Consolas", 24, FontStyle.Bold))
                     TextRenderer.DrawText(e.Graphics, "+100", fonte, ClientRectangle,
                         Color.FromArgb(50, 34, 9), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
             }

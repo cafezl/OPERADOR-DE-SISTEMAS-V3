@@ -13,11 +13,13 @@ namespace sei_la
         public static int AcertosSalvos { get; private set; }
         public static int Recorde { get; private set; }
         public static bool SomAtivo { get; private set; }
+        public static int EstiloSom { get; private set; }
         public static string UltimoErro { get; private set; }
 
         static ProgressoJogo()
         {
             SomAtivo = true;
+            EstiloSom = 0;
             UltimoErro = "";
         }
 
@@ -33,6 +35,7 @@ namespace sei_la
             AcertosSalvos = 0;
             Recorde = 0;
             SomAtivo = true;
+            EstiloSom = 0;
             UltimoErro = "";
             try
             {
@@ -45,6 +48,7 @@ namespace sei_la
                     if (raiz.Name != "toupeira") throw new XmlException("Formato de progresso desconhecido.");
                     AcertosSalvos = LerNumero(raiz, "acertos", 29);
                     Recorde = LerNumero(raiz, "recorde", 3000);
+                    EstiloSom = LerNumero(raiz, "estiloSom", 2);
                     bool som;
                     if (Boolean.TryParse((string)raiz.Element("som"), out som)) SomAtivo = som;
                 }
@@ -86,6 +90,14 @@ namespace sei_la
             Gravar();
         }
 
+        // Preserva os saves antigos: se estiloSom não existir, o padrão é moeda.
+        public static void SalvarAudio(bool som, int estilo)
+        {
+            SomAtivo = som;
+            EstiloSom = Math.Max(0, Math.Min(2, estilo));
+            Gravar();
+        }
+
         private static void Gravar()
         {
             string temporario = null;
@@ -95,7 +107,8 @@ namespace sei_la
                 Directory.CreateDirectory(Path.GetDirectoryName(destino));
                 temporario = destino + "." + Guid.NewGuid().ToString("N") + ".tmp";
                 var documento = new XElement("toupeira", new XAttribute("versao", 1),
-                    new XElement("acertos", AcertosSalvos), new XElement("recorde", Recorde), new XElement("som", SomAtivo));
+                    new XElement("acertos", AcertosSalvos), new XElement("recorde", Recorde),
+                    new XElement("som", SomAtivo), new XElement("estiloSom", EstiloSom));
                 documento.Save(temporario);
                 // Só substitui o arquivo anterior depois que o novo terminou de ser escrito.
                 if (File.Exists(destino)) File.Replace(temporario, destino, null);
