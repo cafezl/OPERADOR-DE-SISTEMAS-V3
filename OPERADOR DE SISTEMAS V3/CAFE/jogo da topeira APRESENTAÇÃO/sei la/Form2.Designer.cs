@@ -6,6 +6,7 @@
 
         protected override void Dispose(bool disposing)
         {
+            if (disposing) LiberarRecursos();
             if (disposing && (components != null))
             {
                 components.Dispose();

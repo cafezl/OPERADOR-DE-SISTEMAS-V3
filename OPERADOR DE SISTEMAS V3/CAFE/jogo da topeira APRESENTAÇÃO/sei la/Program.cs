@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace sei_la
@@ -16,7 +13,10 @@ namespace sei_la
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // O loop do Windows entrega cliques, teclas e timers aos formulários.
+            // O finally libera o áudio mesmo se a janela principal for fechada.
+            try { Application.Run(new Form1()); }
+            finally { AudioRetro.Liberar(); }
         }
     }
 }

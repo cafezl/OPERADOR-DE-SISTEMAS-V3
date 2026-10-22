@@ -59,6 +59,11 @@
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="EstadoPartida.cs" />
+    <Compile Include="MarteloCursor.cs" />
+    <Compile Include="AudioRetro.cs" />
+    <Compile Include="CenaVitoria.cs" />
+    <Compile Include="ProgressoJogo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -88,6 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="..\midia\vitoria-retro.mp4">
+      <Link>midia\vitoria-retro.mp4</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Captura de tela 2026-10-13 210608.png" />
