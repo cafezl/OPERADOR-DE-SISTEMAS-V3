@@ -27,6 +27,12 @@ namespace sei_la
         private CenaVitoria cena;
         private bool pausado, emImpacto, iniciado;
         private int quadroImpacto;
+        private int ultimaMensagemAcerto = -1;
+        private static readonly string[] mensagensAcerto =
+        {
+            "BOM!", "VOCÊ É INCRÍVEL!", "PARABÉNS!", "EU ACREDITO EM VOCÊ!",
+            "OBRIGADO, JOGADOR!", "JOGADOR LENDÁRIO!"
+        };
         private bool telaCheia;
         public bool IniciarEmTelaCheia { get; set; }
         private Rectangle limitesAnteriores;
@@ -147,8 +153,7 @@ namespace sei_la
                 // Errar não perde pontos: o feedback orienta sem atrapalhar a demonstração.
                 if (!pausado && !partida.Venceu)
                 {
-                    lblSituacao.Text = "Mire a cabeça do martelo na toupeira!";
-                    timerMensagem.Start();
+                    MostrarMensagemTemporaria("Mire a cabeça do martelo na toupeira!", 650);
                 }
             };
             campo.Controls.Add(toupeira);
@@ -302,7 +307,24 @@ namespace sei_la
             AudioRetro.Acerto();
             if (!modoApresentacao && !partida.Venceu) ProgressoJogo.SalvarAcertos(partida.Acertos);
             AtualizarPlacar();
+            MostrarMensagemTemporaria(ProximaMensagemAcerto(), 2100);
             timerImpacto.Start();
+        }
+
+        private string ProximaMensagemAcerto()
+        {
+            int indice = sorteio.Next(mensagensAcerto.Length);
+            if (indice == ultimaMensagemAcerto) indice = (indice + 1) % mensagensAcerto.Length;
+            ultimaMensagemAcerto = indice;
+            return mensagensAcerto[indice];
+        }
+
+        private void MostrarMensagemTemporaria(string mensagem, int duracao)
+        {
+            timerMensagem.Stop();
+            lblSituacao.Text = mensagem;
+            timerMensagem.Interval = duracao;
+            timerMensagem.Start();
         }
 
         private void AnimarImpacto(object sender, EventArgs e)
@@ -475,6 +497,16 @@ namespace sei_la
                 WindowState = estadoAnterior;
             }
             telaCheia = !telaCheia;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.F11)
+            {
+                AlternarTelaCheia();
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         // Eventos antigos continuam declarados para o Designer do Visual Studio.

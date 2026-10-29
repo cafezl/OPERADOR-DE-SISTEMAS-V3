@@ -15,7 +15,7 @@ namespace sei_la
         private static readonly object trava = new object();
         private static readonly List<Voz> efeitos = new List<Voz>();
         private static SaidaAudio saida;
-        private static MediaPlayer menuPlayer;
+        private static MediaPlayer faixaPlayer;
         private static short[] musica, menuMusical, partidaMusical;
         private static readonly Dictionary<string, short[]> sons = new Dictionary<string, short[]>();
         private static int posicaoMusica, volumeMusica = 18, volumeEfeitos = 80;
@@ -32,7 +32,7 @@ namespace sei_la
                 lock (trava)
                 {
                     volumeMusica = Math.Max(0, Math.Min(100, value));
-                    if (menuPlayer != null) menuPlayer.Volume = volumeMusica / 100.0;
+                    if (faixaPlayer != null) faixaPlayer.Volume = volumeMusica / 100.0;
                 }
             }
         }
@@ -50,10 +50,10 @@ namespace sei_la
                 {
                     ativo = value;
                     if (!value) efeitos.Clear();
-                    if (menuPlayer != null)
+                    if (faixaPlayer != null)
                     {
-                        if (!value) menuPlayer.Pause();
-                        else if (!musicaPausada) menuPlayer.Play();
+                        if (!value) faixaPlayer.Pause();
+                        else if (!musicaPausada) faixaPlayer.Play();
                     }
                     else if (value && musica != null) GarantirSaida();
                 }
@@ -70,10 +70,10 @@ namespace sei_la
         {
             lock (trava)
             {
-                FecharPlayerMenu();
+                FecharFaixa();
                 musicaPausada = false;
                 string caminho = CaminhoMidia("musica-menu.mp3");
-                if (File.Exists(caminho) && AbrirPlayerMenu(caminho)) return;
+                if (File.Exists(caminho) && AbrirFaixa(caminho, true)) return;
                 SelecionarMusica(ObterTemaMenuReserva());
             }
         }
@@ -81,14 +81,13 @@ namespace sei_la
         {
             lock (trava)
             {
-                FecharPlayerMenu();
-                if (partidaMusical == null)
-                {
-                    try { partidaMusical = LerWav(File.ReadAllBytes(CaminhoMidia("musica-partida.wav"))); }
-                    catch (IOException) { UltimoErro = "A música da partida não foi encontrada na pasta midia."; musica = null; return; }
-                    catch (UnauthorizedAccessException) { UltimoErro = "Não foi possível abrir a música da partida."; musica = null; return; }
-                }
-                SelecionarMusica(partidaMusical);
+                FecharFaixa();
+                musicaPausada = false;
+                string caminho = CaminhoMidia("musica-menu.mp3");
+                if (File.Exists(caminho) && AbrirFaixa(caminho, false)) return;
+                short[] reserva = ObterTemaPartidaReserva();
+                if (reserva == null) { musica = null; posicaoMusica = 0; return; }
+                SelecionarMusica(reserva);
             }
         }
         private static short[] ObterTemaMenuReserva()
@@ -96,26 +95,34 @@ namespace sei_la
             if (menuMusical == null) menuMusical = LerWav(CriarMusicaMenu());
             return menuMusical;
         }
-        private static bool AbrirPlayerMenu(string caminho)
+        private static short[] ObterTemaPartidaReserva()
+        {
+            if (partidaMusical != null) return partidaMusical;
+            try { partidaMusical = LerWav(File.ReadAllBytes(CaminhoMidia("musica-partida.wav"))); }
+            catch (IOException) { UltimoErro = "A música da partida não foi encontrada na pasta midia."; }
+            catch (UnauthorizedAccessException) { UltimoErro = "Não foi possível abrir a música da partida."; }
+            return partidaMusical;
+        }
+        private static bool AbrirFaixa(string caminho, bool ehMenu)
         {
             MediaPlayer player = null;
             try
             {
                 player = new MediaPlayer();
                 player.Volume = volumeMusica / 100.0;
-                menuPlayer = player;
+                faixaPlayer = player;
                 player.MediaOpened += delegate(object sender, EventArgs args)
                 {
                     lock (trava)
                     {
-                        if (Object.ReferenceEquals(menuPlayer, player) && ativo && !musicaPausada) player.Play();
+                        if (Object.ReferenceEquals(faixaPlayer, player) && ativo && !musicaPausada) player.Play();
                     }
                 };
                 player.MediaEnded += delegate(object sender, EventArgs args)
                 {
                     lock (trava)
                     {
-                        if (Object.ReferenceEquals(menuPlayer, player))
+                        if (Object.ReferenceEquals(faixaPlayer, player))
                         {
                             player.Position = TimeSpan.Zero;
                             if (ativo && !musicaPausada) player.Play();
@@ -126,10 +133,11 @@ namespace sei_la
                 {
                     lock (trava)
                     {
-                        if (!Object.ReferenceEquals(menuPlayer, player)) return;
-                        UltimoErro = "Não foi possível abrir a música do menu; usando o tema original.";
-                        FecharPlayerMenu();
-                        SelecionarMusica(ObterTemaMenuReserva());
+                        if (!Object.ReferenceEquals(faixaPlayer, player)) return;
+                        UltimoErro = "Não foi possível abrir a música enviada; usando a faixa de reserva.";
+                        FecharFaixa();
+                        short[] reserva = ehMenu ? ObterTemaMenuReserva() : ObterTemaPartidaReserva();
+                        if (reserva != null) SelecionarMusica(reserva);
                     }
                 };
                 musica = null;
@@ -141,27 +149,27 @@ namespace sei_la
             }
             catch (InvalidOperationException)
             {
-                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
-                UltimoErro = "Não foi possível abrir a música do menu; usando o tema original.";
+                if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
+                UltimoErro = "Não foi possível abrir a música enviada; usando a faixa de reserva.";
                 return false;
             }
             catch (IOException)
             {
-                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
-                UltimoErro = "Não foi possível ler a música do menu; usando o tema original.";
+                if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
+                UltimoErro = "Não foi possível ler a música enviada; usando a faixa de reserva.";
                 return false;
             }
             catch (UnauthorizedAccessException)
             {
-                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
-                UltimoErro = "Não foi possível acessar a música do menu; usando o tema original.";
+                if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
+                UltimoErro = "Não foi possível acessar a música enviada; usando a faixa de reserva.";
                 return false;
             }
         }
-        private static void FecharPlayerMenu()
+        private static void FecharFaixa()
         {
-            MediaPlayer anterior = menuPlayer;
-            menuPlayer = null;
+            MediaPlayer anterior = faixaPlayer;
+            faixaPlayer = null;
             if (anterior == null) return;
             try { anterior.Stop(); }
             catch (InvalidOperationException) { }
@@ -178,7 +186,7 @@ namespace sei_la
             lock (trava)
             {
                 musicaPausada = true;
-                if (menuPlayer != null) menuPlayer.Pause();
+                if (faixaPlayer != null) faixaPlayer.Pause();
             }
         }
         public static void RetomarMusica()
@@ -186,9 +194,9 @@ namespace sei_la
             lock (trava)
             {
                 musicaPausada = false;
-                if (menuPlayer != null)
+                if (faixaPlayer != null)
                 {
-                    if (ativo) menuPlayer.Play();
+                    if (ativo) faixaPlayer.Play();
                 }
                 else GarantirSaida();
             }
@@ -197,7 +205,7 @@ namespace sei_la
         {
             lock (trava)
             {
-                FecharPlayerMenu();
+                FecharFaixa();
                 musica = null;
                 posicaoMusica = 0;
             }
@@ -230,7 +238,7 @@ namespace sei_la
             SaidaAudio antiga;
             lock (trava)
             {
-                FecharPlayerMenu();
+                FecharFaixa();
                 antiga = saida; saida = null; musica = null; efeitos.Clear(); sons.Clear(); menuMusical = partidaMusical = null;
             }
             if (antiga != null) antiga.Dispose();

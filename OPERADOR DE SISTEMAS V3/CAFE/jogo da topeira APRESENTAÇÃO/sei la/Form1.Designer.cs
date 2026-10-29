@@ -127,6 +127,7 @@ namespace sei_la
             this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.lblStatus);
             this.Controls.Add(this.lblAtalhos);
+            this.Controls.SetChildIndex(this.pictureMenu, this.Controls.Count - 1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(820, 560);
             this.Name = "Form1";

@@ -161,13 +161,17 @@ namespace sei_la
             CabecalhoPagina("A LENDA DA ILHA", "A história, a inspiração e a proposta do jogo.");
             Colocar(new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical,
                 BorderStyle = BorderStyle.FixedSingle, BackColor = Color.FromArgb(24, 43, 49), ForeColor = Color.Wheat,
-                Text = "A INSPIRAÇÃO\r\nHelix Jump, da Voodoo, foi lançado em fevereiro de 2018. Nele, uma bola desce por uma torre de plataformas giratórias: o jogador procura os espaços, evita os perigos e tenta chegar ao fim. A regra é simples de aprender, mas o ritmo dá vontade de tentar mais uma vez. Trouxemos essa ideia de arcade para cá: controles diretos, objetivo claro e desafio crescente.\r\n\r\nA LENDA DA ILHA\r\nNo coração da ilha, um jardim alimenta seus moradores. Uma noite, túneis surgem por toda parte: as toupeiras descobriram as sementes sob o antigo templo. O guardião entrega seu martelo para proteger a plantação.\r\n\r\nA PROPOSTA\r\nAcerte 50 toupeiras, faça 5.000 pontos e salve o jardim. Cada acerto mostra o progresso; observar, mirar e tentar de novo aproxima a ilha da vitória. Abaixo, o vídeo lembra que os melhores momentos são aqueles que a gente gostaria de viver por mais tempo." }, 290, 212, 520, 264, 17);
-            Botao("VER VÍDEO • O GOSTO DA FELICIDADE", 290, 485, 520, 39, AbrirVideoFelicidade);
-            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 535, 255, 43,
+                Text = "A INSPIRAÇÃO\r\nHelix Jump, da Voodoo, foi lançado em fevereiro de 2018. Nele, uma bola desce por uma torre de plataformas giratórias: o jogador procura os espaços, evita os perigos e tenta chegar ao fim. A regra é simples de aprender, mas o ritmo dá vontade de tentar mais uma vez. Trouxemos essa ideia de arcade para cá: controles diretos, objetivo claro e desafio crescente.\r\n\r\nA LENDA DA ILHA\r\nNo coração da ilha, um jardim alimenta seus moradores. Uma noite, túneis surgem por toda parte: as toupeiras descobriram as sementes sob o antigo templo. O guardião entrega seu martelo para proteger a plantação.\r\n\r\nA PROPOSTA\r\nAcerte 50 toupeiras, faça 5.000 pontos e salve o jardim. Cada acerto mostra o progresso; observar, mirar e tentar de novo aproxima a ilha da vitória." }, 290, 212, 520, 248, 16);
+            Botao("VER VÍDEO • O GOSTO DA FELICIDADE", 290, 468, 520, 38, AbrirVideoFelicidade);
+            Label ligacaoVideo = Texto("Às vezes a gente joga para passar o tempo ou distrair a cabeça num dia difícil. A Ilha da Toupeira quer oferecer esse respiro e pequenas vitórias. O vídeo fala dos instantes felizes que gostaríamos de prolongar.",
+                290, 510, 520, 43, 13);
+            ligacaoVideo.AutoSize = false;
+            ligacaoVideo.TextAlign = ContentAlignment.MiddleLeft;
+            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 558, 255, 42,
                 delegate { Comecar(ProgressoJogo.AcertosSalvos, false); }, true);
             continuar.Enabled = ProgressoJogo.AcertosSalvos > 0;
-            Botao("NOVA AVENTURA", 560, 535, 250, 43, delegate { Comecar(0, false); });
-            Botao("VOLTAR", 435, 587, 230, 38, Voltar);
+            Botao("NOVA AVENTURA", 560, 558, 250, 42, delegate { Comecar(0, false); });
+            Botao("VOLTAR", 435, 610, 230, 38, Voltar);
         }
 
         private void AbrirVideoFelicidade()
