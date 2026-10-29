@@ -12,6 +12,7 @@ O cenário de ilha e templo foi desenhado para este jogo, inspirado nos menus de
 
 - **START:** começa uma nova partida.
 - **A LENDA DA ILHA:** mostra a história e permite continuar uma partida salva.
+- **VER VÍDEO • O GOSTO DA FELICIDADE:** abre o vídeo de reflexão incluído na história.
 - **PASSWORD:** cadastra ou acessa um perfil com nome e senha. O cadastro tem CPF com máscara `000.000.000-00` e validação; o CPF não é armazenado.
 - **OPTIONS:** ajusta música e efeitos separadamente, testa a pancada e abre a demonstração do final.
 
@@ -34,7 +35,7 @@ A demonstração não altera acertos salvos nem recordes. Frases curtas acompanh
 
 A partida usa o áudio enviado pelo Café, com repetição automática. A pancada usa um efeito curto de *Super Mario Bros.*; a música do menu e os sinais da interface são gerados pelo código. Música e efeitos podem tocar juntos, com volumes independentes. [Origens dos áudios](./midia/ORIGENS-AUDIO.md).
 
-A animação da vitória roda dentro do jogo. **ABRIR VÍDEO** abre a [versão MP4](./midia/vitoria-retro.mp4) no player do Windows.
+A animação da vitória roda dentro do jogo. **ABRIR VÍDEO** abre a [versão MP4 da vitória](./midia/vitoria-retro.mp4) no player do Windows. A história também inclui o [vídeo sobre o gosto da felicidade](./midia/video-felicidade.mp4), fornecido pelo Café.
 
 Perfis, recordes, volumes e progresso ficam **somente neste computador**, em `%LOCALAPPDATA%\Cafe\IlhaDaToupeira`. Cada jogador tem seu próprio salvamento; o visitante mantém o arquivo antigo. As senhas são guardadas como hash com salt. Não há servidor nem sincronização entre computadores.
 

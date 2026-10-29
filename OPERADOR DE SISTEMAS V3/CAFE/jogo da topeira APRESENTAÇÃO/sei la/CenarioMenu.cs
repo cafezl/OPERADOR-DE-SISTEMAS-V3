@@ -7,7 +7,7 @@ namespace sei_la
 {
     // Cenário original com formas angulares, madeira e pedra: clima de aventura de console.
     // Todos os desenhos usam 1100 x 690; a mesma transformação posiciona os controles.
-    internal sealed class CenarioMenu : Panel
+    public sealed class CenarioMenu : Panel
     {
         private bool interior;
         public bool Interior { get { return interior; } set { interior = value; Invalidate(true); } }
@@ -233,7 +233,7 @@ namespace sei_la
     }
 
     // Continua sendo Button: Tab, Enter, atalhos e leitores de tela funcionam normalmente.
-    internal sealed class BotaoAventura : Button
+    public sealed class BotaoAventura : Button
     {
         private bool apontado, pressionado;
         public BotaoAventura()
@@ -241,7 +241,8 @@ namespace sei_la
             SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
             FlatStyle = FlatStyle.Flat; FlatAppearance.BorderSize = 0;
             FlatAppearance.MouseOverBackColor = Color.Transparent; FlatAppearance.MouseDownBackColor = Color.Transparent;
-            BackColor = Color.Transparent; ForeColor = Color.Gold; UseVisualStyleBackColor = false; Cursor = Cursors.Hand;
+            // A faixa verde escura evita o fundo preto que alguns temas do Windows aplicam ao Button transparente.
+            BackColor = Color.FromArgb(31, 49, 34); ForeColor = Color.Gold; UseVisualStyleBackColor = false; Cursor = Cursors.Hand;
             TextAlign = ContentAlignment.MiddleLeft;
         }
         protected override void OnMouseEnter(EventArgs e) { apontado = true; Invalidate(); base.OnMouseEnter(e); }

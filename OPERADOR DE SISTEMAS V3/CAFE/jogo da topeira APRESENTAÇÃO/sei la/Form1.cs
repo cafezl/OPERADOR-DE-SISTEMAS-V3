@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using System.Threading.Tasks;
 
@@ -158,12 +161,33 @@ namespace sei_la
             CabecalhoPagina("A LENDA DA ILHA", "Toda aventura começa com um problema pequeno...");
             Colocar(new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical,
                 BorderStyle = BorderStyle.FixedSingle, BackColor = Color.FromArgb(24, 43, 49), ForeColor = Color.Wheat,
-                Text = "No coração da ilha existe um jardim que alimenta seus moradores. Mas, numa noite, túneis começaram a aparecer por toda parte.\r\n\r\nAs toupeiras encontraram as sementes escondidas sob o antigo templo. Agora surgem em lugares diferentes e ninguém consegue cuidar da plantação.\r\n\r\nVocê recebeu o martelo do guardião. Sua missão é mandar 50 toupeiras de volta às tocas, recuperar 5.000 pontos e devolver a tranquilidade ao jardim.\r\n\r\nObserve, mire e acerte. A ilha conta com você." }, 290, 212, 520, 262, 19);
-            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 492, 255, 43,
+                Text = "No coração da ilha existe um jardim que alimenta seus moradores. Mas, numa noite, túneis começaram a aparecer por toda parte.\r\n\r\nAs toupeiras encontraram as sementes escondidas sob o antigo templo. Agora surgem em lugares diferentes e ninguém consegue cuidar da plantação.\r\n\r\nVocê recebeu o martelo do guardião. Sua missão é mandar 50 toupeiras de volta às tocas, recuperar 5.000 pontos e devolver a tranquilidade ao jardim.\r\n\r\nObserve, mire e acerte. A ilha conta com você." }, 290, 212, 520, 242, 19);
+            Botao("VER VÍDEO • O GOSTO DA FELICIDADE", 290, 462, 520, 39, AbrirVideoFelicidade);
+            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 514, 255, 43,
                 delegate { Comecar(ProgressoJogo.AcertosSalvos, false); }, true);
             continuar.Enabled = ProgressoJogo.AcertosSalvos > 0;
-            Botao("NOVA AVENTURA", 560, 492, 250, 43, delegate { Comecar(0, false); });
-            Botao("VOLTAR", 435, 553, 230, 40, Voltar);
+            Botao("NOVA AVENTURA", 560, 514, 250, 43, delegate { Comecar(0, false); });
+            Botao("VOLTAR", 435, 568, 230, 40, Voltar);
+        }
+
+        private void AbrirVideoFelicidade()
+        {
+            string caminho = Path.Combine(Application.StartupPath, "midia", "video-felicidade.mp4");
+            if (!File.Exists(caminho))
+            {
+                MessageBox.Show(this, "Não encontrei o vídeo na pasta midia. Recompile a solução para copiá-lo.",
+                    "Vídeo da felicidade", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            try
+            {
+                Process.Start(new ProcessStartInfo(caminho) { UseShellExecute = true });
+            }
+            catch (Win32Exception)
+            {
+                MessageBox.Show(this, "Não foi possível abrir o player de vídeo deste computador.",
+                    "Vídeo da felicidade", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void MostrarConta(bool cadastrar)
@@ -185,19 +209,23 @@ namespace sei_la
             Botao("CADASTRAR", 560, 205, 240, 36, delegate { MostrarConta(true); }, cadastrar);
             Texto("Nome do jogador", 300, 252, 500, 24, 16);
             TextBox nome = Colocar(new TextBox { MaxLength = 40, BorderStyle = BorderStyle.FixedSingle }, 300, 280, 500, 32, 19);
-            MaskedTextBox cpf = null;
+            TextBox cpf = null;
             if (cadastrar)
             {
-                Texto("CPF", 300, 320, 500, 24, 16);
-                cpf = Colocar(new MaskedTextBox("000.000.000-00") { TextMaskFormat = MaskFormat.ExcludePromptAndLiterals,
-                    BorderStyle = BorderStyle.FixedSingle, AccessibleName = "CPF" }, 300, 347, 500, 32, 19);
+                Texto("CPF • digite os 11 números", 300, 320, 500, 24, 16);
+                cpf = Colocar(new TextBox { MaxLength = 14, BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = Color.FromArgb(249, 247, 239), ForeColor = Color.FromArgb(26, 35, 37),
+                    AccessibleName = "CPF (11 números)" }, 300, 347, 500, 32, 19);
+                TextBox campoCpfFormatar = cpf;
+                cpf.TextChanged += delegate { FormatarCpf(campoCpfFormatar); };
+                cpf.KeyDown += TratarEdicaoCpf;
             }
             int ySenha = cadastrar ? 387 : 325;
             Texto("Senha" + (cadastrar ? " • pelo menos 6 caracteres" : ""), 300, ySenha, 500, 24, 16);
             TextBox senha = Colocar(new TextBox { MaxLength = 128, UseSystemPasswordChar = true, BorderStyle = BorderStyle.FixedSingle,
                 AccessibleName = "Senha" }, 300, ySenha + 27, 500, 32, 19);
             Label aviso = Texto("", 300, 453, 500, 41, 15, true);
-            MaskedTextBox campoCpf = cpf;
+            TextBox campoCpf = cpf;
             acaoEnter = Botao(cadastrar ? "CRIAR PERFIL" : "ENTRAR NA ILHA", 300, 500, 500, 43, async delegate
             {
                 processandoConta = true;
@@ -218,6 +246,92 @@ namespace sei_la
             }, true);
             Botao("VOLTAR", 435, 556, 230, 38, Voltar);
             nome.Focus();
+        }
+
+        // Formata um TextBox comum para que o usuário consiga digitar ou colar o CPF sem a máscara bloquear as teclas.
+        private bool atualizandoCpf;
+
+        private void FormatarCpf(TextBox campo)
+        {
+            if (atualizandoCpf) return;
+            int posicao = Math.Min(campo.SelectionStart, campo.Text.Length);
+            int digitosAntes = ContarDigitos(campo.Text.Substring(0, posicao));
+            string digitos = ApenasDigitos(campo.Text);
+            if (digitos.Length > 11) digitos = digitos.Substring(0, 11);
+            string formatado = FormatarDigitosCpf(digitos);
+            if (campo.Text == formatado) return;
+
+            atualizandoCpf = true;
+            campo.Text = formatado;
+            campo.SelectionStart = PosicaoAposDigitos(formatado, digitosAntes);
+            campo.SelectionLength = 0;
+            atualizandoCpf = false;
+        }
+
+        private void TratarEdicaoCpf(object sender, KeyEventArgs e)
+        {
+            TextBox campo = sender as TextBox;
+            if (campo == null || campo.SelectionLength != 0 ||
+                (e.KeyCode != Keys.Back && e.KeyCode != Keys.Delete)) return;
+
+            int antes = ContarDigitos(campo.Text.Substring(0, Math.Min(campo.SelectionStart, campo.Text.Length)));
+            int indice = e.KeyCode == Keys.Back ? antes - 1 : antes;
+            string digitos = ApenasDigitos(campo.Text);
+            if (indice < 0 || indice >= digitos.Length) return;
+
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+            digitos = digitos.Remove(indice, 1);
+            string formatado = FormatarDigitosCpf(digitos);
+            atualizandoCpf = true;
+            campo.Text = formatado;
+            campo.SelectionStart = PosicaoAposDigitos(formatado, e.KeyCode == Keys.Back ? indice : antes);
+            campo.SelectionLength = 0;
+            atualizandoCpf = false;
+        }
+
+        private static string ApenasDigitos(string texto)
+        {
+            var resultado = new System.Text.StringBuilder(11);
+            foreach (char caractere in texto)
+            {
+                if (Char.IsDigit(caractere))
+                {
+                    resultado.Append(caractere);
+                    if (resultado.Length == 11) break;
+                }
+            }
+            return resultado.ToString();
+        }
+
+        private static int ContarDigitos(string texto)
+        {
+            int quantidade = 0;
+            foreach (char caractere in texto) if (Char.IsDigit(caractere)) quantidade++;
+            return quantidade;
+        }
+
+        private static string FormatarDigitosCpf(string digitos)
+        {
+            var texto = new System.Text.StringBuilder(14);
+            for (int i = 0; i < digitos.Length; i++)
+            {
+                if (i == 3 || i == 6) texto.Append('.');
+                else if (i == 9) texto.Append('-');
+                texto.Append(digitos[i]);
+            }
+            return texto.ToString();
+        }
+
+        private static int PosicaoAposDigitos(string texto, int quantidade)
+        {
+            if (quantidade <= 0) return 0;
+            int encontrados = 0;
+            for (int i = 0; i < texto.Length; i++)
+            {
+                if (Char.IsDigit(texto[i]) && ++encontrados == quantidade) return i + 1;
+            }
+            return texto.Length;
         }
 
         private void MostrarOpcoes()

@@ -104,6 +104,10 @@
       <Link>midia\musica-partida.wav</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\midia\video-felicidade.mp4">
+      <Link>midia\video-felicidade.mp4</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\midia\vitoria-retro.mp4">
       <Link>midia\vitoria-retro.mp4</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
