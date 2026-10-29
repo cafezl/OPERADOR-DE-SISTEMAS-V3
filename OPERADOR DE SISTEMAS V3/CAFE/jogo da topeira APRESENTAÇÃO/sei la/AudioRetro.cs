@@ -16,7 +16,7 @@ namespace sei_la
         private static readonly List<Voz> efeitos = new List<Voz>();
         private static SaidaAudio saida;
         private static MediaPlayer faixaPlayer;
-        private static short[] musica, menuMusical, partidaMusical;
+        private static short[] musica, partidaMusical;
         private static readonly Dictionary<string, short[]> sons = new Dictionary<string, short[]>();
         private static int posicaoMusica, volumeMusica = 18, volumeEfeitos = 80;
         private static bool ativo = true, musicaPausada;
@@ -72,9 +72,11 @@ namespace sei_la
             {
                 FecharFaixa();
                 musicaPausada = false;
-                string caminho = CaminhoMidia("musica-menu.mp3");
+                string caminho = CaminhoMusicaMenu();
                 if (File.Exists(caminho) && AbrirFaixa(caminho)) return;
-                SelecionarMusica(ObterTemaMenuReserva());
+                musica = null;
+                posicaoMusica = 0;
+                UltimoErro = "Não encontrei ou não consegui abrir a música do Form1.";
             }
         }
         public static void MusicaJogo()
@@ -90,11 +92,6 @@ namespace sei_la
                 }
                 SelecionarMusica(partidaMusical);
             }
-        }
-        private static short[] ObterTemaMenuReserva()
-        {
-            if (menuMusical == null) menuMusical = LerWav(CriarMusicaMenu());
-            return menuMusical;
         }
         private static bool AbrirFaixa(string caminho)
         {
@@ -127,9 +124,10 @@ namespace sei_la
                     lock (trava)
                     {
                         if (!Object.ReferenceEquals(faixaPlayer, player)) return;
-                        UltimoErro = "Não foi possível abrir a música enviada; usando a faixa de reserva.";
+                        UltimoErro = "Não foi possível abrir a música do Form1.";
                         FecharFaixa();
-                        SelecionarMusica(ObterTemaMenuReserva());
+                        musica = null;
+                        posicaoMusica = 0;
                     }
                 };
                 musica = null;
@@ -142,19 +140,19 @@ namespace sei_la
             catch (InvalidOperationException)
             {
                 if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
-                UltimoErro = "Não foi possível abrir a música enviada; usando a faixa de reserva.";
+                UltimoErro = "Não foi possível abrir a música do Form1.";
                 return false;
             }
             catch (IOException)
             {
                 if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
-                UltimoErro = "Não foi possível ler a música enviada; usando a faixa de reserva.";
+                UltimoErro = "Não foi possível ler a música do Form1.";
                 return false;
             }
             catch (UnauthorizedAccessException)
             {
                 if (Object.ReferenceEquals(faixaPlayer, player)) FecharFaixa();
-                UltimoErro = "Não foi possível acessar a música enviada; usando a faixa de reserva.";
+                UltimoErro = "Não foi possível acessar a música do Form1.";
                 return false;
             }
         }
@@ -231,7 +229,7 @@ namespace sei_la
             lock (trava)
             {
                 FecharFaixa();
-                antiga = saida; saida = null; musica = null; efeitos.Clear(); sons.Clear(); menuMusical = partidaMusical = null;
+                antiga = saida; saida = null; musica = null; efeitos.Clear(); sons.Clear(); partidaMusical = null;
             }
             if (antiga != null) antiga.Dispose();
         }
@@ -277,6 +275,34 @@ namespace sei_la
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "midia", nome);
         }
 
+        private static string CaminhoMusicaMenu()
+        {
+            string noProjeto = CaminhoMidia("musica-menu.mp3");
+            if (File.Exists(noProjeto)) return noProjeto;
+
+            string downloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "Downloads", "MUSICA DO FORM 1 .mpeg");
+            if (!File.Exists(downloads)) return noProjeto;
+
+            // O arquivo fica fora do Git. Procuramos a cópia em Downloads e damos ao Windows
+            // uma extensão MP3 reconhecida, sem alterar o áudio original do usuário.
+            string cache = Path.Combine(Path.GetTempPath(), "IlhaDaToupeira", "musica-menu.mp3");
+            try
+            {
+                FileInfo origem = new FileInfo(downloads);
+                FileInfo existente = new FileInfo(cache);
+                if (!existente.Exists || existente.Length != origem.Length || existente.LastWriteTimeUtc < origem.LastWriteTimeUtc)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(cache));
+                    File.Copy(downloads, cache, true);
+                    File.SetLastWriteTimeUtc(cache, origem.LastWriteTimeUtc);
+                }
+                return cache;
+            }
+            catch (IOException) { return downloads; }
+            catch (UnauthorizedAccessException) { return downloads; }
+        }
+
         public static byte[] CriarSomAcerto(int estilo)
         {
             try { return File.ReadAllBytes(CaminhoMidia("acerto-stomp.wav")); }
@@ -305,22 +331,6 @@ namespace sei_la
                 return (Math.Sin(fase) * 0.43 + Math.Sin(fase * 0.25) * 0.15) * envelope;
             });
         }
-        private static byte[] CriarMusicaMenu()
-        {
-            // Pequeno tema original de marimba e baixo, em 16 compassos curtos que se repetem.
-            double[] notas = { 440, 523.25, 659.25, 523.25, 392, 493.88, 587.33, 493.88,
-                349.23, 440, 523.25, 440, 392, 493.88, 587.33, 392 };
-            return CriarWav(8.0, delegate(double t)
-            {
-                int nota = Math.Min(15, (int)(t / 0.5));
-                double local = t - nota * 0.5;
-                double fase = 2 * Math.PI * notas[nota] * local;
-                double envelope = Math.Min(1, local / 0.008) * Math.Exp(-local * 11) * Math.Min(1, (0.5 - local) / 0.04);
-                double baixo = Math.Sin(2 * Math.PI * notas[nota - nota % 4] * 0.25 * local) * Math.Sin(Math.PI * local / 0.5);
-                return (Math.Sin(fase) + 0.2 * Math.Sin(fase * 3)) * envelope * 0.32 + baixo * 0.10;
-            });
-        }
-
         // Os WAVs do projeto usam PCM mono de 16 bits, a 22.050 amostras por segundo.
         private static short[] LerWav(byte[] bytes)
         {
