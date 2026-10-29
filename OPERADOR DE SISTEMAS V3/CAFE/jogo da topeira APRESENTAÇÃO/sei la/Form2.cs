@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
@@ -28,6 +28,7 @@ namespace sei_la
         private bool pausado, emImpacto, iniciado;
         private int quadroImpacto;
         private bool telaCheia;
+        public bool IniciarEmTelaCheia { get; set; }
         private Rectangle limitesAnteriores;
         private FormWindowState estadoAnterior;
         private FormBorderStyle bordaAnterior;
@@ -55,6 +56,8 @@ namespace sei_la
         {
             ProgressoJogo.Carregar();
             AudioRetro.EstiloAcerto = ProgressoJogo.EstiloSom;
+            AudioRetro.VolumeMusica = ProgressoJogo.VolumeMusica;
+            AudioRetro.VolumeEfeitos = ProgressoJogo.VolumeEfeitos;
             AudioRetro.Ativo = ProgressoJogo.SomAtivo;
             CriarInterface();
             martelos = new MarteloCursor();
@@ -71,6 +74,8 @@ namespace sei_la
             MoverToupeira();
             AtualizarPlacar();
             if (!modoApresentacao) ProgressoJogo.SalvarAcertos(partida.Acertos);
+            if (IniciarEmTelaCheia) AlternarTelaCheia();
+            AudioRetro.MusicaJogo();
         }
 
         private void CriarInterface()
@@ -197,11 +202,11 @@ namespace sei_la
         {
             painelVitoria = new Panel { Visible = false, BackColor = Color.FromArgb(10, 18, 36) };
             cena = new CenaVitoria { Dock = DockStyle.Fill };
-            Panel acoes = new Panel { Dock = DockStyle.Bottom, Height = 100, BackColor = Color.FromArgb(10, 18, 36) };
+            Panel acoes = new Panel { Dock = DockStyle.Bottom, Height = 124, BackColor = Color.FromArgb(10, 18, 36) };
             lblResumo = new Label
             {
-                Dock = DockStyle.Top, Height = 35, ForeColor = Color.Gold,
-                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Consolas", 12, FontStyle.Bold)
+                Dock = DockStyle.Top, Height = 30, ForeColor = Color.Gold,
+                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Consolas", 11, FontStyle.Bold)
             };
             FlowLayoutPanel botoes = new FlowLayoutPanel
             {
@@ -211,7 +216,17 @@ namespace sei_la
             botoes.Controls.Add(CriarBotao("JOGAR DE NOVO", delegate { Reiniciar(); }));
             botoes.Controls.Add(CriarBotao("ABRIR VÍDEO", delegate { AbrirVideo(); }));
             botoes.Controls.Add(CriarBotao("VOLTAR AO MENU", delegate { Close(); }));
-            acoes.Controls.Add(lblResumo);
+            // A mensagem encerra a aventura sem interromper a animação nem abrir outra janela.
+            Label aprendizado = new Label
+            {
+                Dock = DockStyle.Bottom, Height = 30, ForeColor = Color.FromArgb(177, 214, 222),
+                TextAlign = ContentAlignment.MiddleCenter, Font = new Font("Segoe UI", 10),
+                Text = "Não é o quanto você sabe, é o quanto você quer aprender."
+            };
+            Panel resultado = new Panel { Dock = DockStyle.Top, Height = 62 };
+            resultado.Controls.Add(lblResumo);
+            resultado.Controls.Add(aprendizado);
+            acoes.Controls.Add(resultado);
             acoes.Controls.Add(botoes);
             acoes.Resize += delegate { botoes.Padding = new Padding(Math.Max(10, (acoes.Width - 462) / 2), 7, 0, 0); };
             painelVitoria.Controls.Add(cena);
@@ -252,7 +267,8 @@ namespace sei_la
             lblNivel.SetBounds(54, 10, 170, 38);
             lblPontos.SetBounds(269, 10, 200, 38);
             lblRestantes.Location = new Point(20, 48);
-            lblInstrucao.Location = new Point(20, 78);
+            lblInstrucao.AutoSize = false;
+            lblInstrucao.SetBounds(20, 76, w - 40, 26);
             btnPausa.SetBounds(w - 130, 15, 110, 34);
             btnSom.SetBounds(w - 275, 15, 135, 34);
             lblAjuda.SetBounds(14, 0, Math.Max(475, w - 280), 44);
@@ -317,10 +333,22 @@ namespace sei_la
             lblPontos.Text = partida.Pontos + " pontos";
             lblRestantes.Text = "Toupeiras restantes: " + partida.Restantes;
             progresso.Value = partida.Acertos;
+            // A cada etapa, uma frase curta valoriza o esforço sem cobrir o alvo.
+            lblInstrucao.Text = Incentivo(partida.Acertos);
             btnSom.Text = AudioRetro.Ativo ? "SOM: ON" : "SOM: OFF";
             // O desenho do alto-falante também muda quando o som é desligado.
             TemaIlha.AtualizarIcone(btnSom, AudioRetro.Ativo ? "som" : "mudo", Color.WhiteSmoke);
             AtualizarSituacao();
+        }
+
+        private static string Incentivo(int acertos)
+        {
+            if (acertos >= EstadoPartida.Meta) return "VOCÊ CONSEGUIU! • A ilha voltou a sorrir.";
+            if (acertos >= 40) return "RETA FINAL • Continue. Falta pouco para salvar a ilha!";
+            if (acertos >= 30) return "OLHA ATÉ ONDE VOCÊ CHEGOU • Um acerto de cada vez.";
+            if (acertos >= 20) return "VOCÊ ESTÁ EVOLUINDO • A prática faz a diferença.";
+            if (acertos >= 10) return "BOM COMEÇO! • Cada tentativa é uma chance de aprender.";
+            return "SUA MISSÃO • Proteja o jardim. A ilha conta com você!";
         }
 
         private void AtualizarSituacao()
@@ -332,21 +360,23 @@ namespace sei_la
 
         private void MostrarVitoria()
         {
-            // 30 acertos = 3000 pontos. A vitória limpa o save somente no modo normal.
+            // 50 acertos = 5000 pontos. A vitória limpa o save somente no modo normal.
             if (!modoApresentacao) ProgressoJogo.RegistrarVitoria(partida.Pontos);
             toupeira.Visible = false;
             campo.Enabled = false;
-            lblResumo.Text = "JARDIM SALVO! • 30 / 30 TOUPEIRAS • " + partida.Pontos + " PONTOS"
+            lblResumo.Text = "JARDIM SALVO! • " + partida.Acertos + " / " + EstadoPartida.Meta + " • " + partida.Pontos + " PONTOS"
                 + (modoApresentacao ? " • DEMONSTRAÇÃO" : "");
             painelVitoria.Visible = true;
             painelVitoria.BringToFront();
             cena.Iniciar();
+            AudioRetro.PararMusica();
             AudioRetro.Vitoria();
             painelVitoria.Controls[1].Focus();
         }
 
         private void Reiniciar()
         {
+            AudioRetro.MusicaJogo();
             AudioRetro.Parar();
             cena.Parar();
             painelVitoria.Visible = false;
@@ -363,6 +393,7 @@ namespace sei_la
         private void Pausar()
         {
             if (pausado || partida.Venceu) return;
+            AudioRetro.PausarMusica();
             AudioRetro.Pausa();
             pausado = true;
             timerImpacto.Stop();
@@ -375,6 +406,7 @@ namespace sei_la
 
         private void Retomar()
         {
+            AudioRetro.RetomarMusica();
             pausado = false;
             painelPausa.Visible = false;
             campo.Enabled = true;
@@ -386,7 +418,7 @@ namespace sei_la
         private void AlternarSom()
         {
             AudioRetro.Ativo = !AudioRetro.Ativo;
-            ProgressoJogo.SalvarAudio(AudioRetro.Ativo, AudioRetro.EstiloAcerto);
+            ProgressoJogo.SalvarAudio(AudioRetro.Ativo, 0, AudioRetro.VolumeMusica, AudioRetro.VolumeEfeitos);
             if (AudioRetro.Ativo) AudioRetro.Menu();
             else AudioRetro.Parar();
             AtualizarPlacar();
@@ -441,6 +473,7 @@ namespace sei_la
             timerMensagem.Stop();
             if (cena != null) cena.Parar();
             AudioRetro.Parar();
+            AudioRetro.PararMusica();
             // Salva também se o usuário fechar nos 180 ms entre o último acerto e a vitória.
             if (!modoApresentacao)
             {

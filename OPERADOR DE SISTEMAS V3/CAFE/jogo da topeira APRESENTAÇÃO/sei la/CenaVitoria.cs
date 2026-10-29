@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -31,7 +31,7 @@ namespace sei_la
                 | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             BackColor = Ceu;
             TabStop = false;
-            AccessibleName = "Vitória: ilha conquistada, 30 de 30 toupeiras";
+            AccessibleName = "Vitória: ilha conquistada, " + EstadoPartida.Meta + " de " + EstadoPartida.Meta + " toupeiras. Torna-te quem tu és.";
             animacao = new Timer();
             animacao.Interval = 33; // Aproximadamente 30 quadros por segundo.
             animacao.Tick += delegate { Invalidate(); };
@@ -106,8 +106,8 @@ namespace sei_la
                 // Duas passadas dão sombra às letras e mantêm a leitura mesmo no céu animado.
                 TextoCentral(g, "VITÓRIA!", fonteTitulo, Ouro, 14);
                 TextoCentral(g, "ILHA CONQUISTADA", fonteLegenda, Creme, 49);
-                TextoCentral(g, "30 / 30 TOUPEIRAS", fonteLegenda, Ouro, 233);
-                TextoCentral(g, "CAFÉ  //  MISSÃO CUMPRIDA", fonteRodape, Color.FromArgb(177, 214, 222), 252);
+                TextoCentral(g, "Torna-te quem tu és", fonteLegenda, Ouro, 233);
+                TextoCentral(g, EstadoPartida.Meta + " / " + EstadoPartida.Meta + " TOUPEIRAS  //  MISSÃO CUMPRIDA", fonteRodape, Color.FromArgb(177, 214, 222), 252);
             }
             finally
             {

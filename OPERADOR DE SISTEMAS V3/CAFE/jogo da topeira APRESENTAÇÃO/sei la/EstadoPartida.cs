@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 
 namespace sei_la
 {
     // A regra do jogo fica separada da tela: fica fácil explicar e conferir a contagem.
     public sealed class EstadoPartida
     {
-        public const int Meta = 30;
+        public const int Meta = 50;
         public const int PontosPorAcerto = 100;
         public int Acertos { get; private set; }
         public int Pontos { get { return Acertos * PontosPorAcerto; } }

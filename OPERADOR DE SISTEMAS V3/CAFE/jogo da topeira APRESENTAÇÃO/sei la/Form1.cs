@@ -1,420 +1,336 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Threading;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 namespace sei_la
 {
-    // MENU: mantém a ilha animada e as cores do projeto, com ações que funcionam.
+    // Apenas dois Forms: este menu troca painéis; Form2 contém a partida.
     public partial class Form1 : Form
     {
-        private Image gifMenu;
-        private bool animandoMenu;
-        private int quadroPendente;
-        private System.Windows.Forms.Timer timerFundo;
-        private Button botaoSetaAtual;
-        private Button[] botoesMenu;
-        private Label lblResumo;
-        private Label lblHistoria;
-        private Label lblMissao;
-        private PictureBox iconeMissao;
-        private Label lblAssinatura;
-        private Font fonteMenu;
-        private Font fonteTitulo;
-        private float escalaAnterior;
+        private CenarioMenu cenario;
+        private readonly List<AreaControle> areas = new List<AreaControle>();
+        private Button[] opcoesMenu;
+        private Button acaoEnter;
+        private string pagina = "inicio";
+        private bool telaCheia, carregando, processandoConta;
+        private Rectangle limitesAnteriores;
+        private FormBorderStyle bordaAnterior;
+        private FormWindowState estadoAnterior;
+        private Timer timerCarga;
         private bool recursosLiberados;
 
         public Form1()
         {
             InitializeComponent();
-            if (components == null) components = new System.ComponentModel.Container();
-            DoubleBuffered = true; // Desenha o quadro inteiro antes de mostrá-lo, evitando piscar.
-            AutoSize = false;
-            MinimumSize = new Size(820, 560);
+            // Os controles antigos do Designer dão lugar às páginas do mesmo menu.
+            while (Controls.Count > 0) Controls[0].Dispose();
+            BackgroundImage = null;
+            AutoScaleMode = AutoScaleMode.None;
+            DoubleBuffered = true;
             KeyPreview = true;
-            BackgroundImage = null; // O GIF será desenhado uma única vez em OnPaintBackground.
-
-            Rectangle area = Screen.PrimaryScreen.WorkingArea;
-            ClientSize = new Size(Math.Min(1100, area.Width - 48), Math.Min(690, area.Height - 90));
-            botoesMenu = new[] { btnStart, btnLoadGame, btnPassword, btnOptions };
-            string[] icones = { "jogar", "continuar", "chave", "opcoes" };
-            string[] nomes = { "JOGAR", "CONTINUAR", "DEMONSTRAÇÃO", "OPÇÕES" };
-            for (int i = 0; i < botoesMenu.Length; i++)
-            {
-                botoesMenu[i].Text = nomes[i];
-                TemaIlha.Aplicar(botoesMenu[i], icones[i], i == 0);
-            }
-            foreach (Button botao in botoesMenu)
-            {
-                botao.Enter += Menu_MouseEnter; // A seta também acompanha Tab/teclado.
-                botao.Cursor = Cursors.Hand;
-            }
-
+            MinimumSize = new Size(820, 560);
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Ilha da Toupeira • Café";
-            lblTitulo.Text = ""; // O título é desenhado com contorno grosso, como a tela de um jogo de plataforma.
-            lblTitulo.AccessibleName = "ILHA DA TOUPEIRA";
-            lblTitulo.TextAlign = ContentAlignment.MiddleLeft;
-            lblTitulo.ForeColor = Color.FromArgb(255, 211, 96);
-            lblTitulo.Paint += PintarTituloRetro;
-            lblAssinatura = new Label
-            {
-                Text = "UMA AVENTURA DE REFLEXOS  /  CAFÉ", AutoSize = false,
-                BackColor = Color.Transparent, ForeColor = Color.FromArgb(155, 218, 191),
-                Font = new Font("Consolas", 10, FontStyle.Bold)
-            };
-            lblMissao = new Label
-            {
-                Text = "PROTEJA O JARDIM", AutoSize = false, TextAlign = ContentAlignment.MiddleLeft,
-                Padding = new Padding(52, 0, 0, 0),
-                BackColor = Color.FromArgb(22, 48, 40), ForeColor = Color.FromArgb(255, 211, 96),
-                Font = new Font("Consolas", 13, FontStyle.Bold)
-            };
-            iconeMissao = new PictureBox
-            {
-                Image = TemaIlha.CriarIcone("alvo", Color.FromArgb(255, 211, 96)),
-                BackColor = Color.FromArgb(22, 48, 40), SizeMode = PictureBoxSizeMode.CenterImage
-            };
-            lblHistoria = new Label
-            {
-                Text = "A tranquilidade da ilha foi interrompida por toupeiras que tomaram o jardim.\n\nPegue o martelo, mande cada uma de volta à toca e complete 30 acertos para devolver a paz à ilha.\n\n30 ACERTOS  •  3.000 PONTOS",
-                AutoSize = false, Padding = new Padding(18, 12, 18, 10),
-                BackColor = Color.FromArgb(22, 48, 40), ForeColor = Color.FromArgb(224, 234, 224),
-                Font = new Font("Consolas", 10)
-            };
-            Controls.AddRange(new Control[] { lblAssinatura, lblMissao, lblHistoria, iconeMissao });
-            iconeMissao.BringToFront();
-            lblResumo = new Label
-            {
-                AutoSize = false, ForeColor = Color.FromArgb(186, 210, 194), BackColor = Color.FromArgb(13, 29, 25),
-                TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(12, 0, 0, 0)
-            };
-            Controls.Add(lblResumo);
-            Resize += Form1_Resize;
-            MoverSeta(btnStart);
-            AjustarLayout();
+            Rectangle tela = Screen.PrimaryScreen.WorkingArea;
+            ClientSize = new Size(Math.Min(1100, tela.Width - 48), Math.Min(690, tela.Height - 80));
+            cenario = new CenarioMenu { Dock = DockStyle.Fill };
+            Controls.Add(cenario);
+            Resize += delegate { AjustarLayout(); };
+            MostrarInicio();
         }
 
-        // Carrega preferências somente ao abrir; as partidas atualizam a mesma classe de progresso.
         private void Form1_Load(object sender, EventArgs e)
         {
             ProgressoJogo.Carregar();
-            AudioRetro.EstiloAcerto = ProgressoJogo.EstiloSom;
+            AplicarAudioSalvo();
+            AudioRetro.MusicaMenu();
+            MostrarInicio();
+        }
+
+        private void AplicarAudioSalvo()
+        {
+            AudioRetro.VolumeMusica = ProgressoJogo.VolumeMusica;
+            AudioRetro.VolumeEfeitos = ProgressoJogo.VolumeEfeitos;
             AudioRetro.Ativo = ProgressoJogo.SomAtivo;
-            AtualizarResumo();
-            gifMenu = (Image)Properties.Resources.FUNDO_gif.Clone();
-            timerFundo = new System.Windows.Forms.Timer(components) { Interval = 40 };
-            timerFundo.Tick += AtualizarFundo;
-            ControlarAnimacao();
         }
 
-        // ImageAnimator usa outra thread: ela apenas sinaliza o próximo quadro, sem tocar na tela.
-        private void OnFrameChanged(object sender, EventArgs e)
+        // Cada posição usa a mesma escala do cenário. A janela nunca estica só os botões.
+        private T Colocar<T>(T controle, int x, int y, int w, int h, float tamanho = 15) where T : Control
         {
-            Interlocked.Exchange(ref quadroPendente, 1);
+            cenario.Controls.Add(controle);
+            areas.Add(new AreaControle { Controle = controle, Retangulo = new Rectangle(x, y, w, h), Tamanho = tamanho });
+            AjustarLayout();
+            return controle;
         }
 
-        // O timer executa na thread da interface; há no máximo 25 repinturas por segundo.
-        private void AtualizarFundo(object sender, EventArgs e)
-        {
-            if (Interlocked.Exchange(ref quadroPendente, 0) != 0)
-                Invalidate(true);
-        }
-
-        private void ControlarAnimacao()
-        {
-            if (gifMenu == null || timerFundo == null || recursosLiberados) return;
-            bool deveAnimar = Visible && WindowState != FormWindowState.Minimized;
-            if (deveAnimar && !animandoMenu && ImageAnimator.CanAnimate(gifMenu))
-            {
-                ImageAnimator.Animate(gifMenu, OnFrameChanged);
-                animandoMenu = true;
-                timerFundo.Start();
-            }
-            else if (!deveAnimar && animandoMenu)
-            {
-                timerFundo.Stop();
-                ImageAnimator.StopAnimate(gifMenu, OnFrameChanged);
-                animandoMenu = false;
-            }
-            Invalidate(true);
-        }
-
-        // Pausa o fundo enquanto o jogo está aberto, poupando processamento no laboratório.
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            base.OnVisibleChanged(e);
-            ControlarAnimacao();
-        }
-
-        protected override void OnPaintBackground(PaintEventArgs e)
-        {
-            if (gifMenu == null)
-            {
-                base.OnPaintBackground(e);
-                return;
-            }
-            if (animandoMenu) ImageAnimator.UpdateFrames(gifMenu);
-            e.Graphics.DrawImage(gifMenu, ClientRectangle);
-            if (ClientSize.Width <= 0 || ClientSize.Height <= 0) return;
-            // Sombra leve atrás das opções: preserva a ilha e melhora a leitura no projetor.
-            using (var sombra = new LinearGradientBrush(ClientRectangle,
-                Color.FromArgb(185, 14, 17, 20), Color.FromArgb(18, 14, 17, 20), 0f))
-                e.Graphics.FillRectangle(sombra, ClientRectangle);
-        }
-
-        // Escala o menu inteiro conforme a área útil; as quatro opções permanecem visíveis.
         private void AjustarLayout()
         {
-            if (botoesMenu == null) return;
-            float escala = Math.Max(0.70f, Math.Min(1.55f,
-                Math.Min(ClientSize.Width / 1100f, ClientSize.Height / 690f)));
-            if (Math.Abs(escala - escalaAnterior) > 0.01f)
+            if (cenario == null || cenario.Width == 0 || cenario.Height == 0) return;
+            float escala = Math.Min(cenario.Width / 1100f, cenario.Height / 690f);
+            int dx = (int)((cenario.Width - 1100 * escala) / 2), dy = (int)((cenario.Height - 690 * escala) / 2);
+            foreach (AreaControle item in areas)
             {
-                Font antigaMenu = fonteMenu, antigaTitulo = fonteTitulo;
-                fonteMenu = new Font("Consolas", 18f * escala, FontStyle.Bold, GraphicsUnit.Pixel);
-                fonteTitulo = new Font("Consolas", 54f * escala, FontStyle.Bold, GraphicsUnit.Pixel);
-                foreach (Button botao in botoesMenu) botao.Font = fonteMenu;
-                lblTitulo.Font = fonteTitulo;
-                lblSombra.Font = fonteTitulo;
-                if (antigaMenu != null) antigaMenu.Dispose();
-                if (antigaTitulo != null) antigaTitulo.Dispose();
-                escalaAnterior = escala;
-            }
-
-            int margem = (int)(62 * escala), altura = (int)(56 * escala), passo = altura + 10;
-            int topo = Math.Max((int)(240 * escala), ClientSize.Height - passo * 4 - 66);
-            for (int i = 0; i < botoesMenu.Length; i++)
-                botoesMenu[i].SetBounds(margem, topo + i * passo, (int)(355 * escala), altura);
-            lblAssinatura.SetBounds(margem + 4, (int)(40 * escala), 420, 30);
-            lblTitulo.SetBounds(margem - 4, (int)(80 * escala), (int)(480 * escala), (int)(145 * escala));
-            int larguraHistoria = Math.Min(335, ClientSize.Width - margem * 2 - (int)(395 * escala));
-            int xHistoria = ClientSize.Width - margem - larguraHistoria;
-            int yHistoria = Math.Max(154, (int)(225 * escala));
-            lblMissao.SetBounds(xHistoria, yHistoria, larguraHistoria, 52);
-            iconeMissao.SetBounds(xHistoria + 18, yHistoria + 14, 24, 24);
-            lblHistoria.SetBounds(xHistoria, yHistoria + 52, larguraHistoria,
-                Math.Min(245, ClientSize.Height - yHistoria - 106));
-            // WinForms não compõe a transparência de labels irmãos; o título usa o mesmo fundo.
-            lblSombra.Visible = false;
-            lblResumo.SetBounds(0, ClientSize.Height - 36, ClientSize.Width, 36);
-            MoverSeta(botaoSetaAtual ?? btnStart);
-        }
-
-        private void Form1_Resize(object sender, EventArgs e)
-        {
-            AjustarLayout();
-            ControlarAnimacao();
-        }
-
-        private void PintarTituloRetro(object sender, PaintEventArgs e)
-        {
-            if (fonteTitulo == null) return;
-            e.Graphics.SmoothingMode = SmoothingMode.None;
-            using (GraphicsPath caminho = new GraphicsPath())
-            using (StringFormat formato = new StringFormat())
-            using (Pen contorno = new Pen(Color.FromArgb(53, 36, 24), 8))
-            using (Pen brilho = new Pen(Color.FromArgb(255, 240, 166), 2))
-            using (Brush sombra = new SolidBrush(Color.FromArgb(170, 17, 29, 24)))
-            using (Brush letra = new SolidBrush(Color.FromArgb(255, 211, 96)))
-            {
-                formato.Alignment = StringAlignment.Near;
-                formato.LineAlignment = StringAlignment.Center;
-                caminho.AddString("ILHA DA\nTOUPEIRA", fonteTitulo.FontFamily, (int)FontStyle.Bold,
-                    fonteTitulo.Size, new RectangleF(0, 0, lblTitulo.ClientSize.Width - 8,
-                    lblTitulo.ClientSize.Height - 8), formato);
-                using (Matrix deslocamento = new Matrix())
+                Rectangle r = item.Retangulo;
+                item.Controle.SetBounds(dx + (int)(r.X * escala), dy + (int)(r.Y * escala),
+                    Math.Max(1, (int)(r.Width * escala)), Math.Max(1, (int)(r.Height * escala)));
+                float pontos = Math.Max(9, item.Tamanho * escala);
+                if (item.Fonte == null || Math.Abs(item.Fonte.Size - pontos) > 0.1)
                 {
-                    deslocamento.Translate(6, 6);
-                    caminho.Transform(deslocamento);
-                    e.Graphics.FillPath(sombra, caminho);
-                    deslocamento.Translate(-6, -6);
-                    caminho.Transform(deslocamento);
+                    Font anterior = item.Fonte;
+                    item.Fonte = new Font(item.Controle is BotaoAventura ? "Arial Black" : "Segoe UI", pontos,
+                        item.Controle is Button ? FontStyle.Bold : FontStyle.Regular, GraphicsUnit.Pixel);
+                    item.Controle.Font = item.Fonte;
+                    if (anterior != null) anterior.Dispose();
                 }
-                e.Graphics.DrawPath(contorno, caminho);
-                e.Graphics.FillPath(letra, caminho);
-                e.Graphics.DrawPath(brilho, caminho);
             }
+            cenario.Invalidate();
         }
 
-        private void MoverSeta(Button botao)
+        private void LimparPagina(string nome)
         {
-            botaoSetaAtual = botao;
-            lblSeta.Location = new Point(botao.Left - lblSeta.Width - 8,
-                botao.Top + (botao.Height - lblSeta.Height) / 2);
-            lblSeta.BringToFront();
+            acaoEnter = null;
+            opcoesMenu = null;
+            foreach (AreaControle item in areas)
+            {
+                item.Controle.Dispose();
+                if (item.Fonte != null) item.Fonte.Dispose();
+            }
+            areas.Clear();
+            pagina = nome;
+            cenario.Interior = nome != "inicio" && nome != "carga";
         }
 
-        private void Menu_MouseEnter(object sender, EventArgs e)
+        private Label Texto(string texto, int x, int y, int w, int h, float tamanho = 17, bool ouro = false)
         {
-            Button botao = (Button)sender;
-            if (botaoSetaAtual != botao) AudioRetro.Menu();
-            MoverSeta(botao);
+            return Colocar(new Label { Text = texto, BackColor = Color.Transparent,
+                ForeColor = ouro ? Color.FromArgb(255, 215, 100) : Color.FromArgb(230, 237, 231),
+                TextAlign = ContentAlignment.MiddleLeft }, x, y, w, h, tamanho);
         }
 
-        // Setas navegam no menu, Enter executa; Tab continua funcionando normalmente.
+        private Button Botao(string texto, int x, int y, int w, int h, Action acao, bool principal = false)
+        {
+            Button botao = new Button { Text = texto, FlatStyle = FlatStyle.Flat, Cursor = Cursors.Hand,
+                BackColor = principal ? Color.FromArgb(158, 66, 28) : Color.FromArgb(29, 51, 58),
+                ForeColor = Color.FromArgb(255, 225, 155), UseVisualStyleBackColor = false };
+            botao.FlatAppearance.BorderColor = Color.FromArgb(170, 125, 60);
+            botao.Click += delegate { AudioRetro.Menu(); acao(); };
+            return Colocar(botao, x, y, w, h, 16);
+        }
+
+        private void CabecalhoPagina(string titulo, string subtitulo)
+        {
+            Texto(titulo, 290, 112, 530, 50, 32, true);
+            Texto(subtitulo, 290, 161, 530, 35, 15);
+        }
+
+        private void Voltar()
+        {
+            // Sair das opções sem salvar desfaz somente a prévia dos volumes.
+            AplicarAudioSalvo();
+            MostrarInicio();
+        }
+
+        private void MostrarInicio()
+        {
+            LimparPagina("inicio");
+            string[] nomes = { "START", "A LENDA DA ILHA", "PASSWORD", "OPTIONS" };
+            Action[] acoes = { delegate { Comecar(0, false); }, MostrarHistoria, delegate { MostrarConta(false); }, MostrarOpcoes };
+            opcoesMenu = new Button[4];
+            for (int i = 0; i < nomes.Length; i++)
+            {
+                Action executar = acoes[i];
+                Button b = Colocar(new BotaoAventura { Text = nomes[i] }, 90, 310 + i * 65, 470, 60, 31);
+                b.Click += delegate { AudioRetro.Menu(); executar(); };
+                b.Enter += delegate { AudioRetro.Menu(); };
+                opcoesMenu[i] = b;
+            }
+            Texto(PerfisJogador.NomeAtual + "  •  " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + " salvos  •  recorde " + ProgressoJogo.Recorde,
+                110, 603, 880, 30, 17, true);
+            Texto("↑ ↓ e Enter ou mouse  •  F11: tela cheia  •  Esc: voltar", 110, 640, 900, 28, 15);
+            opcoesMenu[0].Focus();
+        }
+
+        private void MostrarHistoria()
+        {
+            LimparPagina("historia");
+            CabecalhoPagina("A LENDA DA ILHA", "Toda aventura começa com um problema pequeno...");
+            Colocar(new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical,
+                BorderStyle = BorderStyle.FixedSingle, BackColor = Color.FromArgb(24, 43, 49), ForeColor = Color.Wheat,
+                Text = "No coração da ilha existe um jardim que alimenta seus moradores. Mas, numa noite, túneis começaram a aparecer por toda parte.\r\n\r\nAs toupeiras encontraram as sementes escondidas sob o antigo templo. Agora surgem em lugares diferentes e ninguém consegue cuidar da plantação.\r\n\r\nVocê recebeu o martelo do guardião. Sua missão é mandar 50 toupeiras de volta às tocas, recuperar 5.000 pontos e devolver a tranquilidade ao jardim.\r\n\r\nObserve, mire e acerte. A ilha conta com você." }, 290, 212, 520, 262, 19);
+            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 492, 255, 43,
+                delegate { Comecar(ProgressoJogo.AcertosSalvos, false); }, true);
+            continuar.Enabled = ProgressoJogo.AcertosSalvos > 0;
+            Botao("NOVA AVENTURA", 560, 492, 250, 43, delegate { Comecar(0, false); });
+            Botao("VOLTAR", 435, 553, 230, 40, Voltar);
+        }
+
+        private void MostrarConta(bool cadastrar)
+        {
+            LimparPagina("conta");
+            CabecalhoPagina("PASSWORD", "Seu perfil e sua aventura, salvos neste computador.");
+            if (PerfisJogador.EstaLogado)
+            {
+                Texto("Bem-vindo, " + PerfisJogador.NomeAtual + "!", 300, 238, 510, 50, 25, true);
+                Texto("Progresso: " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + " toupeiras\nRecorde: " + ProgressoJogo.Recorde + " pontos",
+                    300, 304, 510, 80, 21);
+                Botao("CONTINUAR AVENTURA", 300, 414, 500, 45, delegate { Comecar(ProgressoJogo.AcertosSalvos, false); }, true);
+                Botao("SAIR DO PERFIL", 300, 477, 500, 40, delegate
+                { PerfisJogador.Sair(); ProgressoJogo.Carregar(); AplicarAudioSalvo(); MostrarConta(false); });
+                Botao("VOLTAR", 435, 550, 230, 40, Voltar);
+                return;
+            }
+            Botao("ENTRAR", 300, 205, 240, 36, delegate { MostrarConta(false); }, !cadastrar);
+            Botao("CADASTRAR", 560, 205, 240, 36, delegate { MostrarConta(true); }, cadastrar);
+            Texto("Nome do jogador", 300, 252, 500, 24, 16);
+            TextBox nome = Colocar(new TextBox { MaxLength = 40, BorderStyle = BorderStyle.FixedSingle }, 300, 280, 500, 32, 19);
+            MaskedTextBox cpf = null;
+            if (cadastrar)
+            {
+                Texto("CPF", 300, 320, 500, 24, 16);
+                cpf = Colocar(new MaskedTextBox("000.000.000-00") { TextMaskFormat = MaskFormat.ExcludePromptAndLiterals,
+                    BorderStyle = BorderStyle.FixedSingle, AccessibleName = "CPF" }, 300, 347, 500, 32, 19);
+            }
+            int ySenha = cadastrar ? 387 : 325;
+            Texto("Senha" + (cadastrar ? " • pelo menos 6 caracteres" : ""), 300, ySenha, 500, 24, 16);
+            TextBox senha = Colocar(new TextBox { MaxLength = 128, UseSystemPasswordChar = true, BorderStyle = BorderStyle.FixedSingle,
+                AccessibleName = "Senha" }, 300, ySenha + 27, 500, 32, 19);
+            Label aviso = Texto("", 300, 453, 500, 41, 15, true);
+            MaskedTextBox campoCpf = cpf;
+            acaoEnter = Botao(cadastrar ? "CRIAR PERFIL" : "ENTRAR NA ILHA", 300, 500, 500, 43, async delegate
+            {
+                processandoConta = true;
+                string nomeDigitado = nome.Text, cpfDigitado = campoCpf == null ? "" : campoCpf.Text, senhaDigitada = senha.Text;
+                foreach (Control controle in cenario.Controls) if (controle is Button || controle is TextBoxBase) controle.Enabled = false;
+                aviso.Text = "Verificando seu perfil...";
+                string erro = "";
+                bool sucesso = await Task.Run(() => cadastrar ? PerfisJogador.Cadastrar(nomeDigitado, cpfDigitado, senhaDigitada, out erro)
+                    : PerfisJogador.Entrar(nomeDigitado, senhaDigitada, out erro));
+                if (IsDisposed) return;
+                processandoConta = false;
+                foreach (Control controle in cenario.Controls) controle.Enabled = true;
+                if (!sucesso) { aviso.Text = erro; return; }
+                senha.Clear();
+                ProgressoJogo.Carregar();
+                AplicarAudioSalvo();
+                MostrarConta(false);
+            }, true);
+            Botao("VOLTAR", 435, 556, 230, 38, Voltar);
+            nome.Focus();
+        }
+
+        private void MostrarOpcoes()
+        {
+            LimparPagina("opcoes");
+            CabecalhoPagina("OPTIONS", "Ajuste a música e as pancadas separadamente.");
+            CheckBox som = Colocar(new CheckBox { Text = "Áudio ativado", Checked = AudioRetro.Ativo,
+                BackColor = Color.Transparent, ForeColor = Color.Wheat }, 300, 207, 500, 33, 18);
+            Label txtMusica = Texto("MÚSICA • " + AudioRetro.VolumeMusica + "%", 300, 250, 500, 28, 20, true);
+            TrackBar musica = Colocar(new TrackBar { Minimum = 0, Maximum = 100, TickFrequency = 10,
+                Value = AudioRetro.VolumeMusica, AutoSize = false, BackColor = Color.FromArgb(24, 43, 49) }, 300, 282, 500, 42);
+            Label txtEfeitos = Texto("EFEITOS • " + AudioRetro.VolumeEfeitos + "%", 300, 332, 500, 28, 20, true);
+            TrackBar efeitos = Colocar(new TrackBar { Minimum = 0, Maximum = 100, TickFrequency = 10,
+                Value = AudioRetro.VolumeEfeitos, AutoSize = false, BackColor = Color.FromArgb(24, 43, 49) }, 300, 365, 500, 42);
+            som.CheckedChanged += delegate { AudioRetro.Ativo = som.Checked; };
+            musica.ValueChanged += delegate { AudioRetro.VolumeMusica = musica.Value; txtMusica.Text = "MÚSICA • " + musica.Value + "%"; };
+            efeitos.ValueChanged += delegate { AudioRetro.VolumeEfeitos = efeitos.Value; txtEfeitos.Text = "EFEITOS • " + efeitos.Value + "%"; };
+            Botao("OUVIR PANCADA", 300, 424, 240, 40, delegate { AudioRetro.Acerto(); });
+            Botao("TELA CHEIA • F11", 560, 424, 240, 40, AlternarTelaCheia);
+            Botao("SALVAR OPÇÕES", 300, 482, 240, 42, delegate
+            {
+                ProgressoJogo.SalvarAudio(som.Checked, 0, musica.Value, efeitos.Value);
+                MostrarInicio();
+            }, true);
+            Botao("VER FINAL • DEMO", 560, 482, 240, 42, delegate
+            { AplicarAudioSalvo(); Comecar(EstadoPartida.Meta - 3, true); });
+            Botao("VOLTAR", 435, 550, 230, 40, Voltar);
+        }
+
+        private void Comecar(int acertos, bool demonstracao)
+        {
+            if (carregando) return;
+            carregando = true;
+            LimparPagina("carga");
+            Texto("PREPARANDO A TRILHA...", 100, 358, 500, 50, 27, true);
+            Texto("Mire a cabeça do martelo. Cada acerto vale 100 pontos.", 100, 420, 490, 65, 18);
+            ProgressBar barra = Colocar(new ProgressBar { Minimum = 0, Maximum = 100 }, 100, 500, 460, 22);
+            AudioRetro.Inicio();
+            timerCarga = new Timer { Interval = 80 };
+            timerCarga.Tick += delegate
+            {
+                barra.Value = Math.Min(100, barra.Value + 20);
+                if (barra.Value < 100) return;
+                timerCarga.Stop(); timerCarga.Dispose(); timerCarga = null;
+                if (!demonstracao && acertos == 0) ProgressoJogo.SalvarAcertos(0);
+                Form2 jogo = new Form2(acertos, demonstracao) { IniciarEmTelaCheia = telaCheia };
+                jogo.FormClosed += delegate
+                {
+                    if (IsDisposed) return;
+                    carregando = false;
+                    AplicarAudioSalvo();
+                    MostrarInicio(); Show(); Activate();
+                    AudioRetro.MusicaMenu();
+                };
+                Hide(); jogo.Show();
+            };
+            timerCarga.Start();
+        }
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            if (botoesMenu == null) return base.ProcessCmdKey(ref msg, keyData);
-            int indice = Array.IndexOf(botoesMenu, botaoSetaAtual);
-            if (keyData == Keys.Up || keyData == Keys.Down)
+            if (keyData == Keys.F11) { AlternarTelaCheia(); return true; }
+            if (processandoConta) return true;
+            if (carregando) return base.ProcessCmdKey(ref msg, keyData);
+            if (keyData == Keys.Escape && pagina != "inicio") { Voltar(); return true; }
+            if (keyData == Keys.Enter && acaoEnter != null) { acaoEnter.PerformClick(); return true; }
+            if (pagina == "inicio" && opcoesMenu != null && (keyData == Keys.Up || keyData == Keys.Down))
             {
-                indice = (indice + (keyData == Keys.Up ? 3 : 1)) % botoesMenu.Length;
-                botoesMenu[indice].Focus();
-                MoverSeta(botoesMenu[indice]);
-                return true;
-            }
-            if (keyData == Keys.Enter && botaoSetaAtual != null)
-            {
-                botaoSetaAtual.PerformClick();
+                int indice = Array.FindIndex(opcoesMenu, b => b.Focused);
+                opcoesMenu[(indice + (keyData == Keys.Up ? 3 : 1) + 4) % 4].Focus();
                 return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
-        private void AtualizarResumo()
+        private void AlternarTelaCheia()
         {
-            lblResumo.Text = "ILHA DA TOUPEIRA     •     Recorde: " + ProgressoJogo.Recorde +
-                " pontos     •     " + (ProgressoJogo.AcertosSalvos > 0
-                ? "Salvo: " + ProgressoJogo.AcertosSalvos + "/30" : "Pronto para jogar") +
-                (String.IsNullOrEmpty(ProgressoJogo.UltimoErro) ? "" : "     •     Salvamento indisponível");
-        }
-
-        private void AbrirJogo(Form2 jogo)
-        {
-            AudioRetro.Inicio();
-            // O menu é a janela principal. Ocultá-lo mantém o aplicativo aberto durante a partida.
-            jogo.FormClosed += (s, args) =>
+            if (!telaCheia)
             {
-                if (IsDisposed || Disposing) return;
-                AtualizarResumo();
-                Show();
-                Activate();
-                btnStart.Focus();
-            };
-            Hide();
-            jogo.Show();
-        }
-
-        private void btnStart_Click(object sender, EventArgs e)
-        {
-            ProgressoJogo.SalvarAcertos(0);
-            AbrirJogo(new Form2(0));
-        }
-
-        private void btnLoadGame_Click(object sender, EventArgs e)
-        {
-            if (ProgressoJogo.AcertosSalvos == 0)
-            {
-                MessageBox.Show(this, "Sua aventura ainda não começou.\nEscolha JOGAR; cada acerto será salvo automaticamente.",
-                    "Continuar aventura", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                estadoAnterior = WindowState;
+                limitesAnteriores = WindowState == FormWindowState.Normal ? Bounds : RestoreBounds;
+                bordaAnterior = FormBorderStyle;
+                WindowState = FormWindowState.Normal;
+                FormBorderStyle = FormBorderStyle.None;
+                Bounds = Screen.FromControl(this).Bounds;
             }
-            AbrirJogo(new Form2(ProgressoJogo.AcertosSalvos));
+            else { FormBorderStyle = bordaAnterior; Bounds = limitesAnteriores; WindowState = estadoAnterior; }
+            telaCheia = !telaCheia;
+            AjustarLayout();
         }
 
-        // Atalho explícito para demonstrar o final na apresentação, sem alterar a partida salva.
-        private void btnPassword_Click(object sender, EventArgs e)
-        {
-            using (Form janela = CriarDialogo("Demonstração — mostrar o final", 470, 225))
-            {
-                Label ajuda = new Label { Text = "Código: TOUPEIRA30\nComeça em 27/30: faltam 3 acertos para a vitória.\nEsse modo não altera seu progresso nem o recorde.",
-                    AutoSize = false, Bounds = new Rectangle(20, 18, 430, 70) };
-                TextBox entrada = new TextBox { Bounds = new Rectangle(20, 100, 430, 28), CharacterCasing = CharacterCasing.Upper, MaxLength = 24 };
-                Button entrar = new Button { Text = "Entrar", Bounds = new Rectangle(220, 155, 110, 36) };
-                Button cancelar = new Button { Text = "Cancelar", Bounds = new Rectangle(340, 155, 110, 36), DialogResult = DialogResult.Cancel };
-                TemaIlha.Aplicar(entrar, "chave", true);
-                TemaIlha.Aplicar(cancelar, "menu");
-                entrar.Click += (s, args) =>
-                {
-                    if (entrada.Text.Trim().Equals("TOUPEIRA30", StringComparison.OrdinalIgnoreCase))
-                        janela.DialogResult = DialogResult.OK;
-                    else
-                    {
-                        MessageBox.Show(janela, "Digite TOUPEIRA30 para abrir a demonstração.", "Código inválido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        entrada.Focus();
-                        entrada.SelectAll();
-                    }
-                };
-                janela.Controls.AddRange(new Control[] { ajuda, entrada, entrar, cancelar });
-                janela.AcceptButton = entrar;
-                janela.CancelButton = cancelar;
-                janela.Shown += (s, args) => entrada.Focus();
-                if (janela.ShowDialog(this) == DialogResult.OK) AbrirJogo(new Form2(27, true));
-            }
-        }
+        // Eventos mantidos para o arquivo Designer do Visual Studio.
+        private void btnStart_Click(object sender, EventArgs e) { Comecar(0, false); }
+        private void btnLoadGame_Click(object sender, EventArgs e) { MostrarHistoria(); }
+        private void btnPassword_Click(object sender, EventArgs e) { MostrarConta(false); }
+        private void btnOptions_Click(object sender, EventArgs e) { MostrarOpcoes(); }
+        private void Menu_MouseEnter(object sender, EventArgs e) { }
 
-        // Preferência de áudio persiste para a próxima abertura do programa.
-        private void btnOptions_Click(object sender, EventArgs e)
-        {
-            bool somAnterior = AudioRetro.Ativo;
-            int estiloAnterior = AudioRetro.EstiloAcerto;
-            using (Form janela = CriarDialogo("Opções — sua aventura", 540, 390))
-            {
-                var instrucoes = new Label { Bounds = new Rectangle(20, 18, 500, 150), Text =
-                    "Proteja o jardim: acerte 30 toupeiras com o mouse.\nCada acerto vale 100 pontos. Jogue no seu ritmo.\n\nMire a cabeça do martelo na toupeira. Complete 30/30 para vencer.\nEsc: pausar  •  F11: tela cheia  •  M: som\nCONTINUAR retoma sua aventura. DEMONSTRAÇÃO mostra o final." };
-                var som = new CheckBox { Text = "Sons retrô ativados", Checked = ProgressoJogo.SomAtivo, Bounds = new Rectangle(20, 177, 420, 30) };
-                var estiloRotulo = new Label { Text = "ESTILO DO EFEITO DE ACERTO", Bounds = new Rectangle(20, 218, 290, 25),
-                    ForeColor = Color.FromArgb(255, 211, 96), Font = new Font("Consolas", 10, FontStyle.Bold) };
-                var estilo = new ComboBox { Bounds = new Rectangle(20, 246, 310, 34), DropDownStyle = ComboBoxStyle.DropDownList,
-                    BackColor = Color.FromArgb(13, 29, 25), ForeColor = Color.FromArgb(241, 245, 231),
-                    Font = new Font("Consolas", 10, FontStyle.Bold) };
-                estilo.Items.AddRange(new object[] { "MOEDA • 8 BITS", "ANEL • 16 BITS", "CAIXA • AVENTURA" });
-                estilo.SelectedIndex = Math.Max(0, Math.Min(2, ProgressoJogo.EstiloSom));
-                var testar = new Button { Text = "TESTAR SOM", Bounds = new Rectangle(350, 244, 165, 38) };
-                testar.Enabled = som.Checked;
-                som.CheckedChanged += delegate { testar.Enabled = som.Checked; };
-                testar.Click += delegate
-                {
-                    AudioRetro.EstiloAcerto = estilo.SelectedIndex;
-                    AudioRetro.Ativo = som.Checked;
-                    AudioRetro.Acerto();
-                };
-                var salvar = new Button { Text = "SALVAR", Bounds = new Rectangle(285, 326, 110, 38), DialogResult = DialogResult.OK };
-                var cancelar = new Button { Text = "VOLTAR", Bounds = new Rectangle(405, 326, 110, 38), DialogResult = DialogResult.Cancel };
-                TemaIlha.Aplicar(salvar, "continuar", true);
-                TemaIlha.Aplicar(cancelar, "menu");
-                TemaIlha.Aplicar(testar, "som");
-                janela.Controls.AddRange(new Control[] { instrucoes, som, estiloRotulo, estilo, testar, salvar, cancelar });
-                janela.AcceptButton = salvar;
-                janela.CancelButton = cancelar;
-                if (janela.ShowDialog(this) == DialogResult.OK)
-                {
-                    ProgressoJogo.SalvarAudio(som.Checked, estilo.SelectedIndex);
-                    AudioRetro.EstiloAcerto = estilo.SelectedIndex;
-                    AudioRetro.Ativo = som.Checked;
-                    if (som.Checked) AudioRetro.Menu(); else AudioRetro.Parar();
-                    AtualizarResumo();
-                }
-                else
-                {
-                    AudioRetro.EstiloAcerto = estiloAnterior;
-                    AudioRetro.Ativo = somAnterior;
-                    if (!somAnterior) AudioRetro.Parar();
-                }
-            }
-        }
-
-        private static Form CriarDialogo(string titulo, int largura, int altura)
-        {
-            return new Form { Text = titulo, ClientSize = new Size(largura, altura),
-                FormBorderStyle = FormBorderStyle.FixedDialog, StartPosition = FormStartPosition.CenterParent,
-                MaximizeBox = false, MinimizeBox = false, ShowInTaskbar = false,
-                BackColor = Color.FromArgb(20, 43, 35), ForeColor = Color.FromArgb(231, 236, 221),
-                Font = new Font("Consolas", 10f), AutoScaleMode = AutoScaleMode.Font };
-        }
-
-        // Chamado pelo Dispose do formulário, inclusive se ele for descartado sem ser mostrado.
         private void LiberarRecursosMenu()
         {
             if (recursosLiberados) return;
             recursosLiberados = true;
-            if (timerFundo != null) timerFundo.Stop();
-            if (animandoMenu && gifMenu != null) ImageAnimator.StopAnimate(gifMenu, OnFrameChanged);
-            if (gifMenu != null) gifMenu.Dispose();
-            if (fonteMenu != null) fonteMenu.Dispose();
-            if (fonteTitulo != null) fonteTitulo.Dispose();
-            if (iconeMissao != null && iconeMissao.Image != null) iconeMissao.Image.Dispose();
+            if (timerCarga != null) { timerCarga.Stop(); timerCarga.Dispose(); }
+            foreach (AreaControle area in areas) if (area.Fonte != null) area.Fonte.Dispose();
+            AudioRetro.PararMusica();
+        }
+
+        private sealed class AreaControle
+        {
+            public Control Controle;
+            public Rectangle Retangulo;
+            public float Tamanho;
+            public Font Fonte;
         }
     }
 }

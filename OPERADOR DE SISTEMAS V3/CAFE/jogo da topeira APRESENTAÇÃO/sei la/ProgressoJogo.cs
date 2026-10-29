@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Globalization;
 using System.IO;
 using System.Security;
@@ -14,20 +14,29 @@ namespace sei_la
         public static int Recorde { get; private set; }
         public static bool SomAtivo { get; private set; }
         public static int EstiloSom { get; private set; }
+        public static int VolumeMusica { get; private set; }
+        public static int VolumeEfeitos { get; private set; }
         public static string UltimoErro { get; private set; }
 
         static ProgressoJogo()
         {
             SomAtivo = true;
             EstiloSom = 0;
+            VolumeMusica = 12;
+            VolumeEfeitos = 75;
             UltimoErro = "";
         }
 
         // AppData é gravável pelo usuário comum: o jogo também funciona em pastas de leitura.
         private static string Caminho
         {
-            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Cafe", "IlhaDaToupeira", "progresso.xml"); }
+            get
+            {
+                // O visitante conserva o arquivo antigo; contas usam apenas IDs gerados pelo jogo.
+                return PerfisJogador.EstaLogado
+                    ? Path.Combine(PerfisJogador.PastaDados, "progresso-" + PerfisJogador.IdAtual + ".xml")
+                    : Path.Combine(PerfisJogador.PastaDados, "progresso.xml");
+            }
         }
 
         public static void Carregar()
@@ -36,6 +45,8 @@ namespace sei_la
             Recorde = 0;
             SomAtivo = true;
             EstiloSom = 0;
+            VolumeMusica = 12;
+            VolumeEfeitos = 75;
             UltimoErro = "";
             try
             {
@@ -46,9 +57,11 @@ namespace sei_la
                 {
                     XElement raiz = XElement.Load(leitor);
                     if (raiz.Name != "toupeira") throw new XmlException("Formato de progresso desconhecido.");
-                    AcertosSalvos = LerNumero(raiz, "acertos", 29);
-                    Recorde = LerNumero(raiz, "recorde", 3000);
+                    AcertosSalvos = LerNumero(raiz, "acertos", EstadoPartida.Meta - 1);
+                    Recorde = LerNumero(raiz, "recorde", EstadoPartida.Meta * EstadoPartida.PontosPorAcerto);
                     EstiloSom = LerNumero(raiz, "estiloSom", 2);
+                    VolumeMusica = LerNumero(raiz, "volumeMusica", 100, 12);
+                    VolumeEfeitos = LerNumero(raiz, "volumeEfeitos", 100, 75);
                     bool som;
                     if (Boolean.TryParse((string)raiz.Element("som"), out som)) SomAtivo = som;
                 }
@@ -63,23 +76,23 @@ namespace sei_la
             }
         }
 
-        private static int LerNumero(XElement raiz, string nome, int maximo)
+        private static int LerNumero(XElement raiz, string nome, int maximo, int padrao = 0)
         {
             int valor;
             if (!Int32.TryParse((string)raiz.Element(nome), NumberStyles.Integer, CultureInfo.InvariantCulture, out valor))
-                return 0;
+                return padrao;
             return Math.Max(0, Math.Min(maximo, valor));
         }
 
         public static void SalvarAcertos(int acertos)
         {
-            AcertosSalvos = Math.Max(0, Math.Min(29, acertos));
+            AcertosSalvos = Math.Max(0, Math.Min(EstadoPartida.Meta - 1, acertos));
             Gravar();
         }
 
         public static void RegistrarVitoria(int pontos)
         {
-            Recorde = Math.Max(Recorde, Math.Max(0, Math.Min(3000, pontos)));
+            Recorde = Math.Max(Recorde, Math.Max(0, Math.Min(EstadoPartida.Meta * EstadoPartida.PontosPorAcerto, pontos)));
             AcertosSalvos = 0; // Uma vitória conclui a partida; LOAD GAME só retoma partidas em andamento.
             Gravar();
         }
@@ -90,11 +103,18 @@ namespace sei_la
             Gravar();
         }
 
-        // Preserva os saves antigos: se estiloSom não existir, o padrão é moeda.
+        // Preserva os saves antigos: se estiloSom não existir, o padrão usa o efeito de acerto atual.
         public static void SalvarAudio(bool som, int estilo)
+        {
+            SalvarAudio(som, estilo, VolumeMusica, VolumeEfeitos);
+        }
+
+        public static void SalvarAudio(bool som, int estilo, int volumeMusica, int volumeEfeitos)
         {
             SomAtivo = som;
             EstiloSom = Math.Max(0, Math.Min(2, estilo));
+            VolumeMusica = Math.Max(0, Math.Min(100, volumeMusica));
+            VolumeEfeitos = Math.Max(0, Math.Min(100, volumeEfeitos));
             Gravar();
         }
 
@@ -108,7 +128,8 @@ namespace sei_la
                 temporario = destino + "." + Guid.NewGuid().ToString("N") + ".tmp";
                 var documento = new XElement("toupeira", new XAttribute("versao", 1),
                     new XElement("acertos", AcertosSalvos), new XElement("recorde", Recorde),
-                    new XElement("som", SomAtivo), new XElement("estiloSom", EstiloSom));
+                    new XElement("som", SomAtivo), new XElement("estiloSom", EstiloSom),
+                    new XElement("volumeMusica", VolumeMusica), new XElement("volumeEfeitos", VolumeEfeitos));
                 documento.Save(temporario);
                 // Só substitui o arquivo anterior depois que o novo terminou de ser escrito.
                 if (File.Exists(destino)) File.Replace(temporario, destino, null);
