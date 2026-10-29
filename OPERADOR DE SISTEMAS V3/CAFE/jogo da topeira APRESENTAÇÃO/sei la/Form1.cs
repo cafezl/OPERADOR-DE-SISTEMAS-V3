@@ -27,6 +27,11 @@ namespace sei_la
         public Form1()
         {
             InitializeComponent();
+            if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+            {
+                pictureMenu.SendToBack();
+                return;
+            }
             // Os controles antigos do Designer dão lugar às páginas do mesmo menu.
             while (Controls.Count > 0) Controls[0].Dispose();
             BackgroundImage = null;

@@ -73,7 +73,7 @@ namespace sei_la
                 FecharFaixa();
                 musicaPausada = false;
                 string caminho = CaminhoMidia("musica-menu.mp3");
-                if (File.Exists(caminho) && AbrirFaixa(caminho, true)) return;
+                if (File.Exists(caminho) && AbrirFaixa(caminho)) return;
                 SelecionarMusica(ObterTemaMenuReserva());
             }
         }
@@ -82,12 +82,13 @@ namespace sei_la
             lock (trava)
             {
                 FecharFaixa();
-                musicaPausada = false;
-                string caminho = CaminhoMidia("musica-menu.mp3");
-                if (File.Exists(caminho) && AbrirFaixa(caminho, false)) return;
-                short[] reserva = ObterTemaPartidaReserva();
-                if (reserva == null) { musica = null; posicaoMusica = 0; return; }
-                SelecionarMusica(reserva);
+                if (partidaMusical == null)
+                {
+                    try { partidaMusical = LerWav(File.ReadAllBytes(CaminhoMidia("musica-partida.wav"))); }
+                    catch (IOException) { UltimoErro = "A música da partida não foi encontrada na pasta midia."; musica = null; return; }
+                    catch (UnauthorizedAccessException) { UltimoErro = "Não foi possível abrir a música da partida."; musica = null; return; }
+                }
+                SelecionarMusica(partidaMusical);
             }
         }
         private static short[] ObterTemaMenuReserva()
@@ -95,15 +96,7 @@ namespace sei_la
             if (menuMusical == null) menuMusical = LerWav(CriarMusicaMenu());
             return menuMusical;
         }
-        private static short[] ObterTemaPartidaReserva()
-        {
-            if (partidaMusical != null) return partidaMusical;
-            try { partidaMusical = LerWav(File.ReadAllBytes(CaminhoMidia("musica-partida.wav"))); }
-            catch (IOException) { UltimoErro = "A música da partida não foi encontrada na pasta midia."; }
-            catch (UnauthorizedAccessException) { UltimoErro = "Não foi possível abrir a música da partida."; }
-            return partidaMusical;
-        }
-        private static bool AbrirFaixa(string caminho, bool ehMenu)
+        private static bool AbrirFaixa(string caminho)
         {
             MediaPlayer player = null;
             try
@@ -136,8 +129,7 @@ namespace sei_la
                         if (!Object.ReferenceEquals(faixaPlayer, player)) return;
                         UltimoErro = "Não foi possível abrir a música enviada; usando a faixa de reserva.";
                         FecharFaixa();
-                        short[] reserva = ehMenu ? ObterTemaMenuReserva() : ObterTemaPartidaReserva();
-                        if (reserva != null) SelecionarMusica(reserva);
+                        SelecionarMusica(ObterTemaMenuReserva());
                     }
                 };
                 musica = null;
