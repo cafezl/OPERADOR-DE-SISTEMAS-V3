@@ -82,6 +82,20 @@ namespace sei_la
         {
             SuspendLayout();
             BackgroundImage = null;
+            // O Designer mantém uma prévia parada; ela é substituída pelos controles da partida.
+            foreach (Control placar in new Control[] { lblNivel, lblPontos, lblRestantes, lblInstrucao })
+                Controls.Remove(placar);
+            while (Controls.Count > 0)
+            {
+                Control anterior = Controls[0];
+                Controls.RemoveAt(0);
+                anterior.Dispose();
+            }
+            progresso = null;
+            lblAjuda = null;
+            lblSituacao = null;
+            btnPausa = null;
+            btnSom = null;
             BackColor = Color.FromArgb(16, 29, 25);
             cabecalho = new Panel { BackColor = Color.FromArgb(17, 30, 29) };
             rodape = new Panel { BackColor = Color.FromArgb(17, 30, 29) };

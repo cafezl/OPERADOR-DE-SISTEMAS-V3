@@ -158,16 +158,16 @@ namespace sei_la
         private void MostrarHistoria()
         {
             LimparPagina("historia");
-            CabecalhoPagina("A LENDA DA ILHA", "Toda aventura começa com um problema pequeno...");
+            CabecalhoPagina("A LENDA DA ILHA", "A história, a inspiração e a proposta do jogo.");
             Colocar(new TextBox { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical,
                 BorderStyle = BorderStyle.FixedSingle, BackColor = Color.FromArgb(24, 43, 49), ForeColor = Color.Wheat,
-                Text = "No coração da ilha existe um jardim que alimenta seus moradores. Mas, numa noite, túneis começaram a aparecer por toda parte.\r\n\r\nAs toupeiras encontraram as sementes escondidas sob o antigo templo. Agora surgem em lugares diferentes e ninguém consegue cuidar da plantação.\r\n\r\nVocê recebeu o martelo do guardião. Sua missão é mandar 50 toupeiras de volta às tocas, recuperar 5.000 pontos e devolver a tranquilidade ao jardim.\r\n\r\nObserve, mire e acerte. A ilha conta com você." }, 290, 212, 520, 242, 19);
-            Botao("VER VÍDEO • O GOSTO DA FELICIDADE", 290, 462, 520, 39, AbrirVideoFelicidade);
-            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 514, 255, 43,
+                Text = "A INSPIRAÇÃO\r\nHelix Jump, da Voodoo, foi lançado em fevereiro de 2018. Nele, uma bola desce por uma torre de plataformas giratórias: o jogador procura os espaços, evita os perigos e tenta chegar ao fim. A regra é simples de aprender, mas o ritmo dá vontade de tentar mais uma vez. Trouxemos essa ideia de arcade para cá: controles diretos, objetivo claro e desafio crescente.\r\n\r\nA LENDA DA ILHA\r\nNo coração da ilha, um jardim alimenta seus moradores. Uma noite, túneis surgem por toda parte: as toupeiras descobriram as sementes sob o antigo templo. O guardião entrega seu martelo para proteger a plantação.\r\n\r\nA PROPOSTA\r\nAcerte 50 toupeiras, faça 5.000 pontos e salve o jardim. Cada acerto mostra o progresso; observar, mirar e tentar de novo aproxima a ilha da vitória. Abaixo, o vídeo lembra que os melhores momentos são aqueles que a gente gostaria de viver por mais tempo." }, 290, 212, 520, 264, 17);
+            Botao("VER VÍDEO • O GOSTO DA FELICIDADE", 290, 485, 520, 39, AbrirVideoFelicidade);
+            Button continuar = Botao("CONTINUAR • " + ProgressoJogo.AcertosSalvos + "/" + EstadoPartida.Meta + "", 290, 535, 255, 43,
                 delegate { Comecar(ProgressoJogo.AcertosSalvos, false); }, true);
             continuar.Enabled = ProgressoJogo.AcertosSalvos > 0;
-            Botao("NOVA AVENTURA", 560, 514, 250, 43, delegate { Comecar(0, false); });
-            Botao("VOLTAR", 435, 568, 230, 40, Voltar);
+            Botao("NOVA AVENTURA", 560, 535, 250, 43, delegate { Comecar(0, false); });
+            Botao("VOLTAR", 435, 587, 230, 38, Voltar);
         }
 
         private void AbrirVideoFelicidade()

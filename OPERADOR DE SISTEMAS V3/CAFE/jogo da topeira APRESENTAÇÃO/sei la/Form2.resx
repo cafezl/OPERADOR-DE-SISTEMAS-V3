@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -9115,5 +9115,8 @@
         PGkGBQYFAAAAAAAAAAAAAAAAAAAAAMABAADAAQAAwAEAAIABAACAAQAAwAEAAMADAADAAwAAAAAAAIAB
         AACAAQAAwAMAAIABAADAAQAAwAMAAPAPAAA=
 </value>
+  </data>
+  <data name="partidaPreview" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\partida-preview.png;System.Drawing.Bitmap, System.Drawing</value>
   </data>
 </root>

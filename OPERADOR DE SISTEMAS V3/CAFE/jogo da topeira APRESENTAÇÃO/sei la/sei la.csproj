@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -114,6 +114,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\menu-preview.png" />
+    <None Include="Resources\partida-preview.png" />
     <None Include="Resources\Captura de tela 2026-10-13 210608.png" />
   </ItemGroup>
   <ItemGroup>
