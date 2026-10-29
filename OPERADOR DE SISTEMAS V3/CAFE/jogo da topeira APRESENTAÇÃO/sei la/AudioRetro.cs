@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows.Media;
 
 namespace sei_la
 {
@@ -14,6 +15,7 @@ namespace sei_la
         private static readonly object trava = new object();
         private static readonly List<Voz> efeitos = new List<Voz>();
         private static SaidaAudio saida;
+        private static MediaPlayer menuPlayer;
         private static short[] musica, menuMusical, partidaMusical;
         private static readonly Dictionary<string, short[]> sons = new Dictionary<string, short[]>();
         private static int posicaoMusica, volumeMusica = 18, volumeEfeitos = 80;
@@ -25,7 +27,14 @@ namespace sei_la
         public static int VolumeMusica
         {
             get { lock (trava) return volumeMusica; }
-            set { lock (trava) volumeMusica = Math.Max(0, Math.Min(100, value)); }
+            set
+            {
+                lock (trava)
+                {
+                    volumeMusica = Math.Max(0, Math.Min(100, value));
+                    if (menuPlayer != null) menuPlayer.Volume = volumeMusica / 100.0;
+                }
+            }
         }
         public static int VolumeEfeitos
         {
@@ -35,7 +44,20 @@ namespace sei_la
         public static bool Ativo
         {
             get { lock (trava) return ativo; }
-            set { lock (trava) { ativo = value; if (!value) efeitos.Clear(); else if (musica != null) GarantirSaida(); } }
+            set
+            {
+                lock (trava)
+                {
+                    ativo = value;
+                    if (!value) efeitos.Clear();
+                    if (menuPlayer != null)
+                    {
+                        if (!value) menuPlayer.Pause();
+                        else if (!musicaPausada) menuPlayer.Play();
+                    }
+                    else if (value && musica != null) GarantirSaida();
+                }
+            }
         }
 
         public static void Acerto() { Tocar("acerto", delegate { return CriarSomAcerto(0); }); }
@@ -48,14 +70,18 @@ namespace sei_la
         {
             lock (trava)
             {
-                if (menuMusical == null) menuMusical = LerWav(CriarMusicaMenu());
-                SelecionarMusica(menuMusical);
+                FecharPlayerMenu();
+                musicaPausada = false;
+                string caminho = CaminhoMidia("musica-menu.mp3");
+                if (File.Exists(caminho) && AbrirPlayerMenu(caminho)) return;
+                SelecionarMusica(ObterTemaMenuReserva());
             }
         }
         public static void MusicaJogo()
         {
             lock (trava)
             {
+                FecharPlayerMenu();
                 if (partidaMusical == null)
                 {
                     try { partidaMusical = LerWav(File.ReadAllBytes(CaminhoMidia("musica-partida.wav"))); }
@@ -65,15 +91,117 @@ namespace sei_la
                 SelecionarMusica(partidaMusical);
             }
         }
+        private static short[] ObterTemaMenuReserva()
+        {
+            if (menuMusical == null) menuMusical = LerWav(CriarMusicaMenu());
+            return menuMusical;
+        }
+        private static bool AbrirPlayerMenu(string caminho)
+        {
+            MediaPlayer player = null;
+            try
+            {
+                player = new MediaPlayer();
+                player.Volume = volumeMusica / 100.0;
+                menuPlayer = player;
+                player.MediaOpened += delegate(object sender, EventArgs args)
+                {
+                    lock (trava)
+                    {
+                        if (Object.ReferenceEquals(menuPlayer, player) && ativo && !musicaPausada) player.Play();
+                    }
+                };
+                player.MediaEnded += delegate(object sender, EventArgs args)
+                {
+                    lock (trava)
+                    {
+                        if (Object.ReferenceEquals(menuPlayer, player))
+                        {
+                            player.Position = TimeSpan.Zero;
+                            if (ativo && !musicaPausada) player.Play();
+                        }
+                    }
+                };
+                player.MediaFailed += delegate(object sender, ExceptionEventArgs args)
+                {
+                    lock (trava)
+                    {
+                        if (!Object.ReferenceEquals(menuPlayer, player)) return;
+                        UltimoErro = "Não foi possível abrir a música do menu; usando o tema original.";
+                        FecharPlayerMenu();
+                        SelecionarMusica(ObterTemaMenuReserva());
+                    }
+                };
+                musica = null;
+                posicaoMusica = 0;
+                player.Open(new Uri(caminho, UriKind.Absolute));
+                GarantirSaida();
+                UltimoErro = "";
+                return true;
+            }
+            catch (InvalidOperationException)
+            {
+                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
+                UltimoErro = "Não foi possível abrir a música do menu; usando o tema original.";
+                return false;
+            }
+            catch (IOException)
+            {
+                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
+                UltimoErro = "Não foi possível ler a música do menu; usando o tema original.";
+                return false;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                if (Object.ReferenceEquals(menuPlayer, player)) FecharPlayerMenu();
+                UltimoErro = "Não foi possível acessar a música do menu; usando o tema original.";
+                return false;
+            }
+        }
+        private static void FecharPlayerMenu()
+        {
+            MediaPlayer anterior = menuPlayer;
+            menuPlayer = null;
+            if (anterior == null) return;
+            try { anterior.Stop(); }
+            catch (InvalidOperationException) { }
+            anterior.Close();
+        }
         private static void SelecionarMusica(short[] faixa)
         {
             if (!Object.ReferenceEquals(musica, faixa)) { musica = faixa; posicaoMusica = 0; }
             musicaPausada = false;
             GarantirSaida();
         }
-        public static void PausarMusica() { lock (trava) musicaPausada = true; }
-        public static void RetomarMusica() { lock (trava) { musicaPausada = false; GarantirSaida(); } }
-        public static void PararMusica() { lock (trava) { musica = null; posicaoMusica = 0; } }
+        public static void PausarMusica()
+        {
+            lock (trava)
+            {
+                musicaPausada = true;
+                if (menuPlayer != null) menuPlayer.Pause();
+            }
+        }
+        public static void RetomarMusica()
+        {
+            lock (trava)
+            {
+                musicaPausada = false;
+                if (menuPlayer != null)
+                {
+                    if (ativo) menuPlayer.Play();
+                }
+                else GarantirSaida();
+            }
+        }
+        public static void PararMusica()
+        {
+            lock (trava)
+            {
+                FecharPlayerMenu();
+                musica = null;
+                posicaoMusica = 0;
+            }
+        }
         public static void Parar() { lock (trava) efeitos.Clear(); }
 
         // Cada clique inicia uma voz independente. As pancadas podem se sobrepor sem criar fila.
@@ -100,7 +228,11 @@ namespace sei_la
         public static void Liberar()
         {
             SaidaAudio antiga;
-            lock (trava) { antiga = saida; saida = null; musica = null; efeitos.Clear(); sons.Clear(); menuMusical = partidaMusical = null; }
+            lock (trava)
+            {
+                FecharPlayerMenu();
+                antiga = saida; saida = null; musica = null; efeitos.Clear(); sons.Clear(); menuMusical = partidaMusical = null;
+            }
             if (antiga != null) antiga.Dispose();
         }
 

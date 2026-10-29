@@ -404,6 +404,9 @@ namespace sei_la
             campo.Focus();
         }
 
+        private void btnSom_Click(object sender, EventArgs e) { AlternarSom(); }
+        private void btnPausa_Click(object sender, EventArgs e) { Pausar(); }
+
         private void Pausar()
         {
             if (pausado || partida.Venceu) return;

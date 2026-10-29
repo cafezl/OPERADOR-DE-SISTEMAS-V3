@@ -29,3 +29,6 @@ Thumbs.db
 # Arquivos compactados não fazem parte do código-fonte
 *.zip
 *.rar
+
+# Faixa comercial opcional do menu (arquivo local do usuário)
+**/musica-menu.mp3

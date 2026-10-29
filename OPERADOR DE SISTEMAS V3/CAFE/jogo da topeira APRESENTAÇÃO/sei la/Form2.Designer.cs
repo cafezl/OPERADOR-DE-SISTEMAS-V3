@@ -84,7 +84,7 @@ namespace sei_la
             this.btnSom.Size = new System.Drawing.Size(135, 34);
             this.btnSom.Text = "SOM: ON";
             this.btnSom.UseVisualStyleBackColor = false;
-            this.btnSom.Click += delegate { AlternarSom(); };
+            this.btnSom.Click += new System.EventHandler(this.btnSom_Click);
             this.btnPausa.BackColor = System.Drawing.Color.FromArgb(20, 54, 45);
             this.btnPausa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPausa.ForeColor = System.Drawing.Color.WhiteSmoke;
@@ -93,7 +93,7 @@ namespace sei_la
             this.btnPausa.Size = new System.Drawing.Size(110, 34);
             this.btnPausa.Text = "PAUSAR";
             this.btnPausa.UseVisualStyleBackColor = false;
-            this.btnPausa.Click += delegate { Pausar(); };
+            this.btnPausa.Click += new System.EventHandler(this.btnPausa_Click);
             this.progresso.Location = new System.Drawing.Point(0, 105);
             this.progresso.Maximum = 50;
             this.progresso.Name = "progresso";
